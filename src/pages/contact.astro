@@ -1,0 +1,78 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+<BaseLayout title="Contact — Dry Gulch Design" description="Start a landscape design project in the Vail Valley.">
+  <section class="wrap contact">
+    <span class="eyebrow">Get in Touch</span>
+    <h1>Start a project</h1>
+    <p class="lead">
+      Tell me a bit about the site and what you're working with &mdash; lot size, current
+      water/drainage issues, and what you'd like the space to do.
+    </p>
+
+    <div class="grid-2 contact-grid">
+      <!--
+        This form posts to Formspree (formspree.io) — free tier, no backend required,
+        works on static hosting like Cloudflare Pages. Replace YOUR_FORM_ID below after
+        creating a free form at formspree.io. Until then this form won't actually send.
+      -->
+      <form class="contact-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+        <label>
+          Name
+          <input type="text" name="name" required />
+        </label>
+        <label>
+          Email
+          <input type="email" name="email" required />
+        </label>
+        <label>
+          Location / property
+          <input type="text" name="location" placeholder="e.g. Avon, Edwards, Eagle-Vail" />
+        </label>
+        <label>
+          Project details
+          <textarea name="message" rows="6" required placeholder="Lot size, current drainage issues, what you'd like the space to do..."></textarea>
+        </label>
+        <button type="submit" class="btn primary">Send</button>
+      </form>
+
+      <div class="stamp contact-stamp">
+        <span class="compass">&#8593;N</span>
+        SERVICE AREA<br />
+        Vail &middot; Avon &middot; Edwards &middot; Eagle-Vail &middot; Beaver Creek<br /><br />
+        RESPONSE TIME<br />
+        1&ndash;2 business days
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .contact { padding-top: 3rem; padding-bottom: 4rem; }
+  .lead { max-width: 600px; color: var(--basalt-soft); font-size: 1.05rem; }
+  .contact-grid { margin-top: 2.5rem; align-items: start; }
+  .contact-form { display: flex; flex-direction: column; gap: 1.2rem; }
+  .contact-form label {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--basalt-soft);
+  }
+  .contact-form input,
+  .contact-form textarea {
+    font-family: var(--font-body);
+    font-size: 1rem;
+    padding: 0.7rem 0.8rem;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: var(--sand-light);
+    color: var(--basalt);
+    resize: vertical;
+  }
+  .contact-form button { align-self: flex-start; border: none; cursor: pointer; }
+  .contact-stamp { align-self: start; line-height: 1.9; }
+</style>

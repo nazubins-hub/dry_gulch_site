@@ -1,0 +1,190 @@
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap');
+
+:root {
+  /* Colors -- high-desert mountain palette, not the default AI cream/terracotta */
+  --sand: #E3DBC8;
+  --sand-light: #EEE8D9;
+  --basalt: #262420;
+  --basalt-soft: #55503f;
+  --juniper: #3C4A3C;
+  --juniper-dark: #283428;
+  --sienna: #A0522E;
+  --sky-wash: #C7D0C6;
+  --line: #b9b09b;
+
+  /* Type */
+  --font-display: 'Fraunces', ui-serif, Georgia, serif;
+  --font-body: 'IBM Plex Sans', ui-sans-serif, system-ui, sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, monospace;
+
+  --radius: 3px;
+}
+
+* { box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  * { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+}
+
+body {
+  margin: 0;
+  background: var(--sand);
+  color: var(--basalt);
+  font-family: var(--font-body);
+  font-size: 17px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  line-height: 1.1;
+  margin: 0 0 0.5em;
+  color: var(--basalt);
+}
+
+h1 { font-size: clamp(2.4rem, 5vw, 4rem); font-weight: 500; }
+h2 { font-size: clamp(1.6rem, 3vw, 2.3rem); }
+h3 { font-size: 1.3rem; }
+
+p { margin: 0 0 1em; }
+
+a {
+  color: var(--juniper);
+  text-decoration-color: var(--sienna);
+  text-underline-offset: 3px;
+}
+a:hover { color: var(--sienna); }
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid var(--sienna);
+  outline-offset: 3px;
+}
+
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--sienna);
+  display: block;
+  margin-bottom: 0.6em;
+}
+
+.wrap {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+.stamp {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--basalt-soft);
+  border: 1px solid var(--line);
+  padding: 0.9rem 1.1rem;
+  border-radius: var(--radius);
+  display: inline-block;
+  line-height: 1.7;
+}
+
+.stamp .compass {
+  display: inline-block;
+  transform: translateY(1px);
+  margin-right: 0.4em;
+}
+
+.btn {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  letter-spacing: 0.03em;
+  text-decoration: none;
+  padding: 0.8rem 1.4rem;
+  border-radius: var(--radius);
+  border: 1px solid var(--basalt);
+  color: var(--basalt);
+  transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+.btn:hover {
+  background: var(--juniper);
+  border-color: var(--juniper);
+  color: var(--sand-light);
+}
+.btn.primary {
+  background: var(--juniper);
+  border-color: var(--juniper);
+  color: var(--sand-light);
+}
+.btn.primary:hover {
+  background: var(--juniper-dark);
+  border-color: var(--juniper-dark);
+  color: var(--sand-light);
+}
+
+.card {
+  background: var(--sand-light);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 1.6rem;
+}
+
+.tag {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--juniper);
+  background: rgba(60, 74, 60, 0.08);
+  padding: 0.25em 0.6em;
+  border-radius: 2px;
+  display: inline-block;
+}
+
+/* contour-line divider -- the site's signature element, used once per page at most */
+.contour {
+  width: 100%;
+  height: 34px;
+  display: block;
+  margin: 3.5rem 0;
+}
+.contour path {
+  fill: none;
+  stroke: var(--line);
+  stroke-width: 1;
+}
+.contour path:nth-child(2) { stroke: var(--sienna); opacity: 0.55; }
+
+.grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+}
+.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+@media (max-width: 760px) {
+  .grid-2, .grid-3 { grid-template-columns: 1fr; }
+}
+
+.meta-row {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--basalt-soft);
+  display: flex;
+  gap: 1.2rem;
+  flex-wrap: wrap;
+}
+
+code, pre { font-family: var(--font-mono); }

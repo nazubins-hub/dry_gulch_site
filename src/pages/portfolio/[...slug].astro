@@ -1,0 +1,59 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const projects = await getCollection('portfolio', ({ data }) => !data.draft);
+  return projects.map((project) => ({
+    params: { slug: project.slug },
+    props: { project },
+  }));
+}
+
+const { project } = Astro.props;
+const { Content } = await project.render();
+---
+<BaseLayout title={`${project.data.title} — Dry Gulch Design`} description={project.data.summary}>
+  <article class="wrap post">
+    <a href="/portfolio" class="back-link">&larr; Portfolio</a>
+    <span class="meta-row">
+      {project.data.year && <span>{project.data.year}</span>}
+      {project.data.elevation && <span>{project.data.elevation}</span>}
+      {project.data.waterUse && <span>Water use: {project.data.waterUse}</span>}
+    </span>
+    <h1>{project.data.title}</h1>
+    <p class="loc">{project.data.location}</p>
+    <div class="scope-tags">
+      {project.data.scope.map((s) => <span class="tag">{s}</span>)}
+    </div>
+    <div class="prose">
+      <Content />
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .post { padding-top: 2.5rem; padding-bottom: 4rem; max-width: 720px; }
+  .back-link {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    text-decoration: none;
+    margin-bottom: 1.5rem;
+    color: var(--basalt-soft);
+  }
+  .back-link:hover { color: var(--sienna); }
+  .loc {
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--sienna);
+  }
+  .scope-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin: 1rem 0 2rem; }
+  h1 { margin-top: 0.4rem; margin-bottom: 0.2rem; }
+  .prose :global(h2) { margin-top: 2rem; font-size: 1.4rem; }
+  .prose :global(p) { color: var(--basalt); }
+  .prose :global(ul) { padding-left: 1.3rem; }
+  .prose :global(li) { margin-bottom: 0.4em; }
+</style>

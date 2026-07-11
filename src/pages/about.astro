@@ -1,0 +1,55 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Contour from '../components/Contour.astro';
+---
+<BaseLayout title="About — Dry Gulch Design" description="A landscape architecture practice built on stormwater and hydrology expertise, based in the Vail Valley.">
+  <section class="wrap about">
+    <span class="eyebrow">Practice Notes</span>
+    <h1>Designed from the water down.</h1>
+    <p class="lead">
+      Most landscape plans start with plants and work backward. This one starts with where
+      the water goes &mdash; snowmelt, runoff, storm events &mdash; and builds the planting plan on top of that.
+    </p>
+
+    <div class="grid-2 about-grid">
+      <div>
+        <h2>Background</h2>
+        <p>
+          Trained in landscape architecture with a specialization in stormwater management,
+          bioinfiltration, and rain garden design. That background shapes every project: soil
+          and drainage come first, plant selection follows, and the result is a landscape that
+          holds up through the valley's dry summers and short, intense storm events.
+        </p>
+        <p>
+          Based in the Vail Valley, working across mountain-town lots, HOA common areas, and
+          properties where water-wise design has to hold up against deer, altitude, and a short
+          growing season.
+        </p>
+      </div>
+      <div>
+        <h2>Approach</h2>
+        <ul class="approach-list">
+          <li><span class="tag">01</span> Read the site &mdash; grading, drainage, sun, existing soil.</li>
+          <li><span class="tag">02</span> Plan the water &mdash; infiltration, detention, and where runoff is meant to go.</li>
+          <li><span class="tag">03</span> Select xeric, regionally adapted plants once the water plan is set.</li>
+          <li><span class="tag">04</span> Design for maintenance that actually fits a mountain-town schedule.</li>
+        </ul>
+      </div>
+    </div>
+
+    <Contour />
+
+    <div class="stamp about-stamp">
+      <span class="compass">&#8593;N</span>BLA &middot; MSLA, STORMWATER MANAGEMENT SPECIALIZATION &middot; VAIL VALLEY, CO
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .about { padding-top: 3rem; padding-bottom: 4rem; }
+  .lead { max-width: 640px; font-size: 1.1rem; color: var(--basalt-soft); }
+  .about-grid { margin-top: 2.5rem; }
+  .approach-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0.8rem; }
+  .approach-list li { display: flex; align-items: baseline; gap: 0.7rem; }
+  .about-stamp { margin-top: 0.5rem; }
+</style>

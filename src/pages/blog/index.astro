@@ -1,0 +1,45 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+const posts = (await getCollection('blog', ({ data }) => !data.draft))
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+---
+<BaseLayout title="Journal — Dry Gulch Design" description="Notes on stormwater management, bioinfiltration, and xeric planting for the Vail Valley.">
+  <section class="wrap">
+    <span class="eyebrow">Field Notes</span>
+    <h1>Journal</h1>
+    <p class="intro">Notes on stormwater design, plant selection, and building landscapes that work with a dry, high-altitude climate instead of against it.</p>
+
+    <ul class="post-list">
+      {posts.map((post) => (
+        <li>
+          <a href={`/blog/${post.slug}`}>
+            <span class="meta-row">
+              <span>{post.data.date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</span>
+              {post.data.tags.map((tag) => <span class="tag">{tag}</span>)}
+            </span>
+            <h2>{post.data.title}</h2>
+            <p>{post.data.summary}</p>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </section>
+</BaseLayout>
+
+<style>
+  .intro { max-width: 620px; color: var(--basalt-soft); font-size: 1.05rem; }
+  .post-list { list-style: none; margin: 2.5rem 0; padding: 0; }
+  .post-list li { border-top: 1px solid var(--line); }
+  .post-list li:last-child { border-bottom: 1px solid var(--line); }
+  .post-list a {
+    display: block;
+    text-decoration: none;
+    color: var(--basalt);
+    padding: 1.8rem 0;
+  }
+  .post-list a:hover h2 { color: var(--sienna); }
+  .post-list h2 { margin: 0.4em 0 0.3em; font-size: 1.5rem; transition: color 0.15s ease; }
+  .post-list p { margin: 0; color: var(--basalt-soft); }
+</style>

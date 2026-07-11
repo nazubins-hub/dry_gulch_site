@@ -1,0 +1,118 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Contour from '../components/Contour.astro';
+import { getCollection } from 'astro:content';
+
+const portfolio = (await getCollection('portfolio', ({ data }) => !data.draft))
+  .sort((a, b) => (b.data.year ?? '').localeCompare(a.data.year ?? ''))
+  .slice(0, 3);
+
+const posts = (await getCollection('blog', ({ data }) => !data.draft))
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+  .slice(0, 3);
+---
+<BaseLayout title="Dry Gulch Design — Xeriscape &amp; Stormwater Landscape Architecture, Vail Valley">
+  <section class="hero wrap">
+    <span class="eyebrow">Site Plan &middot; Rev. 01</span>
+    <h1>Landscapes designed<br />for where the water goes.</h1>
+    <p class="hero-sub">
+      Landscape architecture for the Vail Valley, built from the ground up on hydrology &mdash;
+      bioinfiltration, rain gardens, and xeric planting plans that hold up at 7,400 feet.
+    </p>
+    <div class="hero-actions">
+      <a href="/contact" class="btn primary">Start a project</a>
+      <a href="/portfolio" class="btn">View portfolio</a>
+    </div>
+    <div class="stamp hero-stamp">
+      <span class="compass">&#8593;N</span>DESIGN + INSTALL &middot; STORMWATER-INFORMED &middot; INTERMOUNTAIN WEST NATIVES
+    </div>
+  </section>
+
+  <Contour />
+
+  <section class="wrap">
+    <span class="eyebrow">Selected Work</span>
+    <h2>Portfolio</h2>
+    <div class="grid-3">
+      {portfolio.map((project) => (
+        <a class="card project-card" href={`/portfolio/${project.slug}`}>
+          <h3>{project.data.title}</h3>
+          <p class="project-loc">{project.data.location}</p>
+          <p>{project.data.summary}</p>
+          <span class="read-more">View project &rarr;</span>
+        </a>
+      ))}
+    </div>
+    {portfolio.length === 0 && (
+      <p class="empty-note">Portfolio entries will appear here once added to <code>src/content/portfolio/</code>.</p>
+    )}
+  </section>
+
+  <Contour />
+
+  <section class="wrap">
+    <span class="eyebrow">From the Journal</span>
+    <h2>Notes on water-wise design</h2>
+    <div class="grid-3">
+      {posts.map((post) => (
+        <a class="card" href={`/blog/${post.slug}`}>
+          <span class="meta-row"><span>{post.data.date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</span></span>
+          <h3>{post.data.title}</h3>
+          <p>{post.data.summary}</p>
+          <span class="read-more">Read &rarr;</span>
+        </a>
+      ))}
+    </div>
+    {posts.length === 0 && (
+      <p class="empty-note">Journal posts will appear here once added to <code>src/content/blog/</code>.</p>
+    )}
+  </section>
+</BaseLayout>
+
+<style>
+  .hero { padding: 4.5rem 1.5rem 2rem; }
+  .hero-sub {
+    max-width: 640px;
+    font-size: 1.1rem;
+    color: var(--basalt-soft);
+  }
+  .hero-actions {
+    display: flex;
+    gap: 1rem;
+    margin: 1.6rem 0 2.2rem;
+    flex-wrap: wrap;
+  }
+  .hero-stamp { margin-top: 0.5rem; }
+
+  .project-card, .card {
+    text-decoration: none;
+    color: var(--basalt);
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    transition: border-color 0.15s ease, transform 0.15s ease;
+  }
+  .project-card:hover, .card:hover {
+    border-color: var(--sienna);
+    transform: translateY(-2px);
+  }
+  .project-loc {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--sienna);
+    margin: 0;
+  }
+  .read-more {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    margin-top: auto;
+    padding-top: 0.6rem;
+  }
+  .empty-note {
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    color: var(--basalt-soft);
+  }
+</style>
