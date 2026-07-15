@@ -1,0 +1,13 @@
+# pybose pinned - it's reverse-engineered and its API surface moves between releases
+pybose==2025.12.4
+
+# pybose's undeclared runtime dependencies
+requests
+pyjwt
+websockets
+zeroconf
+
+# server
+fastapi
+uvicorn
+python-dotenv

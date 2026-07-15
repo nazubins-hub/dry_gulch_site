@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Soundbar 600</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+  <meta name="theme-color" content="#000000">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Soundbar">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="icon" href="/icons/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/icons/icon-180.png">
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <div id="app">
+
+    <header>
+      <div class="wordmark">
+        <div class="brand" id="device-name">SOUNDBAR 600</div>
+        <div class="status"><span id="status-dot" class="dot"></span><span id="status-text">connecting</span></div>
+      </div>
+      <button id="power" class="power" aria-label="Power" title="Power">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+          <path d="M12 3v8"/><path d="M6.3 6.3a8 8 0 1 0 11.4 0"/>
+        </svg>
+      </button>
+    </header>
+
+    <div id="error" class="error" hidden></div>
+
+    <main id="controls">
+
+      <!-- Volume -->
+      <section class="volume">
+        <div class="vol-readout">
+          <span id="vol-value">–</span>
+          <span class="vol-label" id="vol-label">VOLUME</span>
+        </div>
+        <div class="vol-buttons">
+          <button id="vol-down" class="round big" aria-label="Volume down">
+            <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M5 12h14"/></svg>
+          </button>
+          <button id="mute" class="round small" aria-label="Mute">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M11 5 6 9H3v6h3l5 4V5z"/>
+              <path id="mute-waves" d="M15.5 8.5a5 5 0 0 1 0 7M18 6a8.5 8.5 0 0 1 0 12"/>
+              <path id="mute-cross" d="M16 9l6 6M22 9l-6 6" style="display:none"/>
+            </svg>
+          </button>
+          <button id="vol-up" class="round big" aria-label="Volume up">
+            <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+          </button>
+        </div>
+        <input id="vol-slider" class="slider" type="range" min="0" max="100" value="0" aria-label="Volume slider">
+      </section>
+
+      <hr>
+
+      <!-- Sources -->
+      <section>
+        <h2>SOURCE</h2>
+        <div id="sources" class="pills"></div>
+      </section>
+
+      <hr>
+
+      <!-- Playback -->
+      <section class="playback">
+        <h2>NOW PLAYING</h2>
+        <div id="now-playing" class="now-playing">
+          <div id="np-track" class="np-track">—</div>
+          <div id="np-artist" class="np-artist"></div>
+        </div>
+        <div class="transport">
+          <button id="prev" class="round small" aria-label="Previous">
+            <svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M6 5h1.5v14H6zM18 5l-9 7 9 7z"/></svg>
+          </button>
+          <button id="play-pause" class="round big" aria-label="Play or pause">
+            <svg id="icon-play" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M8 5v14l11-7z"/></svg>
+            <svg id="icon-pause" viewBox="0 0 24 24" fill="currentColor" stroke="none" style="display:none"><path d="M7 5h3.2v14H7zM13.8 5H17v14h-3.2z"/></svg>
+          </button>
+          <button id="next" class="round small" aria-label="Next">
+            <svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M16.5 5H18v14h-1.5zM6 5l9 7-9 7z"/></svg>
+          </button>
+        </div>
+      </section>
+
+      <hr>
+
+      <!-- Audio / EQ -->
+      <section>
+        <h2>AUDIO</h2>
+        <div id="audio-modes" class="pills"></div>
+        <div id="eq"></div>
+      </section>
+
+    </main>
+
+    <footer>
+      <span id="product-name"></span>
+    </footer>
+  </div>
+
+  <script src="/app.js"></script>
+</body>
+</html>
