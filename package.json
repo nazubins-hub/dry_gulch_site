@@ -5,10 +5,22 @@
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
+    "predev": "node scripts/build-island.mjs",
+    "prebuild": "node scripts/check-plant-db-fresh.mjs && node scripts/build-island.mjs",
     "build": "astro build",
-    "preview": "astro preview"
+    "postbuild": "node scripts/build-headers.mjs",
+    "preview": "astro preview",
+    "sync:plants": "node scripts/sync-plant-db.mjs && node scripts/build-island.mjs",
+    "build:island": "node scripts/build-island.mjs",
+    "check:plants": "node scripts/check-plant-db-fresh.mjs",
+    "audit:plants": "node scripts/publish-audit.mjs"
   },
   "dependencies": {
-    "astro": "^4.16.0"
+    "@astrojs/react": "^3.6.3",
+    "@types/react": "^18.3.31",
+    "@types/react-dom": "^18.3.7",
+    "astro": "^4.16.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
   }
 }

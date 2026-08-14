@@ -13,7 +13,7 @@ export async function getStaticPaths() {
 const { post } = Astro.props;
 const { Content } = await post.render();
 ---
-<BaseLayout title={`${post.data.title} — Dry Gulch Design`} description={post.data.summary}>
+<BaseLayout title={`${post.data.title} — Next Steppe`} description={post.data.summary}>
   <article class="wrap post">
     <a href="/blog" class="back-link">&larr; Journal</a>
     <span class="meta-row">

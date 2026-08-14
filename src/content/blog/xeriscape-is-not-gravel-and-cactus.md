@@ -17,4 +17,4 @@ A well-designed xeric planting bed here can be lush-looking for most of the seas
 
 ## The real payoff
 
-The visible result is a yard that still reads as green and intentional. The invisible result is a irrigation system running a fraction of the hours, healthier soil that holds moisture longer between waterings, and a landscape that isn't fighting the valley's climate every August.
+The visible result is a yard that still reads as green and intentional. The invisible result is an irrigation system running a fraction of the hours, healthier soil that holds moisture longer between waterings, and a landscape that isn't fighting the valley's climate every August.

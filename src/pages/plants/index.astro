@@ -1,0 +1,199 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Contour from '../../components/Contour.astro';
+import XericPlantDB from '../../components/XericPlantDB.generated.jsx';
+// Already gated at sync time — see scripts/sync-plant-db.mjs.
+import plants from '../../../data/plants.public.json';
+import { hasPublishedIgn } from '../../lib/publish-gate.js';
+
+const all = plants;
+
+// Order matches the database's own grouping: woody structure first, then the
+// herbaceous layer, then the ground plane.
+const GROUPS = ['Tree', 'Shrub', 'Cactus/Succulent', 'Perennial', 'Grass', 'Groundcover'];
+
+const grouped = GROUPS.map((type) => ({
+  type,
+  species: all
+    .filter((p) => p.type === type)
+    .sort((a, b) => a.common.localeCompare(b.common)),
+})).filter((g) => g.species.length > 0);
+
+const rated = all.filter(hasPublishedIgn).length;
+const native = all.filter((p) => p.native).length;
+---
+<BaseLayout
+  title="Plant Database — Next Steppe"
+  description="A xeric plant reference for the Colorado Rockies: 100 species with water use, elevation range, fire placement and design notes, sourced and cited."
+>
+  <section class="wrap intro-section">
+    <span class="eyebrow">Reference</span>
+    <h1>Xeric plant database</h1>
+    <p class="lead">
+      {all.length} species for the Vail Valley and Eagle County, with water use,
+      elevation range, mature size, wildlife value and fire placement. Every figure
+      traces to a source; where a source doesn't exist, the field says so instead of
+      guessing.
+    </p>
+
+    <div class="stat-row">
+      <div class="stat"><span class="stat-n">{all.length}</span><span class="stat-l">Species</span></div>
+      <div class="stat"><span class="stat-n">{native}</span><span class="stat-l">Native</span></div>
+      <div class="stat"><span class="stat-n">{rated}</span><span class="stat-l">Published fire ratings</span></div>
+    </div>
+
+    <div class="notice">
+      <p>
+        <strong>On fire ratings.</strong> Ignitability is shown only where a published
+        source rates that species — {rated} of {all.length}. The rest are marked
+        <em>not established</em> rather than carrying an internal estimate: every one
+        of the twelve estimates since checked against a published source was revised
+        downward, and all twelve lost their clearance to sit within 30 ft of a
+        structure. Confirm defensible-space requirements with your local fire
+        authority; jurisdictions vary.
+      </p>
+    </div>
+  </section>
+
+  <Contour />
+
+  <section class="browser">
+    <div class="wrap">
+      <span class="eyebrow">Filter &amp; compare</span>
+      <h2>Browse</h2>
+    </div>
+    <!-- client:load rather than client:visible — this is the page's primary tool,
+         and Astro pre-renders the table to static HTML either way. -->
+    <XericPlantDB client:load />
+  </section>
+
+  <Contour />
+
+  <section class="wrap">
+    <h2 class="list-heading">All species</h2>
+    {grouped.map((group) => (
+      <div class="group">
+        <h2>{group.type}<span class="count">{group.species.length}</span></h2>
+        <ul class="species-list">
+          {group.species.map((p) => (
+            <li>
+              <a href={`/plants/${p.slug}`}>
+                <span class="common">{p.common}</span>
+                <span class="sci">{p.sci}</span>
+                <span class="meta">
+                  <span>{p.water} water</span>
+                  <span>{(p.elevMax / 1000).toFixed(1)}k ft</span>
+                  {p.native && <span class="native">Native</span>}
+                </span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    ))}
+  </section>
+</BaseLayout>
+
+<style>
+  .intro-section { padding-top: 3rem; }
+  .lead { max-width: 660px; font-size: 1.08rem; color: var(--basalt-soft); }
+
+  .stat-row { display: flex; gap: 2.5rem; margin: 2rem 0 1.8rem; flex-wrap: wrap; }
+  .stat { display: flex; flex-direction: column; }
+  .stat-n {
+    font-family: var(--font-display);
+    font-size: 2.1rem;
+    line-height: 1;
+    color: var(--juniper);
+  }
+  .stat-l {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--basalt-soft);
+    margin-top: 0.4em;
+  }
+
+  .notice {
+    border: 1px solid var(--line);
+    border-left: 3px solid var(--sienna);
+    border-radius: var(--radius);
+    background: var(--sand-light);
+    padding: 1rem 1.3rem;
+    max-width: 720px;
+  }
+  .notice p { margin: 0; font-size: 0.9rem; line-height: 1.65; color: var(--basalt-soft); }
+
+  /* The component was built to run standalone and sets height:100vh inline on its
+     root. Embedded in a page that scrolls, that turns into a full-viewport nested
+     scroller with no visible edges. Constrain it to a bounded panel instead —
+     done here, in the host, so the database's own standalone view keeps 100vh. */
+  .browser :global(astro-island > div) {
+    height: min(88vh, 940px) !important;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
+  .browser > .wrap { margin-bottom: 1.2rem; }
+
+  .list-heading { margin-bottom: 1.5rem; }
+
+  .group { margin-bottom: 3rem; }
+  .group h2 {
+    display: flex;
+    align-items: baseline;
+    gap: 0.7rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--line);
+  }
+  .count {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--basalt-soft);
+    font-weight: 400;
+  }
+
+  .species-list {
+    list-style: none;
+    padding: 0;
+    margin: 1.2rem 0 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 0.2rem 1.5rem;
+  }
+  .species-list a {
+    display: block;
+    text-decoration: none;
+    color: var(--basalt);
+    padding: 0.6rem 0.7rem;
+    border-radius: var(--radius);
+    border: 1px solid transparent;
+  }
+  .species-list a:hover {
+    border-color: var(--line);
+    background: var(--sand-light);
+  }
+  .common { display: block; font-weight: 500; }
+  .sci {
+    display: block;
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: 0.88rem;
+    color: var(--basalt-soft);
+  }
+  .meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.2em 0.7rem;
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--basalt-soft);
+    margin-top: 0.3em;
+  }
+  /* Keep each fact intact; "Low-Moderate water" must not split across lines. */
+  .meta > span { white-space: nowrap; }
+  .native { color: var(--juniper); }
+</style>

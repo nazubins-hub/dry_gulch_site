@@ -1,4 +1,7 @@
-@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap');
+/* Self-hosted — no third-party font request. Includes Jost, which the plant
+   browser island uses; its own Google @import is stripped at build time by
+   scripts/build-island.mjs, so the host page must supply that family. */
+@import url('./fonts.css');
 
 :root {
   /* Colors -- high-desert mountain palette, not the default AI cream/terracotta */

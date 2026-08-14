@@ -2,16 +2,25 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Contour from '../components/Contour.astro';
 import { getCollection } from 'astro:content';
+// Already gated at sync time — see scripts/sync-plant-db.mjs.
+import plants from '../../data/plants.public.json';
+import { hasPublishedIgn } from '../lib/publish-gate.js';
 
-const portfolio = (await getCollection('portfolio', ({ data }) => !data.draft))
-  .sort((a, b) => (b.data.year ?? '').localeCompare(a.data.year ?? ''))
-  .slice(0, 3);
+const all = plants;
+const rated = all.filter(hasPublishedIgn).length;
+const native = all.filter((p) => p.native).length;
+
+const GROUPS = ['Tree', 'Shrub', 'Cactus/Succulent', 'Perennial', 'Grass', 'Groundcover'];
+const groupCounts = GROUPS.map((type) => ({
+  type,
+  n: all.filter((p) => p.type === type).length,
+})).filter((g) => g.n > 0);
 
 const posts = (await getCollection('blog', ({ data }) => !data.draft))
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
   .slice(0, 3);
 ---
-<BaseLayout title="Dry Gulch Design — Xeriscape &amp; Stormwater Landscape Architecture, Vail Valley">
+<BaseLayout title="Next Steppe — Xeriscape &amp; Stormwater Landscape Architecture, Vail Valley">
   <section class="hero wrap">
     <span class="eyebrow">Site Plan &middot; Rev. 01</span>
     <h1>Landscapes designed<br />for where the water goes.</h1>
@@ -21,7 +30,7 @@ const posts = (await getCollection('blog', ({ data }) => !data.draft))
     </p>
     <div class="hero-actions">
       <a href="/contact" class="btn primary">Start a project</a>
-      <a href="/portfolio" class="btn">View portfolio</a>
+      <a href="/plants" class="btn">Browse the plant database</a>
     </div>
     <div class="stamp hero-stamp">
       <span class="compass">&#8593;N</span>DESIGN + INSTALL &middot; STORMWATER-INFORMED &middot; INTERMOUNTAIN WEST NATIVES
@@ -31,21 +40,31 @@ const posts = (await getCollection('blog', ({ data }) => !data.draft))
   <Contour />
 
   <section class="wrap">
-    <span class="eyebrow">Selected Work</span>
-    <h2>Portfolio</h2>
-    <div class="grid-3">
-      {portfolio.map((project) => (
-        <a class="card project-card" href={`/portfolio/${project.slug}`}>
-          <h3>{project.data.title}</h3>
-          <p class="project-loc">{project.data.location}</p>
-          <p>{project.data.summary}</p>
-          <span class="read-more">View project &rarr;</span>
+    <span class="eyebrow">Reference</span>
+    <h2>The plant database</h2>
+    <p class="db-lead">
+      {all.length} xeric species for the Colorado Rockies &mdash; water use, elevation
+      range, mature size, wildlife value and fire placement, each traced to a source.
+      Where a published source doesn&rsquo;t exist, the entry says so rather than
+      estimating.
+    </p>
+
+    <div class="stat-row">
+      <div class="stat"><span class="stat-n">{all.length}</span><span class="stat-l">Species</span></div>
+      <div class="stat"><span class="stat-n">{native}</span><span class="stat-l">Native</span></div>
+      <div class="stat"><span class="stat-n">{rated}</span><span class="stat-l">Published fire ratings</span></div>
+    </div>
+
+    <div class="group-row">
+      {groupCounts.map((g) => (
+        <a class="group-chip" href="/plants">
+          <span class="group-n">{g.n}</span>
+          <span class="group-t">{g.type}</span>
         </a>
       ))}
     </div>
-    {portfolio.length === 0 && (
-      <p class="empty-note">Portfolio entries will appear here once added to <code>src/content/portfolio/</code>.</p>
-    )}
+
+    <a href="/plants" class="btn primary db-cta">Browse the database</a>
   </section>
 
   <Contour />
@@ -104,6 +123,49 @@ const posts = (await getCollection('blog', ({ data }) => !data.draft))
     color: var(--sienna);
     margin: 0;
   }
+
+  .db-lead { max-width: 640px; color: var(--basalt-soft); font-size: 1.05rem; }
+
+  .stat-row { display: flex; gap: 2.5rem; margin: 1.8rem 0; flex-wrap: wrap; }
+  .stat { display: flex; flex-direction: column; }
+  .stat-n {
+    font-family: var(--font-display);
+    font-size: 2.1rem;
+    line-height: 1;
+    color: var(--juniper);
+  }
+  .stat-l {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--basalt-soft);
+    margin-top: 0.4em;
+  }
+
+  .group-row { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-bottom: 1.8rem; }
+  .group-chip {
+    display: flex;
+    align-items: baseline;
+    gap: 0.45rem;
+    text-decoration: none;
+    color: var(--basalt);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 0.5rem 0.85rem;
+    background: var(--sand-light);
+  }
+  .group-chip:hover { border-color: var(--sienna); }
+  .group-n { font-family: var(--font-display); font-size: 1.1rem; color: var(--juniper); }
+  .group-t {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--basalt-soft);
+  }
+
+  .db-cta { display: inline-block; }
   .read-more {
     font-family: var(--font-mono);
     font-size: 0.8rem;

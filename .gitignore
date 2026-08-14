@@ -1,6 +1,15 @@
 # build output
 dist/
 
+# Generated from the synced UI template + gated data by scripts/build-island.mjs.
+# Regenerated on every dev run and build; never edit or commit it.
+src/components/XericPlantDB.generated.jsx
+
+# The RAW database export must never live in this repo — it carries the estimated
+# fire ratings the publish gate withholds, and this repo is public. Only the gated
+# projection (data/plants.public.json) is committed. See scripts/sync-plant-db.mjs.
+data/plants.json
+
 # dependencies
 node_modules/
 

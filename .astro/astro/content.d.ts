@@ -163,29 +163,14 @@ declare module 'astro:content' {
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
 };
-"portfolio": {
-"beaver-creek-hoa-common-area.md": {
-	id: "beaver-creek-hoa-common-area.md";
-  slug: "beaver-creek-hoa-common-area";
+"portfolio": Record<string, {
+  id: string;
+  slug: string;
   body: string;
   collection: "portfolio";
-  data: InferEntrySchema<"portfolio">
-} & { render(): Render[".md"] };
-"eagle-vail-rain-garden.md": {
-	id: "eagle-vail-rain-garden.md";
-  slug: "eagle-vail-rain-garden";
-  body: string;
-  collection: "portfolio";
-  data: InferEntrySchema<"portfolio">
-} & { render(): Render[".md"] };
-"edwards-slope-stabilization.md": {
-	id: "edwards-slope-stabilization.md";
-  slug: "edwards-slope-stabilization";
-  body: string;
-  collection: "portfolio";
-  data: InferEntrySchema<"portfolio">
-} & { render(): Render[".md"] };
-};
+  data: InferEntrySchema<"portfolio">;
+  render(): Render[".md"];
+}>;
 
 	};
 

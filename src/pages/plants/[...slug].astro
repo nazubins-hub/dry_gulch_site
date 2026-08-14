@@ -1,0 +1,279 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+// Already gated at sync time by scripts/sync-plant-db.mjs — withheld fire ratings
+// and unverified cultural notes are absent from this file, not filtered here.
+import plants from '../../../data/plants.public.json';
+import { hizGuidance, ignSourceLabel } from '../../lib/publish-gate.js';
+
+export function getStaticPaths() {
+  return plants.map((plant) => ({
+    params: { slug: plant.slug },
+    props: { plant },
+  }));
+}
+
+const { plant: p } = Astro.props;
+
+const hiz = hizGuidance(p);
+const ignSource = ignSourceLabel(p.ignSrc);
+
+const ft = (v) => (v < 1 ? `${Math.round(v * 12)} in` : `${v} ft`);
+const range = (a, b) => (a === b ? `${a}` : `${a}–${b}`);
+
+// Carry the unit once when both ends share it: "1–3 ft", not "1 ft–3 ft".
+const sizeRange = (a, b) => {
+  if (a === b) return ft(b);
+  const sameUnit = a < 1 === b < 1;
+  if (!sameUnit) return `${ft(a)}–${ft(b)}`;
+  return a < 1
+    ? `${Math.round(a * 12)}–${Math.round(b * 12)} in`
+    : `${a}–${b} ft`;
+};
+
+// Field-note seam: once the Next Steppe content engine feeds this site, a per-species
+// markdown entry keyed by this same slug attaches here. Deliberately not built yet —
+// the lookup point exists so adding it later needs no restructuring of this page.
+const fieldNotes = null;
+
+const facts = [
+  ['Family', p.family],
+  ['Type', p.type],
+  ['Water use', p.water],
+  ['Plant factor', `${p.pf} (ETo multiplier)`],
+  ['USDA zones', range(p.zoneMin, p.zoneMax)],
+  ['Elevation', `${p.elevMin.toLocaleString()}–${p.elevMax.toLocaleString()} ft`],
+  ['Mature height', sizeRange(p.htMin, p.htMax)],
+  ['Mature spread', sizeRange(p.spMin, p.spMax)],
+  ['Sun', p.sun],
+  ['Soil', p.soil],
+  ['Bloom', p.bloom && p.bloom !== '—' ? p.bloom : null],
+  ['Deer', p.deer],
+  ['Native', p.native ? 'Yes — Intermountain West' : 'No'],
+  ['Pollinator support', p.ps ? 'Yes' : null],
+].filter(([, v]) => v);
+---
+<BaseLayout
+  title={`${p.common} (${p.sci}) — Next Steppe`}
+  description={`${p.common}, ${p.sci}. ${p.water} water use, USDA zones ${range(p.zoneMin, p.zoneMax)}, ${p.elevMin.toLocaleString()}–${p.elevMax.toLocaleString()} ft. Xeric plant data for the Vail Valley.`}
+>
+  <article class="wrap species">
+    <a href="/plants" class="back-link">&larr; All plants</a>
+
+    <span class="meta-row">
+      <span>{p.type}</span>
+      <span>{p.water} water</span>
+      {p.native && <span>Native</span>}
+    </span>
+
+    <h1>{p.common}</h1>
+    <p class="sci">{p.sci}</p>
+    {p.syn && <p class="syn">Also sold as <em>{p.syn}</em></p>}
+
+    {p.useTags?.length > 0 && (
+      <div class="scope-tags">
+        {p.useTags.map((t) => <span class="tag">{t}</span>)}
+      </div>
+    )}
+
+    <section class="fire">
+      <h2>Fire placement</h2>
+      {hiz ? (
+        <>
+          <p class="fire-rating">
+            <strong>Ignitability {p.ign} of 10.</strong> {hiz.label}.
+          </p>
+          <p class="fire-src">
+            Published in {ignSource}. Higher numbers are harder to ignite.
+          </p>
+        </>
+      ) : (
+        <>
+          <p class="fire-rating unrated">
+            <strong>Not established.</strong> No published ignitability rating exists
+            for this species.
+          </p>
+          <p class="fire-src">
+            An internal estimate exists but is withheld deliberately: of the twelve
+            such estimates later checked against a published source, all twelve were
+            revised downward and lost their clearance to sit within 30 ft of a
+            structure. Treat this plant as unrated and confirm placement with your
+            local fire authority.
+          </p>
+        </>
+      )}
+      <p class="fire-note">
+        Home Ignition Zone guidance follows CSU Extension, which permits ratings of 8
+        and above within the first 30 ft. Requirements vary by jurisdiction — confirm
+        defensible-space rules locally before specifying.
+      </p>
+    </section>
+
+    <section>
+      <h2>At a glance</h2>
+      <dl class="facts">
+        {facts.map(([k, v]) => (
+          <div class="fact">
+            <dt>{k}</dt>
+            <dd>{v}</dd>
+          </div>
+        ))}
+      </dl>
+    </section>
+
+    {p.wildlife?.length > 0 && (
+      <section>
+        <h2>Wildlife value</h2>
+        <div class="scope-tags">
+          {p.wildlife.map((w) => <span class="tag">{w}</span>)}
+        </div>
+      </section>
+    )}
+
+    {p.notes && (
+      <section>
+        <h2>Design notes</h2>
+        <p>{p.notes}</p>
+      </section>
+    )}
+
+    {p.edible && (
+      <section>
+        <h2>Food use</h2>
+        <p><strong>{p.edible.part}.</strong> {p.edible.prep}</p>
+        <p class="caveat">
+          This records that the plant has a documented food history. It is not a
+          recommendation that anyone eat it, and foraging guidance is outside the
+          scope of a design reference.
+        </p>
+      </section>
+    )}
+
+    {p.culture && (
+      <section>
+        <h2>Cultural use</h2>
+        <p class="culture">{p.culture}</p>
+        <p class="caveat">
+          {p.cultureSrc === 'T'
+            ? 'Attributed to specific peoples in the standard ethnobotanical literature.'
+            : 'Widely documented across multiple groups.'}
+          {' '}These are living practices, recorded in the present tense. This valley is
+          the homeland of the Nuche (Ute); Eagle County in particular was summered by
+          the Yampa and Parianuche bands.
+        </p>
+      </section>
+    )}
+
+    {p.cultureWithheld && (
+      <section>
+        <h2>Cultural use</h2>
+        <p class="caveat">
+          A cultural note exists for this species but is withheld pending verification
+          against the Native American Ethnobotany Database. Commonly repeated material
+          is not published here until its attribution is confirmed.
+        </p>
+      </section>
+    )}
+
+    {p.caution && (
+      <section class="caution">
+        <h2>Caution</h2>
+        <p>{p.caution}</p>
+      </section>
+    )}
+
+    <div class="stamp species-stamp">
+      <span class="compass">&#8593;N</span>
+      NEXT STEPPE PLANT REFERENCE &middot; RECORD {String(p.id).padStart(3, '0')} OF 100
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .species { padding-top: 2.5rem; padding-bottom: 4rem; max-width: 760px; }
+  .back-link {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    text-decoration: none;
+    margin-bottom: 1.5rem;
+    color: var(--basalt-soft);
+  }
+  .back-link:hover { color: var(--sienna); }
+
+  h1 { margin-top: 0.4rem; margin-bottom: 0.1rem; }
+  .sci {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: 1.25rem;
+    color: var(--basalt-soft);
+    margin: 0 0 0.3em;
+  }
+  .syn { font-family: var(--font-mono); font-size: 0.8rem; color: var(--basalt-soft); }
+
+  .scope-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin: 1rem 0 0; }
+
+  section { margin-top: 2.6rem; }
+  section h2 { font-size: 1.25rem; margin-bottom: 0.7rem; }
+
+  .fire {
+    border: 1px solid var(--line);
+    border-left: 3px solid var(--juniper);
+    border-radius: var(--radius);
+    padding: 1.2rem 1.4rem;
+    background: var(--sand-light);
+  }
+  .fire h2 { margin-top: 0; }
+  .fire-rating { margin-bottom: 0.4em; }
+  .fire-rating.unrated { color: var(--basalt-soft); }
+  .fire-src, .fire-note {
+    font-size: 0.88rem;
+    color: var(--basalt-soft);
+    margin-bottom: 0.5em;
+  }
+  .fire-note {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    line-height: 1.7;
+    margin-top: 0.9em;
+    margin-bottom: 0;
+    padding-top: 0.8em;
+    border-top: 1px solid var(--line);
+  }
+
+  .facts { display: grid; grid-template-columns: 1fr 1fr; gap: 0 2rem; margin: 0; }
+  .fact {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.55rem 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .fact dt {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--basalt-soft);
+    flex-shrink: 0;
+    padding-top: 0.2em;
+  }
+  .fact dd { margin: 0; text-align: right; font-size: 0.95rem; }
+
+  .culture { font-style: italic; }
+  .caveat {
+    font-size: 0.85rem;
+    color: var(--basalt-soft);
+    line-height: 1.65;
+  }
+
+  .caution {
+    border-left: 3px solid var(--sienna);
+    padding-left: 1.1rem;
+  }
+
+  .species-stamp { margin-top: 3rem; }
+
+  @media (max-width: 640px) {
+    .facts { grid-template-columns: 1fr; }
+  }
+</style>
