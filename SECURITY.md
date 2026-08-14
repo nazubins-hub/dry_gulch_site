@@ -16,8 +16,15 @@ What the site actually is:
 - **no middleware** (`src/middleware.*` does not exist)
 - **no server islands** (`server:defer`), **no `define:vars`**, **no
   `transition:name/animate/persist`**, **no dynamic slot names**, **no spread props**
-- **reads no request input at all** — zero uses of `Astro.request`, `Astro.url`,
-  `Astro.params`, `Astro.cookies`, or `searchParams`
+- **reads no request input** — zero uses of `Astro.request`, `Astro.params`,
+  `Astro.cookies`, or `searchParams`
+
+  One qualification, added when canonical/`og:url` tags went in: `BaseLayout.astro`
+  uses `Astro.url.pathname`. In a **static** build that is not request input — it is
+  the path of the page being generated, resolved at build time and frozen into the
+  output. No request reaches the server, so there is nothing to reflect. It would
+  become request input the moment an adapter or SSR is introduced, which is one more
+  reason the re-review trigger below matters.
 
 Cloudflare Pages serves pre-rendered files. No request reaches Astro at runtime, so
 advisories about reflected XSS, header manipulation, middleware auth bypass, and
@@ -26,7 +33,12 @@ Host-header SSRF have nothing to act on.
 Verify the claims above still hold:
 
 ```bash
-grep -rnE 'Astro\.(request|url|params|cookies|redirect)|searchParams' src/   # expect none
+# Request-handling APIs. Astro.url is excluded deliberately — see the qualification
+# above; it is a build-time page path in a static build, and BaseLayout uses it for
+# the canonical URL. Everything here genuinely implies reading a live request.
+grep -rnE 'Astro\.(request|params|cookies|redirect)|searchParams' src/       # expect none
+grep -rn 'Astro\.url' src/     # expect hits ONLY in BaseLayout.astro: one line of code
+                               # (the canonical URL) plus its explanatory comment
 grep -rnE 'server:defer|define:vars|transition:(name|animate|persist)' src/  # expect none
 ls src/middleware.* 2>/dev/null                                              # expect none
 grep -n 'adapter' astro.config.mjs                                           # expect none
@@ -49,10 +61,20 @@ analysis completely.
 
 ## Version pinning
 
-`@astrojs/react` is pinned to **v3** with **React 18**, because the site is on Astro
-4. `astro add react` installs v6 + React 19, which builds successfully but **breaks
-`astro dev`**: the integration shadows the `/plants` route and serves its own config
-module instead of the page. Do not bump the integration without upgrading Astro.
+The Astro integrations are pinned to **exact versions, no caret**, because this site
+is on Astro 4 and newer releases target Astro 5 — including releases within the *same
+major version*, which a caret range would happily install.
+
+| package | pinned | why |
+|---|---|---|
+| `@astrojs/react` | `3.6.3` | `astro add react` installs v6 + React 19. It builds, but **breaks `astro dev`**: the integration shadows the `/plants` route and serves its own config module instead of the page. |
+| `@astrojs/sitemap` | `3.2.1` | `3.7.3` (latest) crashes the build — `Cannot read properties of undefined (reading 'reduce')`. It reads a `routes` payload from the `astro:build:done` hook that Astro 5 provides and Astro 4 does not. **3.2.1 (Oct 2024) is the last release before Astro 5.** |
+| React | `^18` | Astro 4 + `@astrojs/react` v3 pair with React 18, not 19. |
+
+The sitemap case is the instructive one: "latest v3" looked safe and was not. Version
+numbers are not the constraint — the Astro major the release was built against is.
+**Check publish dates against Astro 5's release (2024-12-03) before bumping any of
+these**, and if you upgrade Astro, re-do this whole review.
 
 ## Dev-server hygiene — the one live risk
 
@@ -89,7 +111,29 @@ To verify the CSP doesn't break anything after a change, serve `dist/` with the
 headers applied (`astro preview` ignores `_headers`) and confirm the `/plants` island
 hydrates with a clean console.
 
-## Third-party requests: none
+## Third-party scripts: one, and it is Cloudflare's
+
+`static.cloudflareinsights.com` is allowed in `script-src`, and
+`cloudflareinsights.com` in `connect-src`. This is **Cloudflare Web Analytics,
+injected at the edge** — there is no `<script>` tag for it anywhere in `src/`, so do
+not go looking. It is cookieless and does not track across sites.
+
+Turning Web Analytics off in the Cloudflare dashboard makes both allowances
+unnecessary; remove them together if you do. The CSP found this on the first live
+deploy by refusing it, which is the policy working as intended.
+
+## Transport security
+
+`Strict-Transport-Security: max-age=86400` — **one day, deliberately, and ramping**.
+`max-age` is cached by the browser: for its duration the browser refuses HTTP for this
+domain and refuses to let a visitor click through a certificate error, and it cannot
+be shortened server-side for anyone who already holds it. Starting small means a
+mistake expires in a day rather than a year.
+
+Raise to `31536000` once it has been live a few days without trouble. **Do not add
+`preload`** — that compiles the domain into browser binaries and takes months to undo.
+
+## Other third-party requests: none
 
 Fonts are self-hosted in `public/fonts` (see the README there for attribution and
 licensing). Previously Fraunces/IBM Plex loaded from `fonts.googleapis.com` in
@@ -109,7 +153,8 @@ grep -rhao 'https\?://[a-zA-Z0-9.-]*' dist/ | sort -u
 
 Expect only: `www.w3.org` (SVG namespace), `formspree.io` (form action),
 `reactjs.org` (a comment in React's bundle), and `github.com` / `scripts.sil.org`
-(text inside the font licence files). **No `fonts.googleapis.com`.**
+(text inside the font licence files). **No `fonts.googleapis.com`.** Cloudflare's
+analytics beacon is injected at the edge and so does not appear in `dist/`.
 
 ## Contact form
 

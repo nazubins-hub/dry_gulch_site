@@ -8,6 +8,15 @@ interface Props {
 
 const { title, description = 'Water-wise landscape design and stormwater-informed planting for the Vail Valley.' } = Astro.props;
 const year = new Date().getFullYear();
+
+// Absolute URL for this page, for the canonical link and og:url.
+//
+// This is the ONLY use of Astro.url in the project, and it is not request input:
+// the site is fully static, so at build time Astro.url is the path of the page being
+// generated, fixed in the output. There is no request to reflect. SECURITY.md
+// explains the distinction — the "no request input" claim there still holds, and its
+// verification grep is scoped to the APIs that actually imply request handling.
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
 ---
 <!doctype html>
 <html lang="en">
@@ -16,7 +25,22 @@ const year = new Date().getFullYear();
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>{title}</title>
   <meta name="description" content={description} />
+  <link rel="canonical" href={canonical} />
   <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="sitemap" href="/sitemap-index.xml" />
+
+  {/* No og:image yet — there are no images on this site at all, and the plant
+      database forbids AI-generated plant imagery. Link previews are text-only
+      until there is a real photograph or a designed typographic card. */}
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Next Steppe" />
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:url" content={canonical} />
+  <meta property="og:locale" content="en_US" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content={title} />
+  <meta name="twitter:description" content={description} />
 </head>
 <body>
   <header class="site-header">

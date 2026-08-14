@@ -1,0 +1,51 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+// Astro renders this to dist/404.html, which Cloudflare Pages serves for any
+// unmatched route. Without it visitors get Cloudflare's bare "404: Not Found" —
+// no wordmark, no navigation, no way back.
+//
+// The portfolio mention is not filler. /portfolio/ and three case-study URLs were
+// publicly live for weeks before being removed, so an old link or a stale search
+// result is the most likely way somebody arrives here.
+---
+<BaseLayout
+  title="Page not found — Next Steppe"
+  description="That page doesn’t exist. Browse the xeric plant database or head back to the homepage."
+>
+  <section class="wrap notfound">
+    <span class="eyebrow">404</span>
+    <h1>That page isn’t here.</h1>
+    <p class="lead">
+      The link may be old, or the page may have moved. The portfolio section in
+      particular has been retired while real project write-ups are prepared.
+    </p>
+
+    <div class="notfound-actions">
+      <a href="/plants" class="btn primary">Browse the plant database</a>
+      <a href="/" class="btn">Back to the homepage</a>
+    </div>
+
+    <p class="notfound-help">
+      Looking for something specific? <a href="/contact">Get in touch</a> and I’ll
+      point you at it.
+    </p>
+
+    <div class="stamp notfound-stamp">
+      <span class="compass">&#8593;N</span>VAIL VALLEY, CO &middot; ZONE 5B
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .notfound { padding-top: 4rem; padding-bottom: 5rem; max-width: 640px; }
+  .lead { font-size: 1.08rem; color: var(--basalt-soft); }
+  .notfound-actions {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin: 2rem 0 1.6rem;
+  }
+  .notfound-help { font-size: 0.92rem; color: var(--basalt-soft); }
+  .notfound-stamp { margin-top: 2.5rem; }
+</style>

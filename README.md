@@ -112,6 +112,14 @@ one covers each path. See SECURITY.md.
 Formspree's free tier caps monthly submissions and **rejects** rather than queues over
 the cap, so keep an eye on volume.
 
+## robots.txt — deliberately not in this repo
+
+Cloudflare serves an auto-generated `robots.txt` carrying AI-crawler content-signal
+declarations. Adding `public/robots.txt` would **silently replace that policy**, so
+we don't. The sitemap is discoverable anyway: `<link rel="sitemap">` in the page head,
+plus `/sitemap-index.xml` by convention. Submit it in Google Search Console rather
+than reaching for a robots.txt.
+
 ## Version pinning
 
 `@astrojs/react` is pinned to **v3** with **React 18**, because this site is on
