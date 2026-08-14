@@ -8,17 +8,11 @@ import { hasPublishedIgn } from '../../lib/publish-gate.js';
 
 const all = plants;
 
-// Order matches the database's own grouping: woody structure first, then the
-// herbaceous layer, then the ground plane.
-const GROUPS = ['Tree', 'Shrub', 'Cactus/Succulent', 'Perennial', 'Grass', 'Groundcover'];
-
-const grouped = GROUPS.map((type) => ({
-  type,
-  species: all
-    .filter((p) => p.type === type)
-    .sort((a, b) => a.common.localeCompare(b.common)),
-})).filter((g) => g.species.length > 0);
-
+// The static "All species" list that used to sit below the browser is gone. It
+// existed only to give crawlers links to the 100 species pages; the browser's cards
+// now link out themselves, and Astro pre-renders the island, so those links are in
+// the served HTML either way. Keeping both meant listing every species twice on one
+// very long page — which was part of what made the scrolling feel bad.
 const rated = all.filter(hasPublishedIgn).length;
 const native = all.filter((p) => p.native).length;
 ---
@@ -66,32 +60,6 @@ const native = all.filter((p) => p.native).length;
          and Astro pre-renders the table to static HTML either way. -->
     <XericPlantDB client:load />
   </section>
-
-  <Contour />
-
-  <section class="wrap">
-    <h2 class="list-heading">All species</h2>
-    {grouped.map((group) => (
-      <div class="group">
-        <h2>{group.type}<span class="count">{group.species.length}</span></h2>
-        <ul class="species-list">
-          {group.species.map((p) => (
-            <li>
-              <a href={`/plants/${p.slug}`}>
-                <span class="common">{p.common}</span>
-                <span class="sci">{p.sci}</span>
-                <span class="meta">
-                  <span>{p.water} water</span>
-                  <span>{(p.elevMax / 1000).toFixed(1)}k ft</span>
-                  {p.native && <span class="native">Native</span>}
-                </span>
-              </a>
-            </li>
-          ))}
-        </ul>
-      </div>
-    ))}
-  </section>
 </BaseLayout>
 
 <style>
@@ -125,75 +93,28 @@ const native = all.filter((p) => p.native).length;
   }
   .notice p { margin: 0; font-size: 0.9rem; line-height: 1.65; color: var(--basalt-soft); }
 
-  /* The component was built to run standalone and sets height:100vh inline on its
-     root. Embedded in a page that scrolls, that turns into a full-viewport nested
-     scroller with no visible edges. Constrain it to a bounded panel instead —
-     done here, in the host, so the database's own standalone view keeps 100vh. */
+  /* The component no longer owns a scroll region — it grows to fit its results and
+     this page does the scrolling, so there is nothing to constrain here any more.
+     What it does need is somewhere to stick its filter panel: only the host knows
+     how tall its own sticky header is. .site-header is 78px at desktop, but
+     .header-inner wraps on narrow screens and grows, so the offset is set per
+     breakpoint rather than hardcoded once. */
+  .browser {
+    --xpdb-sticky-top: 5.5rem;
+    display: block;
+  }
+  @media (max-width: 860px) {
+    /* Filters collapse and stop being sticky below this width, so the offset only
+       needs to clear the header for the brief moment the panel is open. */
+    .browser { --xpdb-sticky-top: 1rem; }
+  }
+  /* NO overflow:hidden here. It would create a scroll container, and the sidebar's
+     position:sticky resolves against the nearest scroll container rather than the
+     viewport — inside a box that never scrolls, sticky is inert. Rounded corners
+     are not worth breaking the filter panel for. */
   .browser :global(astro-island > div) {
-    height: min(88vh, 940px) !important;
     border: 1px solid var(--line);
     border-radius: var(--radius);
-    overflow: hidden;
   }
   .browser > .wrap { margin-bottom: 1.2rem; }
-
-  .list-heading { margin-bottom: 1.5rem; }
-
-  .group { margin-bottom: 3rem; }
-  .group h2 {
-    display: flex;
-    align-items: baseline;
-    gap: 0.7rem;
-    padding-bottom: 0.5rem;
-    border-bottom: 1px solid var(--line);
-  }
-  .count {
-    font-family: var(--font-mono);
-    font-size: 0.75rem;
-    color: var(--basalt-soft);
-    font-weight: 400;
-  }
-
-  .species-list {
-    list-style: none;
-    padding: 0;
-    margin: 1.2rem 0 0;
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 0.2rem 1.5rem;
-  }
-  .species-list a {
-    display: block;
-    text-decoration: none;
-    color: var(--basalt);
-    padding: 0.6rem 0.7rem;
-    border-radius: var(--radius);
-    border: 1px solid transparent;
-  }
-  .species-list a:hover {
-    border-color: var(--line);
-    background: var(--sand-light);
-  }
-  .common { display: block; font-weight: 500; }
-  .sci {
-    display: block;
-    font-family: var(--font-display);
-    font-style: italic;
-    font-size: 0.88rem;
-    color: var(--basalt-soft);
-  }
-  .meta {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.2em 0.7rem;
-    font-family: var(--font-mono);
-    font-size: 0.68rem;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-    color: var(--basalt-soft);
-    margin-top: 0.3em;
-  }
-  /* Keep each fact intact; "Low-Moderate water" must not split across lines. */
-  .meta > span { white-space: nowrap; }
-  .native { color: var(--juniper); }
 </style>

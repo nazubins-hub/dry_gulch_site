@@ -79,8 +79,20 @@ const ALL_USES = Object.keys(USE_STYLE);
 const SRC_LABEL = {
   T: "Tribe-attributed in standard literature",
   G: "General / multi-group, widely documented",
-  V: "Commonly repeated — verify in NAEB before publishing",
+  V: "Commonly repeated, attribution not yet confirmed",
 };
+
+/* Does the dataset actually CONTAIN the things the legends and footnotes describe?
+   Consumers may hand this component a filtered dataset — the public site withholds
+   unpublished (estimated) ignitability and unverified cultural notes entirely — and
+   a legend explaining a marker that never appears is worse than no legend: it tells
+   the reader to look for something that is not there, and reads as an instruction to
+   whoever maintains the data rather than as information for whoever is reading.
+
+   Keying the notes on the data means the full internal view keeps them and any gated
+   view drops them, with no second copy of the text to maintain. */
+const HAS_ESTIMATES = PLANTS.some(p => p.ignSrc === "est");
+const HAS_UNVERIFIED_CULTURE = PLANTS.some(p => p.cultureSrc === "V");
 
 /* HIZ classification derived from ignitability score.
    A NULL rating means no rating is known, which is not the same as a bad one.
@@ -143,6 +155,9 @@ export default function XericPlantDB() {
   const [psOnly, setPs]           = useState(false);
   const [useF, setUseF]           = useState([]);
   const [edibleOnly, setEdible]   = useState(false);
+  // Starts collapsed: this only has an effect below 861px, where an expanded filter
+  // panel would push the results off the first screen. Desktop ignores it.
+  const [filtersOpen, setFiltersOpen] = useState(false);
   const [view, setView]           = useState("cards");
   const [sortBy, setSortBy]       = useState("common");
   const [sortDir, setSortDir]     = useState("asc");
@@ -215,9 +230,26 @@ export default function XericPlantDB() {
   const cbRow = { display:"flex", alignItems:"center", gap:7, marginBottom:5, cursor:"pointer" };
 
   /* ── Sidebar ── */
+  // Collapsible on narrow screens. This deliberately does NOT use <details>: browsers
+  // hide closed <details> content via content-visibility on ::details-content, not via
+  // display, so a `display:block !important` rule to force it open on desktop has no
+  // effect and the panel stays invisible at every width.
+  //
+  // Instead the panel is always in the DOM and a class toggles it. CSS decides whether
+  // that class means anything: below 861px it hides, at wider widths it is ignored, so
+  // desktop always shows the filters no matter what the toggle last did on mobile.
   const Sidebar = () => (
-    <aside style={{ width:238, flexShrink:0, background:C.sidebar, borderRight:`1px solid ${C.border}`,
-      padding:"18px 15px", overflowY:"auto", height:"100%", boxSizing:"border-box" }}>
+    <div className="xpdb-filters">
+      <button type="button" className="xpdb-filters-toggle"
+        aria-expanded={filtersOpen} aria-controls="xpdb-filter-panel"
+        onClick={() => setFiltersOpen(o => !o)}>
+        <span>Filters{nActive > 0 ? ` (${nActive})` : ""}</span>
+        <span aria-hidden="true">{filtersOpen ? "−" : "+"}</span>
+      </button>
+      <aside id="xpdb-filter-panel"
+        className={`xpdb-sidebar${filtersOpen ? "" : " is-collapsed"}`}
+        style={{ width:238, flexShrink:0, background:C.sidebar,
+        borderRight:`1px solid ${C.border}`, padding:"18px 15px", boxSizing:"border-box" }}>
 
       <div style={{display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:14}}>
         <span style={{fontFamily:"'Fraunces',Georgia,serif", fontSize:13, fontWeight:700, letterSpacing:"0.05em", textTransform:"uppercase"}}>Filters</span>
@@ -337,12 +369,19 @@ export default function XericPlantDB() {
       <div style={{marginTop:20, padding:11, background:"rgba(0,0,0,0.05)", borderRadius:4, fontSize:10, color:C.muted, lineHeight:1.6}}>
         <strong style={{color:C.text}}>Ignitability 0–10.</strong> Higher = less ignitable.
         Idaho Firewise method via CSU Ext. FS 6.305 (rev. 7/2025).
-        <span style={{display:"block", marginTop:5}}><strong style={{color:C.text}}>*</strong> = estimated from FS 6.305 criteria, not a published value.</span>
+        {HAS_ESTIMATES && (
+          <span style={{display:"block", marginTop:5}}><strong style={{color:C.text}}>*</strong> = estimated from FS 6.305 criteria, not a published value.</span>
+        )}
+        <span style={{display:"block", marginTop:5}}>
+          <strong style={{color:C.text}}>Unrated</strong> = no published rating exists for that species.
+        </span>
         <span style={{display:"block", marginTop:7}}>
-          <strong style={{color:C.text}}>Cultural sources.</strong> <b>T</b> tribe-attributed · <b>G</b> general · <b>V</b> verify in NAEB before publishing.
+          <strong style={{color:C.text}}>Cultural sources.</strong> <b>T</b> tribe-attributed · <b>G</b> general
+          {HAS_UNVERIFIED_CULTURE ? <> · <b>V</b> attribution not yet confirmed</> : null}.
         </span>
       </div>
-    </aside>
+      </aside>
+    </div>
   );
 
   /* ── Card ── */
@@ -357,7 +396,11 @@ export default function XericPlantDB() {
         <div style={{padding:"12px 14px"}}>
           <div style={{display:"flex", justifyContent:"space-between", gap:6}}>
             <div style={{minWidth:0}}>
-              <div style={{fontSize:13.5, fontWeight:700, lineHeight:1.3}}>{p.common}</div>
+              {/* stopPropagation so the name navigates while the rest of the card
+                  still toggles the detail panel. Without it a click would do both. */}
+              <div style={{fontSize:13.5, fontWeight:700, lineHeight:1.3}}>
+                <a className="xpdb-name-link" href={`/plants/${p.slug}`} onClick={e => e.stopPropagation()}>{p.common}</a>
+              </div>
               <div style={{fontSize:11, color:C.muted, fontStyle:"italic", fontFamily:"Georgia,serif", marginTop:1}}>{p.sci}</div>
               {p.syn && <div style={{fontSize:9.5, color:C.muted, marginTop:2, opacity:0.8}}>syn. {p.syn}</div>}
             </div>
@@ -442,7 +485,10 @@ export default function XericPlantDB() {
           onMouseEnter={e => e.currentTarget.style.background = "#ebdfc9"}
           onMouseLeave={e => e.currentTarget.style.background = bgFor()}>
           <td style={{padding:"8px 11px"}}>
-            <div style={{fontWeight:600, fontSize:12.5}}>{p.common}{p.ps && <span style={{color:C.primary, fontSize:9, fontWeight:700, marginLeft:5}}>PS®</span>}</div>
+            <div style={{fontWeight:600, fontSize:12.5}}>
+              <a className="xpdb-name-link" href={`/plants/${p.slug}`} onClick={e => e.stopPropagation()}>{p.common}</a>
+              {p.ps && <span style={{color:C.primary, fontSize:9, fontWeight:700, marginLeft:5}}>PS®</span>}
+            </div>
             <div style={{fontSize:10.5, color:C.muted, fontStyle:"italic", fontFamily:"Georgia,serif"}}>{p.sci}</div>
           </td>
           <td style={{padding:"8px 6px"}}><Chip label={p.type} s={ts} /></td>
@@ -477,7 +523,7 @@ export default function XericPlantDB() {
     cursor:"pointer", userSelect:"none", background:C.sidebar, whiteSpace:"nowrap" };
 
   return (
-    <div style={{fontFamily:"'Jost',system-ui,sans-serif", background:C.bg, color:C.text, height:"100vh", display:"flex", flexDirection:"column"}}>
+    <div style={{fontFamily:"'Jost',system-ui,sans-serif", background:C.bg, color:C.text, display:"flex", flexDirection:"column"}}>
       {/* dangerouslySetInnerHTML, not a text child: as a child, the apostrophes and
           ampersands in the @import get HTML-escaped during server rendering but not
           on the client, so React sees a text mismatch, discards the server HTML and
@@ -487,6 +533,80 @@ export default function XericPlantDB() {
         * { box-sizing:border-box; } body { margin:0; }
         ::-webkit-scrollbar { width:5px; height:5px; }
         ::-webkit-scrollbar-thumb { background:#bfae8c; border-radius:3px; }
+
+        /* ── Layout ──────────────────────────────────────────────────────────
+           The component no longer owns a scroll region. It used to be a 100vh
+           app shell with the sidebar and results scrolling independently, which
+           is right standalone but wrong embedded: a page that also scrolls ends
+           up with three competing scroll contexts and the wheel does different
+           things depending on where the pointer sits. Now the height follows the
+           content and the host page does all the scrolling.
+
+           --xpdb-sticky-top lets the host say how far down the sidebar should
+           stick, since only the host knows the height of its own fixed header.
+           Standalone it falls back to a small gap. */
+        .xpdb-sidebar {
+          position: sticky;
+          top: var(--xpdb-sticky-top, 1rem);
+          align-self: flex-start;
+          max-height: calc(100vh - var(--xpdb-sticky-top, 1rem) - 1rem);
+          overflow-y: auto;
+        }
+        /* The toggle only exists on narrow screens; wide screens always show the
+           panel and ignore the is-collapsed class entirely, so whatever the toggle
+           was last set to on a phone cannot leave a desktop user with no filters.
+           (No backticks in this comment — it lives inside a template literal, and a
+           stray one would terminate the CSS string.) */
+        .xpdb-filters-toggle { display: none; }
+
+        @media (max-width: 860px) {
+          /* Below this the 238px sidebar left ~135px for results on a phone —
+             narrower than a single card. Stack instead. */
+          .xpdb-layout { flex-direction: column; }
+          .xpdb-filters { width: 100%; }
+          .xpdb-sidebar {
+            width: 100% !important;
+            position: static;
+            max-height: none;
+            overflow: visible;
+            border-right: none !important;
+            border-bottom: 1px solid ${C.border};
+          }
+          .xpdb-sidebar.is-collapsed { display: none; }
+          .xpdb-filters-toggle {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+            width: 100%;
+            padding: 12px 15px;
+            cursor: pointer;
+            font-family: 'Fraunces', Georgia, serif;
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            color: ${C.text};
+            background: ${C.sidebar};
+            border: none;
+            border-bottom: 1px solid ${C.border};
+          }
+          .xpdb-main { padding: 14px 15px !important; }
+        }
+
+        /* Species names link to their full page. Inherit the surrounding type so the
+           cards do not turn into a wall of blue underlines; the affordance shows on
+           hover and focus instead. */
+        .xpdb-name-link {
+          color: inherit;
+          text-decoration: none;
+        }
+        .xpdb-name-link:hover { text-decoration: underline; text-underline-offset: 2px; }
+        .xpdb-name-link:focus-visible {
+          outline: 2px solid ${C.accent};
+          outline-offset: 2px;
+          border-radius: 2px;
+        }
       ` }} />
 
       <header style={{ background:C.deep, color:"#f1ebd9", padding:"15px 26px", display:"flex",
@@ -513,9 +633,14 @@ export default function XericPlantDB() {
         </div>
       </header>
 
-      <div style={{display:"flex", flex:1, minHeight:0}}>
+      {/* No `flex:1` / `minHeight:0` here any more: both existed to make the row
+          fill a 100vh shell so its children could scroll internally. Height now
+          follows content and the host page scrolls. */}
+      <div className="xpdb-layout" style={{display:"flex"}}>
         <Sidebar />
-        <main style={{flex:1, overflowY:"auto", padding:"18px 22px"}}>
+        {/* min-width:0 keeps the results column from being forced wider than its
+            share by the table view's content. */}
+        <main className="xpdb-main" style={{flex:1, minWidth:0, padding:"18px 22px"}}>
           <div style={{display:"flex", alignItems:"center", gap:14, marginBottom:15, paddingBottom:11, borderBottom:`1px solid ${C.border}`, flexWrap:"wrap"}}>
             <span style={{fontSize:11.5, color:C.muted, fontWeight:500}}>Sort</span>
             {[["common","Name"],["sci","Scientific"],["type","Type"],["ign","Ignitability"],["zone","Zone"],["elev","Max elev"],["height","Height"]].map(([k,l]) => (
@@ -556,16 +681,28 @@ export default function XericPlantDB() {
             Cultural and material uses draw on the standard ethnobotanical literature, principally Moerman, D. E., <em>Native American Ethnobotany</em> (Timber Press, 1998)
             and the associated Native American Ethnobotany Database (naeb.brit.org), which supplies group-level attribution and a source citation for each recorded use.
             <span style={{display:"block", marginTop:6}}>
-              <strong style={{color:C.text}}>Verify before specifying.</strong> Ratings marked <strong>*</strong> are estimated from the FS 6.305 criteria rather than published for that species,
-              and elevation ceilings are approximate. Confirm defensible-space requirements with your local fire authority — jurisdictions vary.
+              <strong style={{color:C.text}}>Verify before specifying.</strong>{" "}
+              {HAS_ESTIMATES
+                ? <>Ratings marked <strong>*</strong> are estimated from the FS 6.305 criteria rather than published for that species, and elevation ceilings are approximate. </>
+                : <>Species shown as <strong>unrated</strong> have no published ignitability rating; elevation ceilings are approximate. </>}
+              Confirm defensible-space requirements with your local fire authority — jurisdictions vary.
             </span>
+            {/* Written for whoever is READING this, not for whoever maintains it.
+                The authoring rules that used to live here — name the nation, present
+                tense, no medicinal dosage, don't carry forward slurs from older
+                references — are recorded in the project's CLAUDE.md, which is where
+                guidance for the maintainer belongs. They were never information for a
+                visitor, and on a public deployment they read as leaked instructions. */}
             <span style={{display:"block", marginTop:8, padding:"9px 11px", background:"rgba(157,74,26,0.07)", borderLeft:`3px solid ${C.accent}`, borderRadius:2}}>
-              <strong style={{color:C.text}}>Before publishing cultural material.</strong> Entries flagged <strong>V</strong> are widely repeated but not well sourced — check them in NAEB first.
-              Name the specific nation rather than "Native Americans": this database covers the homeland of the Nuche (Ute), and Eagle County in particular was summered by the
-              Yampa and Parianuche bands. Three federally recognized tribes carry that continuity today — the Southern Ute Indian Tribe, the Ute Mountain Ute Tribe, and the
-              Ute Indian Tribe of the Uintah and Ouray Reservation. Write in present tense; these are living practices, not extinct ones. Do not publish medicinal preparation
-              or dosage. Older references carry common names that are slurs — do not carry them forward. Edible entries record that a plant <em>has</em> a food history;
-              they are not a recommendation that anyone eat it, and foraging guidance is outside a design deliverable.
+              <strong style={{color:C.text}}>About the cultural notes.</strong> This database covers the homeland of the Nuche (Ute); Eagle County in particular was
+              summered by the Yampa and Parianuche bands. Three federally recognized tribes carry that continuity today — the Southern Ute Indian Tribe, the
+              Ute Mountain Ute Tribe, and the Ute Indian Tribe of the Uintah and Ouray Reservation. These are living practices, described in the present tense.
+              Medicinal preparation and dosage are deliberately not documented here.
+              {HAS_UNVERIFIED_CULTURE
+                ? <> Entries flagged <strong>V</strong> are widely repeated but their attribution is not yet confirmed against NAEB.</>
+                : null}
+              {" "}Edible entries record that a plant <em>has</em> a food history; they are not a recommendation that anyone eat it, and foraging guidance is
+              outside the scope of a design reference.
             </span>
           </div>
         </main>
