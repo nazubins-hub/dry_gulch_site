@@ -111,20 +111,40 @@ Expect only: `www.w3.org` (SVG namespace), `formspree.io` (form action),
 `reactjs.org` (a comment in React's bundle), and `github.com` / `scripts.sil.org`
 (text inside the font licence files). **No `fonts.googleapis.com`.**
 
-## Contact form — inert until wired
+## Contact form
 
-`src/pages/contact.astro` still posts to `https://formspree.io/f/YOUR_FORM_ID`, which
-does not exist. **Submissions currently fail**; a visitor gets a Formspree error
-rather than reaching anyone. Before launch:
+Live, posting to `https://formspree.io/f/mlgqrnzy`. Submissions carry a name, email,
+location and free-text project details; Formspree processes them and forwards by
+email. Nothing is stored on this site. A notice under the submit button says so.
 
-1. Create the form and replace `YOUR_FORM_ID`.
-2. Enable Formspree's spam protection.
-3. Add a short notice near the submit button saying where submissions go — the form
-   collects name, email, location and free-text project details, and sends them to a
-   third party.
+**No Formspree SDK is used.** Their Vanilla-JS guide loads
+`https://unpkg.com/@formspree/ajax`, which would reintroduce a third-party request and
+require `script-src https://unpkg.com` — undoing the font self-hosting. Their React
+guide would put a framework runtime on a page that otherwise ships ~1 KB of script.
+The handler in `contact.astro` is a plain `fetch` with `Accept: application/json`,
+about 25 lines and no dependency.
 
-`form-action https://formspree.io` in the CSP already allows the submission. Narrow
-it if the form is ever removed or moved.
+**Two CSP directives serve this one form and both are required:**
+
+| directive | path |
+|---|---|
+| `connect-src … https://formspree.io` | the `fetch` (normal path) |
+| `form-action https://formspree.io` | native form POST when JavaScript is unavailable |
+
+Removing either half-breaks the form in a way that is easy to miss, because whichever
+path you happen to test still works.
+
+**Spam protection is a `_gotcha` honeypot** — a hidden field bots fill and Formspree
+discards. Deliberately not reCAPTCHA, which would load Google's script and require
+`script-src`/`frame-src` exceptions.
+
+**Operational risk:** Formspree's free tier caps monthly submissions. Over the cap it
+*rejects* rather than queues, so the enquiry path fails silently. Check the cap on
+their pricing page and watch the volume.
+
+**First submission:** Formspree emails the form owner a confirmation on the very first
+submission and holds delivery until it is clicked. Until then a working form looks
+broken — check spam before debugging.
 
 ## Data published here
 

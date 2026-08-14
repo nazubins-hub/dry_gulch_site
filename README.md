@@ -102,8 +102,15 @@ Set `draft: true` on any entry not ready to publish.
 
 ## Contact form
 
-`src/pages/contact.astro` posts to Formspree. Create a free form at formspree.io and
-replace `YOUR_FORM_ID` in that file. **Until then the form does not send anywhere.**
+`src/pages/contact.astro` posts to Formspree (form `mlgqrnzy`) via a hand-written
+`fetch` — no SDK, no third-party script. It shows an inline thank-you without leaving
+the page, and falls back to a native form POST if JavaScript is unavailable.
+
+Both `connect-src` and `form-action` in the CSP must keep allowing `formspree.io` —
+one covers each path. See SECURITY.md.
+
+Formspree's free tier caps monthly submissions and **rejects** rather than queues over
+the cap, so keep an eye on volume.
 
 ## Version pinning
 

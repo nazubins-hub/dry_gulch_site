@@ -11,30 +11,61 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     </p>
 
     <div class="grid-2 contact-grid">
-      <!--
-        This form posts to Formspree (formspree.io) — free tier, no backend required,
-        works on static hosting like Cloudflare Pages. Replace YOUR_FORM_ID below after
-        creating a free form at formspree.io. Until then this form won't actually send.
-      -->
-      <form class="contact-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
-        <label>
-          Name
-          <input type="text" name="name" required />
-        </label>
-        <label>
-          Email
-          <input type="email" name="email" required />
-        </label>
-        <label>
-          Location / property
-          <input type="text" name="location" placeholder="e.g. Avon, Edwards, Eagle-Vail" />
-        </label>
-        <label>
-          Project details
-          <textarea name="message" rows="6" required placeholder="Lot size, current drainage issues, what you'd like the space to do..."></textarea>
-        </label>
-        <button type="submit" class="btn primary">Send</button>
-      </form>
+      <div class="form-col">
+        <!-- Outcome messages land here. role/aria-live so the result is announced,
+             not only seen — the form is replaced on success, which is a large
+             context change for a screen reader user. -->
+        <div class="form-status" id="form-status" role="status" aria-live="polite"></div>
+
+        <!--
+          action + method are kept deliberately. The script below intercepts submit
+          and posts by fetch, but with JavaScript disabled the browser posts natively
+          and the enquiry still arrives. That is why the CSP carries BOTH
+          form-action and connect-src for formspree.io.
+        -->
+        <form
+          class="contact-form"
+          id="contact-form"
+          action="https://formspree.io/f/mlgqrnzy"
+          method="POST"
+        >
+          <label>
+            Name
+            <input type="text" name="name" required />
+          </label>
+          <label>
+            Email
+            <input type="email" name="email" required />
+          </label>
+          <label>
+            Location / property
+            <input type="text" name="location" placeholder="e.g. Avon, Edwards, Eagle-Vail" />
+          </label>
+          <label>
+            Project details
+            <textarea name="message" rows="6" required placeholder="Lot size, current drainage issues, what you'd like the space to do..."></textarea>
+          </label>
+
+          <!-- Honeypot: hidden from people, irresistible to naive bots. Formspree
+               discards any submission where _gotcha is filled. aria-hidden and
+               tabindex keep it out of the keyboard and screen-reader path. -->
+          <div class="gotcha" aria-hidden="true">
+            <label>
+              Leave this field empty
+              <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" />
+            </label>
+          </div>
+
+          <input type="hidden" name="_subject" value="Next Steppe enquiry" />
+
+          <button type="submit" class="btn primary">Send</button>
+
+          <p class="form-privacy">
+            Submissions are handled by <a href="https://formspree.io/legal/privacy-policy" rel="noopener">Formspree</a>,
+            a third-party form service, and emailed on to me. Nothing is stored on this site.
+          </p>
+        </form>
+      </div>
 
       <div class="stamp contact-stamp">
         <span class="compass">&#8593;N</span>
@@ -46,6 +77,75 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     </div>
   </section>
 </BaseLayout>
+
+{/*
+  Not `is:inline`: Astro compiles this into a module under /_astro/, which the CSP
+  already allows via script-src 'self'. Left inline it would need a fresh SHA-256 in
+  the header on every build instead.
+*/}
+<script>
+  const form = document.getElementById('contact-form') as HTMLFormElement | null;
+  const status = document.getElementById('form-status');
+
+  if (form && status) {
+    const button = form.querySelector('button[type="submit"]') as HTMLButtonElement;
+    const originalLabel = button.textContent;
+
+    const show = (kind: 'success' | 'error', html: string) => {
+      status.className = `form-status is-${kind}`;
+      status.innerHTML = html;
+    };
+
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      button.disabled = true;
+      button.textContent = 'Sending…';
+      status.className = 'form-status';
+      status.textContent = '';
+
+      try {
+        const response = await fetch(form.action, {
+          method: 'POST',
+          body: new FormData(form),
+          // Without this Formspree answers with a redirect to its own page rather
+          // than JSON, and the fetch silently succeeds while the user sees nothing.
+          headers: { Accept: 'application/json' },
+        });
+
+        if (response.ok) {
+          form.hidden = true;
+          show(
+            'success',
+            '<strong>Thanks — that came through.</strong> I read every enquiry myself and will reply within 1–2 business days.',
+          );
+          return;
+        }
+
+        // Formspree reports validation problems as { errors: [{ message }] }.
+        const data = await response.json().catch(() => null);
+        const detail = data?.errors?.map((e: { message: string }) => e.message).join('. ');
+        show(
+          'error',
+          detail
+            ? `Couldn’t send that: ${detail}`
+            : 'Couldn’t send that just now. Please try again, or email me directly.',
+        );
+      } catch {
+        // Network failure, offline, or the request was blocked. Never swallow this —
+        // give them a route that does not depend on the form working.
+        show(
+          'error',
+          'Couldn’t reach the form service — you may be offline. Please try again, or send the details by email.',
+        );
+      } finally {
+        if (!form.hidden) {
+          button.disabled = false;
+          button.textContent = originalLabel;
+        }
+      }
+    });
+  }
+</script>
 
 <style>
   .contact { padding-top: 3rem; padding-bottom: 4rem; }
@@ -74,5 +174,43 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     resize: vertical;
   }
   .contact-form button { align-self: flex-start; border: none; cursor: pointer; }
+  .contact-form button:disabled { opacity: 0.55; cursor: progress; }
   .contact-stamp { align-self: start; line-height: 1.9; }
+
+  /* Honeypot. Not display:none — some bots skip fields that are outright hidden,
+     and Formspree's own guidance is to keep it in the layout but out of sight. */
+  .gotcha {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+  }
+
+  /* Hidden until the handler adds is-success/is-error. Keyed on the class rather
+     than :empty, which silently breaks if the element ever gains stray whitespace
+     and would leave an empty bordered box on the page. */
+  .form-status { display: none; }
+  .form-status.is-success,
+  .form-status.is-error {
+    display: block;
+    border: 1px solid var(--line);
+    border-left: 3px solid var(--juniper);
+    border-radius: var(--radius);
+    background: var(--sand-light);
+    padding: 1rem 1.2rem;
+    margin-bottom: 1.5rem;
+    font-size: 0.95rem;
+    line-height: 1.6;
+  }
+  .form-status.is-error { border-left-color: var(--sienna); }
+  .form-status :global(strong) { display: block; margin-bottom: 0.2em; }
+
+  .form-privacy {
+    font-size: 0.8rem;
+    line-height: 1.6;
+    color: var(--basalt-soft);
+    margin: 0.2rem 0 0;
+  }
+  .form-privacy a { color: inherit; }
 </style>

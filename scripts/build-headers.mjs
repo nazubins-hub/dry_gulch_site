@@ -54,8 +54,12 @@ const csp = [
   "style-src 'self' 'unsafe-inline'",
   "img-src 'self' data:",
   "font-src 'self'",
-  "connect-src 'self'",
-  // The contact form posts to Formspree. Narrow this if the form is ever removed.
+  // The contact form reaches Formspree by TWO paths and needs BOTH directives:
+  //   connect-src  the fetch() in contact.astro (the normal path)
+  //   form-action  the native form POST when JavaScript is unavailable (fallback)
+  // Removing either one half-breaks the form in a way that is easy to miss, because
+  // whichever path you happen to test will still work.
+  "connect-src 'self' https://formspree.io",
   'form-action https://formspree.io',
   "frame-ancestors 'none'",
   "base-uri 'none'",
