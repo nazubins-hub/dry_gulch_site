@@ -251,8 +251,12 @@ export default function XericPlantDB() {
         style={{ width:238, flexShrink:0, background:C.sidebar,
         borderRight:`1px solid ${C.border}`, padding:"18px 15px", boxSizing:"border-box" }}>
 
-      <div style={{display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:14}}>
-        <span style={{fontFamily:"'Fraunces',Georgia,serif", fontSize:13, fontWeight:700, letterSpacing:"0.05em", textTransform:"uppercase"}}>Filters</span>
+      {/* On narrow screens the toggle button above already reads "Filters", so this
+          heading is hidden there to avoid saying it twice. When it is the row's only
+          content the whole row goes too, rather than leaving an empty gap. */}
+      <div className={`xpdb-sidebar-head${nActive > 0 ? "" : " is-title-only"}`}
+        style={{display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:14}}>
+        <span className="xpdb-sidebar-title" style={{fontFamily:"'Fraunces',Georgia,serif", fontSize:13, fontWeight:700, letterSpacing:"0.05em", textTransform:"uppercase"}}>Filters</span>
         {nActive > 0 && <button onClick={clearAll} style={{fontSize:11, color:C.accent, background:"none", border:"none", cursor:"pointer", fontFamily:"inherit", fontWeight:700, padding:0}}>Clear {nActive}</button>}
       </div>
 
@@ -573,6 +577,12 @@ export default function XericPlantDB() {
             border-bottom: 1px solid ${C.border};
           }
           .xpdb-sidebar.is-collapsed { display: none; }
+          /* The toggle supplies the "Filters" label here, so the panel's own heading
+             would be a second one directly beneath it. !important throughout: these
+             elements carry inline style objects, which beat a plain class rule. */
+          .xpdb-sidebar-title { display: none !important; }
+          .xpdb-sidebar-head { justify-content: flex-end !important; }
+          .xpdb-sidebar-head.is-title-only { display: none !important; }
           .xpdb-filters-toggle {
             display: flex;
             align-items: center;
