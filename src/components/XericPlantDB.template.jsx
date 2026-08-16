@@ -6,7 +6,7 @@
 // diverge from the data every other script reads.
 // ─────────────────────────────────────────────────────────────────
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, Fragment } from "react";
 
 /* ═══════════════════════════════════════════════════════════════════
    XERIC PLANT DATABASE v2 — Intermountain West
@@ -646,8 +646,20 @@ export default function XericPlantDB() {
       {/* No `flex:1` / `minHeight:0` here any more: both existed to make the row
           fill a 100vh shell so its children could scroll internally. Height now
           follows content and the host page scrolls. */}
+      {/* Sidebar(), NOT <Sidebar />.
+          Sidebar, Card and Row are declared inside this component, so each render
+          creates a fresh function identity. Rendered as an ELEMENT that reads to
+          React as a different component type every time, and it responds by
+          unmounting the old subtree and mounting a new one — destroying and
+          rebuilding the real DOM nodes.
+
+          For the search box that was fatal: every keystroke re-created the <input>,
+          so it lost focus and mobile browsers dismissed the keyboard after a single
+          letter. Calling these as plain functions inlines their JSX into this
+          component's tree, so the DOM is reconciled in place and the input
+          survives. It also stops all 100 cards being torn down per keystroke. */}
       <div className="xpdb-layout" style={{display:"flex"}}>
-        <Sidebar />
+        {Sidebar()}
         {/* min-width:0 keeps the results column from being forced wider than its
             share by the table view's content. */}
         <main className="xpdb-main" style={{flex:1, minWidth:0, padding:"18px 22px"}}>
@@ -669,7 +681,9 @@ export default function XericPlantDB() {
             </div>
           ) : view === "cards" ? (
             <div style={{display:"grid", gridTemplateColumns:"repeat(auto-fill, minmax(268px, 1fr))", gap:13}}>
-              {plants.map(p => <Card key={p.id} p={p} />)}
+              {/* Keyed Fragment so the list still reconciles by id, while Card
+                  itself is called rather than mounted — see the note above. */}
+              {plants.map(p => <Fragment key={p.id}>{Card({ p })}</Fragment>)}
             </div>
           ) : (
             <div style={{overflowX:"auto"}}>
@@ -678,7 +692,7 @@ export default function XericPlantDB() {
                   {[["common","Name"],["type","Type"],["water","Water"],["ign","Ignitability"],["zone","Zone"],["elev","Elev (k ft)"],["height","Max H"],["native","Native"]].map(([k,l]) =>
                     <th key={k} style={th} onClick={() => doSort(k)}>{l}<SortArrow active={sortBy === k} dir={sortDir} /></th>)}
                 </tr></thead>
-                <tbody>{plants.map((p,i) => <Row key={p.id} p={p} i={i} />)}</tbody>
+                <tbody>{plants.map((p,i) => <Fragment key={p.id}>{Row({ p, i })}</Fragment>)}</tbody>
               </table>
             </div>
           )}
