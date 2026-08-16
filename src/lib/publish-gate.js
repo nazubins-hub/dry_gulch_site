@@ -10,8 +10,16 @@
 // it does, while an ignSrc check publishes each correction automatically on the
 // next sync.
 
-/** Ignitability values that come from a published source rather than an estimate. */
-const PUBLISHED_IGN_SOURCES = new Set(['CSU', 'IDFW']);
+/**
+ * Ignitability values that come from a published source rather than an estimate.
+ *
+ * Exported so scripts/build-island.mjs can assert it still matches the set the
+ * database emits in data/site-rules.json. The same rule necessarily exists in
+ * both repos — neither can import the other — and the two drifting apart would
+ * mean the species pages and the site-tuning panel beside them disagreeing about
+ * which plants are safe within 30 ft of a structure.
+ */
+export const PUBLISHED_IGN_SOURCES = new Set(['CSU', 'IDFW']);
 
 /**
  * Is this species' fire rating safe to state publicly?

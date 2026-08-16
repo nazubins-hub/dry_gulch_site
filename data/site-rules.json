@@ -1,0 +1,68 @@
+{
+  "aspectOffsetFt": {
+    "north": 1500,
+    "south": -1500,
+    "east": 400,
+    "west": -400
+  },
+  "fullAspectSlopePct": 30.0,
+  "minAspectSlopePct": 2.0,
+  "publishedIgnSources": [
+    "CSU",
+    "IDFW"
+  ],
+  "sunLevels": {
+    "Sun": 3,
+    "Part Sun": 2,
+    "Part Shade": 1,
+    "Shade": 0
+  },
+  "plantSunTolerance": {
+    "Sun": [
+      3
+    ],
+    "Sun to Part Shade": [
+      2,
+      3
+    ],
+    "Part Shade to Sun": [
+      2,
+      3
+    ],
+    "Part Shade to Shade": [
+      0,
+      1
+    ]
+  },
+  "zones": [
+    {
+      "name": "HIZ 0",
+      "fromFt": 0,
+      "toFt": 5,
+      "minIgn": null,
+      "note": "noncombustible surfacing only — gravel, stone, bare mineral soil. No plants, at any ignitability rating."
+    },
+    {
+      "name": "HIZ 1-2",
+      "fromFt": 5,
+      "toFt": 30,
+      "minIgn": 8,
+      "note": "CSU FS 6.305 permits ignitability 8, 9 and 10 within the first 30 ft. Higher is harder to ignite."
+    },
+    {
+      "name": "HIZ 3",
+      "fromFt": 30,
+      "toFt": 100,
+      "minIgn": 5,
+      "note": "moderate ignitability acceptable; keep spacing and remove ladder fuels."
+    },
+    {
+      "name": "outer",
+      "fromFt": 100,
+      "toFt": 300,
+      "minIgn": null,
+      "note": "beyond the home ignition zones; no ignitability floor imposed."
+    }
+  ],
+  "minWorkable": 12
+}

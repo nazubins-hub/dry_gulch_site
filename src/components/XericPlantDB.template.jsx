@@ -9,7 +9,7 @@
 import { useState, useMemo, Fragment } from "react";
 
 /* ═══════════════════════════════════════════════════════════════════
-   XERIC PLANT DATABASE v2 — Intermountain West
+   XERIC PLANT DATABASE v3 — Intermountain West
    
    IGNITABILITY: 0–10 scale (Idaho Firewise methodology, adopted by
    CSU Extension Fact Sheet 6.305, rev. 7/2025). HIGHER = LESS ignitable.
@@ -42,6 +42,8 @@ import { useState, useMemo, Fragment } from "react";
    ═══════════════════════════════════════════════════════════════════ */
 
 /* __PLANTS__ */
+
+/* __SITERULES__ */
 
 /* ═══════════════════════ STYLE TOKENS ═══════════════════════ */
 const C = {
@@ -108,6 +110,68 @@ function hiz(ign) {
 
 const ft = v => v < 1 ? `${Math.round(v * 12)}"` : `${v}′`;
 
+/* ═══════════════════ SITE TUNING ═══════════════════
+   Every constant below comes from SITE_RULES, generated out of
+   scripts/packs/xeric.py. Nothing here restates a rule — if the aspect
+   correction or a home ignition zone band changes, it changes there and this
+   follows on the next render. */
+
+const ASPECT_POINTS = [
+  { key:"N",  deg:0   }, { key:"NE", deg:45  }, { key:"E",  deg:90  },
+  { key:"SE", deg:135 }, { key:"S",  deg:180 }, { key:"SW", deg:225 },
+  { key:"W",  deg:270 }, { key:"NW", deg:315 },
+];
+
+/* Slope bands a homeowner can judge by looking, mapped to the mid-point of each
+   range. The aspect correction scales with slope and reaches full strength at
+   SITE_RULES.fullAspectSlopePct, so a gentle grade moves the answer far less
+   than a steep one. */
+const SLOPE_BANDS = [
+  { key:"flat",     label:"Flat",     hint:"barely reads as a slope", pct:1  },
+  { key:"gentle",   label:"Gentle",   hint:"you notice it walking",   pct:10 },
+  { key:"moderate", label:"Moderate", hint:"hard to mow across",      pct:22 },
+  { key:"steep",    label:"Steep",    hint:"you scramble",            pct:38 },
+];
+
+/* offset(θ) = north·cos θ + east·sin θ — the same smooth curve the reports use,
+   so a bearing near a compass boundary cannot swing the answer by 1,900 ft the
+   way a bucketed lookup did. */
+function aspectOffsetFt(deg) {
+  if (deg == null) return 0;
+  const t = (deg % 360) * Math.PI / 180;
+  return SITE_RULES.aspectOffsetFt.north * Math.cos(t)
+       + SITE_RULES.aspectOffsetFt.east  * Math.sin(t);
+}
+
+function effectiveElevation(elevFt, aspectDeg, slopePct) {
+  if (!elevFt) return null;
+  if (aspectDeg == null || slopePct < SITE_RULES.minAspectSlopePct) {
+    return { ft: Math.round(elevFt), offset: 0, flat: true };
+  }
+  const strength = Math.min(1, slopePct / SITE_RULES.fullAspectSlopePct);
+  const offset = aspectOffsetFt(aspectDeg) * strength;
+  return { ft: Math.round(elevFt + offset), offset: Math.round(offset), flat: false };
+}
+
+/* Which zone a distance from the house falls in, and the ignitability floor
+   that band imposes. */
+const zoneForDistance = ftFromHouse =>
+  SITE_RULES.zones.find(z => ftFromHouse >= z.fromFt && ftFromHouse < z.toFt)
+  || SITE_RULES.zones[SITE_RULES.zones.length - 1];
+
+/* THE ESTIMATE GATE, same rule as the reports and the species pages.
+   An inferred rating does not place a plant in a band with a fire floor: of the
+   twenty such estimates checked against a published source, every one came back
+   lower and seventeen of seventeen lost this clearance. A band with no floor
+   makes no claim, so nothing is withheld from it. */
+const hasPublishedIgn = p => SITE_RULES.publishedIgnSources.includes(p.ignSrc);
+
+function clearsFloor(p, minIgn) {
+  if (minIgn == null) return true;
+  if (!hasPublishedIgn(p)) return false;
+  return p.ign >= minIgn;
+}
+
 /* ═══════════════════════ SMALL PARTS ═══════════════════════ */
 const Chip = ({ label, s, title }) => (
   <span title={title} style={{
@@ -158,6 +222,15 @@ export default function XericPlantDB() {
   // Starts collapsed: this only has an effect below 861px, where an expanded filter
   // panel would push the results off the first screen. Desktop ignores it.
   const [filtersOpen, setFiltersOpen] = useState(false);
+
+  /* Site tuning. Held separately from the filter state so that clearing filters
+     does not silently discard the site, and so the panel can explain what it is
+     doing rather than just moving sliders on the user's behalf. */
+  const [siteOn, setSiteOn]       = useState(false);
+  const [siteElev, setSiteElev]   = useState(8000);
+  const [siteAspect, setSiteAspect] = useState(null);   // null = flat/unknown
+  const [siteSlope, setSiteSlope] = useState("gentle");
+  const [siteDist, setSiteDist]   = useState(15);
   const [view, setView]           = useState("cards");
   const [sortBy, setSortBy]       = useState("common");
   const [sortDir, setSortDir]     = useState("asc");
@@ -175,6 +248,10 @@ export default function XericPlantDB() {
     (zoneF ? 1 : 0) + (elevF ? 1 : 0) + (nativeOnly ? 1 : 0) + (deerOnly ? 1 : 0) + (psOnly ? 1 : 0) +
     useF.length + (edibleOnly ? 1 : 0) + (search ? 1 : 0);
 
+  const slopePct = (SLOPE_BANDS.find(b => b.key === siteSlope) || SLOPE_BANDS[1]).pct;
+  const effElev = effectiveElevation(siteElev, siteAspect, slopePct);
+  const siteZone = zoneForDistance(siteDist);
+
   const plants = useMemo(() => {
     const q = search.toLowerCase().trim();
     return PLANTS.filter(p => {
@@ -187,6 +264,13 @@ export default function XericPlantDB() {
       if (hizF.length   && !hizF.includes(hiz(p.ign).key)) return false;
       if (zoneF && p.zoneMin > zoneF) return false;
       if (elevF && (p.elevMin > elevF || p.elevMax < elevF)) return false;
+      /* Site tuning filters on EFFECTIVE elevation and the band's fire floor.
+         It runs alongside the manual filters rather than replacing them, so a
+         visitor can narrow further without the panel fighting them. */
+      if (siteOn && effElev) {
+        if (p.elevMin > effElev.ft || p.elevMax < effElev.ft) return false;
+        if (!clearsFloor(p, siteZone.minIgn)) return false;
+      }
       if (nativeOnly && !p.native) return false;
       if (deerOnly && p.deer !== "Resistant") return false;
       if (psOnly && !p.ps) return false;
@@ -206,7 +290,18 @@ export default function XericPlantDB() {
       }
       return sortDir === "asc" ? av - bv : bv - av;
     });
-  }, [search, typeF, waterF, hizF, zoneF, elevF, nativeOnly, deerOnly, psOnly, useF, edibleOnly, sortBy, sortDir]);
+  }, [search, typeF, waterF, hizF, zoneF, elevF, nativeOnly, deerOnly, psOnly, useF, edibleOnly, sortBy, sortDir,
+      siteOn, siteElev, siteAspect, siteSlope, siteDist]);
+
+  /* Species the band would take but for an unpublished rating. Shown as a count,
+     never as a list of names to plant — the whole point is that they are not
+     cleared. */
+  const heldCount = useMemo(() => {
+    if (!siteOn || !effElev || siteZone.minIgn == null) return 0;
+    return PLANTS.filter(p =>
+      !hasPublishedIgn(p) && p.ign >= siteZone.minIgn &&
+      p.elevMin <= effElev.ft && p.elevMax >= effElev.ft).length;
+  }, [siteOn, siteElev, siteAspect, siteSlope, siteDist]);
 
   const doSort = c => { if (sortBy === c) setSortDir(d => d === "asc" ? "desc" : "asc"); else { setSortBy(c); setSortDir("asc"); } };
 
@@ -238,6 +333,105 @@ export default function XericPlantDB() {
   // Instead the panel is always in the DOM and a class toggles it. CSS decides whether
   // that class means anything: below 861px it hides, at wider widths it is ignored, so
   // desktop always shows the filters no matter what the toggle last did on mobile.
+  /* ═══════════════════ SITE PANEL ═══════════════════
+     Three questions a homeowner can answer by standing outside, turned into the
+     same effective elevation and fire band the full analysis computes. It is a
+     first pass, and it says so — the real work measures slope, aspect, skyline
+     and soil rather than asking. */
+  const SitePanel = () => {
+    const band = SLOPE_BANDS.find(b => b.key === siteSlope) || SLOPE_BANDS[1];
+    const aspectLabel = siteAspect == null
+      ? "flat or unknown"
+      : ASPECT_POINTS.find(a => a.deg === siteAspect).key;
+    return (
+      <div className="xpdb-site">
+        <button type="button" className="xpdb-site-toggle"
+          aria-expanded={siteOn} onClick={() => setSiteOn(o => !o)}>
+          <span>{siteOn ? "Tuned to your site" : "Tune this list to your site"}</span>
+          <span aria-hidden="true">{siteOn ? "−" : "+"}</span>
+        </button>
+
+        {siteOn && (
+          <div className="xpdb-site-body">
+            <label className="xpdb-site-lab" htmlFor="xpdb-elev">
+              Elevation <b>{siteElev.toLocaleString()} ft</b>
+            </label>
+            <input id="xpdb-elev" type="range" min="5000" max="11000" step="100"
+              value={siteElev} onChange={e => setSiteElev(+e.target.value)} />
+
+            <div className="xpdb-site-lab">Which way does the ground fall away?</div>
+            <div className="xpdb-site-row">
+              <button type="button" onClick={() => setSiteAspect(null)}
+                className={siteAspect == null ? "on" : ""}>Flat</button>
+              {ASPECT_POINTS.map(a => (
+                <button key={a.key} type="button" onClick={() => setSiteAspect(a.deg)}
+                  className={siteAspect === a.deg ? "on" : ""}>{a.key}</button>
+              ))}
+            </div>
+
+            <div className="xpdb-site-lab">How steep?</div>
+            <div className="xpdb-site-row">
+              {SLOPE_BANDS.map(b => (
+                <button key={b.key} type="button" title={b.hint}
+                  onClick={() => setSiteSlope(b.key)}
+                  className={siteSlope === b.key ? "on" : ""}>{b.label}</button>
+              ))}
+            </div>
+
+            <div className="xpdb-site-lab">How far from the house?</div>
+            <div className="xpdb-site-row">
+              {[3, 15, 60, 150].map(d => {
+                const z = zoneForDistance(d);
+                return (
+                  <button key={d} type="button" onClick={() => setSiteDist(d)}
+                    className={siteDist === d ? "on" : ""}>
+                    {z.fromFt}–{z.toFt} ft
+                  </button>
+                );
+              })}
+            </div>
+
+            <div className="xpdb-site-out">
+              {siteZone.minIgn == null && siteZone.fromFt === 0 ? (
+                <p className="xpdb-site-nope">
+                  <b>Nothing is planted here.</b> {siteZone.note}
+                </p>
+              ) : (
+                <>
+                  <p>
+                    A {aspectLabel} slope at {band.label.toLowerCase()} grade
+                    behaves like <b>{effElev.ft.toLocaleString()} ft</b>
+                    {effElev.offset !== 0 && (
+                      <> — {effElev.offset > 0 ? "+" : ""}{effElev.offset.toLocaleString()} ft
+                      on its measured elevation</>
+                    )}.
+                  </p>
+                  <p className="xpdb-site-count">
+                    <b>{plants.length}</b> species suit that
+                    {siteZone.minIgn != null && <> within {siteZone.toFt} ft of the house</>}.
+                  </p>
+                  {heldCount > 0 && (
+                    <p className="xpdb-site-held">
+                      {heldCount} more would qualify on an estimated fire rating.
+                      They are held back: every such estimate checked against a
+                      published source so far came back lower.
+                    </p>
+                  )}
+                </>
+              )}
+              <p className="xpdb-site-caveat">
+                A first pass from three answers. A real analysis measures the
+                slope, aspect, skyline and soil rather than asking — and finds
+                things this cannot, like which way the ground actually faces.
+                <a href="/contact/">Ask for a site analysis →</a>
+              </p>
+            </div>
+          </div>
+        )}
+      </div>
+    );
+  };
+
   const Sidebar = () => (
     <div className="xpdb-filters">
       <button type="button" className="xpdb-filters-toggle"
@@ -563,6 +757,40 @@ export default function XericPlantDB() {
            stray one would terminate the CSS string.) */
         .xpdb-filters-toggle { display: none; }
 
+        /* ── site tuning ── */
+        .xpdb-site {
+          border: 1.5px solid ${C.primary};
+          background: ${C.card};
+          margin-bottom: 1rem;
+        }
+        .xpdb-site-toggle {
+          width: 100%; display: flex; justify-content: space-between; align-items: center;
+          gap: .75rem; padding: .7rem .9rem; cursor: pointer;
+          background: ${C.primary}; color: #fff; border: 0;
+          font: 600 .95rem/1 inherit; text-align: left;
+        }
+        .xpdb-site-body { padding: .9rem; display: flex; flex-direction: column; gap: .5rem; }
+        .xpdb-site-lab { font-size: .8rem; color: ${C.muted}; margin-top: .35rem; }
+        .xpdb-site-lab b { color: ${C.text}; font-variant-numeric: tabular-nums; }
+        .xpdb-site-row { display: flex; flex-wrap: wrap; gap: .3rem; }
+        .xpdb-site-row button {
+          padding: .3rem .6rem; cursor: pointer; font: 500 .8rem/1 inherit;
+          border: 1px solid ${C.border}; background: ${C.bg}; color: ${C.text};
+        }
+        .xpdb-site-row button.on {
+          background: ${C.primary}; color: #fff; border-color: ${C.primary};
+        }
+        .xpdb-site input[type=range] { width: 100%; accent-color: ${C.primary}; }
+        .xpdb-site-out {
+          margin-top: .6rem; padding-top: .7rem; border-top: 1px solid ${C.border};
+          font-size: .85rem; color: ${C.text}; display: flex; flex-direction: column; gap: .4rem;
+        }
+        .xpdb-site-count b { font-size: 1.15rem; color: ${C.primary}; }
+        .xpdb-site-nope b { color: ${C.accent}; }
+        .xpdb-site-held { color: ${C.accent}; font-size: .8rem; }
+        .xpdb-site-caveat { color: ${C.muted}; font-size: .78rem; line-height: 1.45; }
+        .xpdb-site-caveat a { color: ${C.primary}; font-weight: 600; margin-left: .35rem; }
+
         @media (max-width: 860px) {
           /* Below this the 238px sidebar left ~135px for results on a phone —
              narrower than a single card. Stack instead. */
@@ -658,6 +886,8 @@ export default function XericPlantDB() {
           letter. Calling these as plain functions inlines their JSX into this
           component's tree, so the DOM is reconciled in place and the input
           survives. It also stops all 100 cards being torn down per keystroke. */}
+      {SitePanel()}
+
       <div className="xpdb-layout" style={{display:"flex"}}>
         {Sidebar()}
         {/* min-width:0 keeps the results column from being forced wider than its

@@ -47,6 +47,14 @@ export const MANIFEST = join(SITE_ROOT, 'data', '.plant-db-sync.json');
 // build-island.mjs injects exactly what may be published.
 export const SYNCED = [
   { from: 'ui/template.jsx', to: 'src/components/XericPlantDB.template.jsx' },
+  // The site-tuning panel's rules — the aspect correction, the home ignition
+  // zone bands, and the set of ignitability sources that count as published.
+  // These are constants, not species data, so they cross verbatim rather than
+  // through the gate. They are GENERATED in the database from
+  // scripts/packs/xeric.py, which is the single home for all four; copying the
+  // values into this repo by hand would put the rule that decides whether a
+  // plant may stand next to a house in two places.
+  { from: 'out/site-rules.json', to: 'data/site-rules.json' },
 ];
 
 /** Species data in the database repo. Read, gated, never copied verbatim. */
@@ -65,6 +73,9 @@ export const PUBLIC_DATA = 'data/plants.public.json';
 
 /** The gate itself is hashed into the manifest: change the rule, re-sync the data. */
 export const GATE_SRC = 'src/lib/publish-gate.js';
+
+/** Site-analysis constants, synced verbatim from the database. */
+export const SITE_RULES_DATA = 'data/site-rules.json';
 
 /** Where build-island.mjs writes the mounted component. Generated, gitignored. */
 export const ISLAND_OUT = 'src/components/XericPlantDB.generated.jsx';
