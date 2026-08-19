@@ -2,6 +2,1398 @@
   "schemaVersion": 1,
   "images": [
     {
+      "id": "acer-glabrum--habit--001",
+      "speciesId": 9,
+      "sci": "Acer glabrum",
+      "role": "habit",
+      "tier": 0,
+      "status": "active",
+      "season": null,
+      "credit": "CK2AZ",
+      "license": "CC-BY",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+      "sourceUrl": "https://www.inaturalist.org/observations/13933279",
+      "idVerification": "inat-research",
+      "capturedAt": null,
+      "elevationFt": null,
+      "site": {},
+      "derivatives": {
+        "thumb": {
+          "src": "/plants/acer-glabrum--habit--001/thumb.webp",
+          "width": 400,
+          "height": 300
+        },
+        "card": {
+          "src": "/plants/acer-glabrum--habit--001/card.webp",
+          "width": 800,
+          "height": 600
+        }
+      }
+    },
+    {
+      "id": "acer-grandidentatum--habit--001",
+      "speciesId": 8,
+      "sci": "Acer grandidentatum",
+      "role": "habit",
+      "tier": 0,
+      "status": "active",
+      "season": null,
+      "credit": "Nick Loveland",
+      "license": "CC0",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "sourceUrl": "https://www.inaturalist.org/observations/134059199",
+      "idVerification": "inat-research",
+      "capturedAt": null,
+      "elevationFt": null,
+      "site": {},
+      "derivatives": {
+        "thumb": {
+          "src": "/plants/acer-grandidentatum--habit--001/thumb.webp",
+          "width": 400,
+          "height": 533
+        },
+        "card": {
+          "src": "/plants/acer-grandidentatum--habit--001/card.webp",
+          "width": 768,
+          "height": 1024
+        }
+      }
+    },
+    {
+      "id": "achillea-millefolium--habit--001",
+      "speciesId": 57,
+      "sci": "Achillea millefolium",
+      "role": "habit",
+      "tier": 0,
+      "status": "active",
+      "season": null,
+      "credit": "Eric Lamb",
+      "license": "CC-BY",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+      "sourceUrl": "https://www.inaturalist.org/observations/50063769",
+      "idVerification": "inat-research",
+      "capturedAt": null,
+      "elevationFt": null,
+      "site": {},
+      "derivatives": {
+        "thumb": {
+          "src": "/plants/achillea-millefolium--habit--001/thumb.webp",
+          "width": 400,
+          "height": 533
+        },
+        "card": {
+          "src": "/plants/achillea-millefolium--habit--001/card.webp",
+          "width": 768,
+          "height": 1024
+        }
+      }
+    },
+    {
+      "id": "agastache-cana--habit--001",
+      "speciesId": 78,
+      "sci": "Agastache cana",
+      "role": "habit",
+      "tier": 0,
+      "status": "active",
+      "season": null,
+      "credit": "Kevin Floyd",
+      "license": "CC-BY",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+      "sourceUrl": "https://www.inaturalist.org/observations/140449114",
+      "idVerification": "inat-research",
+      "capturedAt": null,
+      "elevationFt": null,
+      "site": {},
+      "derivatives": {
+        "thumb": {
+          "src": "/plants/agastache-cana--habit--001/thumb.webp",
+          "width": 400,
+          "height": 267
+        },
+        "card": {
+          "src": "/plants/agastache-cana--habit--001/card.webp",
+          "width": 800,
+          "height": 534
+        }
+      }
+    },
+    {
+      "id": "amelanchier-alnifolia--habit--001",
+      "speciesId": 21,
+      "sci": "Amelanchier alnifolia",
+      "role": "habit",
+      "tier": 0,
+      "status": "active",
+      "season": null,
+      "credit": "Gavin Slater",
+      "license": "CC-BY",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+      "sourceUrl": "https://www.inaturalist.org/observations/80832557",
+      "idVerification": "inat-research",
+      "capturedAt": null,
+      "elevationFt": null,
+      "site": {},
+      "derivatives": {
+        "thumb": {
+          "src": "/plants/amelanchier-alnifolia--habit--001/thumb.webp",
+          "width": 400,
+          "height": 225
+        },
+        "card": {
+          "src": "/plants/amelanchier-alnifolia--habit--001/card.webp",
+          "width": 800,
+          "height": 450
+        }
+      }
+    },
+    {
+      "id": "amorpha-nana--habit--001",
+      "speciesId": 36,
+      "sci": "Amorpha nana",
+      "role": "habit",
+      "tier": 0,
+      "status": "active",
+      "season": null,
+      "credit": "Jared Shorma",
+      "license": "CC-BY",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+      "sourceUrl": "https://www.inaturalist.org/observations/168533567",
+      "idVerification": "inat-research",
+      "capturedAt": null,
+      "elevationFt": null,
+      "site": {},
+      "derivatives": {
+        "thumb": {
+          "src": "/plants/amorpha-nana--habit--001/thumb.webp",
+          "width": 400,
+          "height": 300
+        },
+        "card": {
+          "src": "/plants/amorpha-nana--habit--001/card.webp",
+          "width": 800,
+          "height": 600
+        }
+      }
+    },
+    {
+      "id": "antennaria-parvifolia--habit--001",
+      "speciesId": 92,
+      "sci": "Antennaria parvifolia",
+      "role": "habit",
+      "tier": 0,
+      "status": "active",
+      "season": null,
+      "credit": "dghjertaas",
+      "license": "CC0",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "sourceUrl": "https://www.inaturalist.org/observations/112181255",
+      "idVerification": "inat-research",
+      "capturedAt": null,
+      "elevationFt": null,
+      "site": {},
+      "derivatives": {
+        "thumb": {
+          "src": "/plants/antennaria-parvifolia--habit--001/thumb.webp",
+          "width": 400,
+          "height": 300
+        },
+        "card": {
+          "src": "/plants/antennaria-parvifolia--habit--001/card.webp",
+          "width": 800,
+          "height": 600
+        }
+      }
+    },
+    {
+      "id": "aquilegia-chrysantha--habit--001",
+      "speciesId": 67,
+      "sci": "Aquilegia chrysantha",
+      "role": "habit",
+      "tier": 0,
+      "status": "active",
+      "season": null,
+      "credit": "Daniel Z",
+      "license": "CC-BY",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+      "sourceUrl": "https://www.inaturalist.org/observations/293959221",
+      "idVerification": "inat-research",
+      "capturedAt": null,
+      "elevationFt": null,
+      "site": {},
+      "derivatives": {
+        "thumb": {
+          "src": "/plants/aquilegia-chrysantha--habit--001/thumb.webp",
+          "width": 400,
+          "height": 531
+        },
+        "card": {
+          "src": "/plants/aquilegia-chrysantha--habit--001/card.webp",
+          "width": 771,
+          "height": 1024
+        }
+      }
+    },
+    {
+      "id": "arctostaphylos-coloradensis--habit--001",
+      "speciesId": 39,
+      "sci": "Arctostaphylos × coloradensis",
+      "role": "habit",
+      "tier": 0,
+      "status": "active",
+      "season": null,
+      "credit": "Anders Hastings",
+      "license": "CC-BY",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+      "sourceUrl": "https://www.inaturalist.org/observations/288796999",
+      "idVerification": "inat-research",
+      "capturedAt": null,
+      "elevationFt": null,
+      "site": {},
+      "derivatives": {
+        "thumb": {
+          "src": "/plants/arctostaphylos-coloradensis--habit--001/thumb.webp",
+          "width": 400,
+          "height": 267
+        },
+        "card": {
+          "src": "/plants/arctostaphylos-coloradensis--habit--001/card.webp",
+          "width": 800,
+          "height": 534
+        }
+      }
+    },
+    {
+      "id": "arctostaphylos-uva-ursi--habit--001",
+      "speciesId": 97,
+      "sci": "Arctostaphylos uva-ursi",
+      "role": "habit",
+      "tier": 0,
+      "status": "active",
+      "season": null,
+      "credit": "Syd Cannings",
+      "license": "CC-BY",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+      "sourceUrl": "https://www.inaturalist.org/observations/33600072",
+      "idVerification": "inat-research",
+      "capturedAt": null,
+      "elevationFt": null,
+      "site": {},
+      "derivatives": {
+        "thumb": {
+          "src": "/plants/arctostaphylos-uva-ursi--habit--001/thumb.webp",
+          "width": 400,
+          "height": 600
+        },
+        "card": {
+          "src": "/plants/arctostaphylos-uva-ursi--habit--001/card.webp",
+          "width": 683,
+          "height": 1024
+        }
+      }
+    },
+    {
+      "id": "artemisia-frigida--habit--001",
+      "speciesId": 14,
+      "sci": "Artemisia frigida",
+      "role": "habit",
+      "tier": 0,
+      "status": "active",
+      "season": null,
+      "credit": "Matt Lavin",
+      "license": "CC-BY",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+      "sourceUrl": "https://www.inaturalist.org/observations/67929928",
+      "idVerification": "inat-research",
+      "capturedAt": null,
+      "elevationFt": null,
+      "site": {},
+      "derivatives": {
+        "thumb": {
+          "src": "/plants/artemisia-frigida--habit--001/thumb.webp",
+          "width": 400,
+          "height": 300
+        },
+        "card": {
+          "src": "/plants/artemisia-frigida--habit--001/card.webp",
+          "width": 800,
+          "height": 600
+        }
+      }
+    },
+    {
+      "id": "artemisia-tridentata--habit--001",
+      "speciesId": 13,
+      "sci": "Artemisia tridentata",
+      "role": "habit",
+      "tier": 0,
+      "status": "active",
+      "season": null,
+      "credit": "James H. Thomas",
+      "license": "CC-BY",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+      "sourceUrl": "https://www.inaturalist.org/observations/173318465",
+      "idVerification": "inat-research",
+      "capturedAt": null,
+      "elevationFt": null,
+      "site": {},
+      "derivatives": {
+        "thumb": {
+          "src": "/plants/artemisia-tridentata--habit--001/thumb.webp",
+          "width": 400,
+          "height": 533
+        },
+        "card": {
+          "src": "/plants/artemisia-tridentata--habit--001/card.webp",
+          "width": 768,
+          "height": 1024
+        }
+      }
+    },
+    {
+      "id": "asclepias-tuberosa--habit--001",
+      "speciesId": 75,
+      "sci": "Asclepias tuberosa",
+      "role": "habit",
+      "tier": 0,
+      "status": "active",
+      "season": null,
+      "credit": "Michael J. Papay",
+      "license": "CC-BY",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+      "sourceUrl": "https://www.inaturalist.org/observations/122026449",
+      "idVerification": "inat-research",
+      "capturedAt": null,
+      "elevationFt": null,
+      "site": {},
+      "derivatives": {
+        "thumb": {
+          "src": "/plants/asclepias-tuberosa--habit--001/thumb.webp",
+          "width": 400,
+          "height": 300
+        },
+        "card": {
+          "src": "/plants/asclepias-tuberosa--habit--001/card.webp",
+          "width": 800,
+          "height": 600
+        }
+      }
+    },
+    {
+      "id": "atriplex-canescens--habit--001",
+      "speciesId": 25,
+      "sci": "Atriplex canescens",
+      "role": "habit",
+      "tier": 0,
+      "status": "active",
+      "season": null,
+      "credit": "Rod",
+      "license": "CC0",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "sourceUrl": "https://www.inaturalist.org/observations/110175191",
+      "idVerification": "inat-research",
+      "capturedAt": null,
+      "elevationFt": null,
+      "site": {},
+      "derivatives": {
+        "thumb": {
+          "src": "/plants/atriplex-canescens--habit--001/thumb.webp",
+          "width": 400,
+          "height": 533
+        },
+        "card": {
+          "src": "/plants/atriplex-canescens--habit--001/card.webp",
+          "width": 768,
+          "height": 1024
+        }
+      }
+    },
+    {
+      "id": "berberis-repens--habit--001",
+      "speciesId": 28,
+      "sci": "Berberis repens",
+      "role": "habit",
+      "tier": 0,
+      "status": "active",
+      "season": null,
+      "credit": "Stephen Hornbeck",
+      "license": "CC-BY",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+      "sourceUrl": "https://www.inaturalist.org/observations/170361021",
+      "idVerification": "inat-research",
+      "capturedAt": null,
+      "elevationFt": null,
+      "site": {},
+      "derivatives": {
+        "thumb": {
+          "src": "/plants/berberis-repens--habit--001/thumb.webp",
+          "width": 400,
+          "height": 533
+        },
+        "card": {
+          "src": "/plants/berberis-repens--habit--001/card.webp",
+          "width": 768,
+          "height": 1024
+        }
+      }
+    },
+    {
+      "id": "berlandiera-lyrata--habit--001",
+      "speciesId": 72,
+      "sci": "Berlandiera lyrata",
+      "role": "habit",
+      "tier": 0,
+      "status": "active",
+      "season": null,
+      "credit": "Alejandro Santillana",
+      "license": "CC0",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "sourceUrl": "https://www.inaturalist.org/observations/143892349",
+      "idVerification": "inat-research",
+      "capturedAt": null,
+      "elevationFt": null,
+      "site": {},
+      "derivatives": {
+        "thumb": {
+          "src": "/plants/berlandiera-lyrata--habit--001/thumb.webp",
+          "width": 400,
+          "height": 711
+        },
+        "card": {
+          "src": "/plants/berlandiera-lyrata--habit--001/card.webp",
+          "width": 576,
+          "height": 1024
+        }
+      }
+    },
+    {
+      "id": "bouteloua-curtipendula--habit--001",
+      "speciesId": 83,
+      "sci": "Bouteloua curtipendula",
+      "role": "habit",
+      "tier": 0,
+      "status": "active",
+      "season": null,
+      "credit": "Clifton Ladd, C.W.B.",
+      "license": "CC-BY",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+      "sourceUrl": "https://www.inaturalist.org/observations/314674606",
+      "idVerification": "inat-research",
+      "capturedAt": null,
+      "elevationFt": null,
+      "site": {},
+      "derivatives": {
+        "thumb": {
+          "src": "/plants/bouteloua-curtipendula--habit--001/thumb.webp",
+          "width": 400,
+          "height": 300
+        },
+        "card": {
+          "src": "/plants/bouteloua-curtipendula--habit--001/card.webp",
+          "width": 800,
+          "height": 600
+        }
+      }
+    },
+    {
+      "id": "bouteloua-dactyloides--habit--001",
+      "speciesId": 82,
+      "sci": "Bouteloua dactyloides",
+      "role": "habit",
+      "tier": 0,
+      "status": "active",
+      "season": null,
+      "credit": "Jared Shorma",
+      "license": "CC-BY",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+      "sourceUrl": "https://www.inaturalist.org/observations/364592830",
+      "idVerification": "inat-research",
+      "capturedAt": null,
+      "elevationFt": null,
+      "site": {},
+      "derivatives": {
+        "thumb": {
+          "src": "/plants/bouteloua-dactyloides--habit--001/thumb.webp",
+          "width": 400,
+          "height": 533
+        },
+        "card": {
+          "src": "/plants/bouteloua-dactyloides--habit--001/card.webp",
+          "width": 768,
+          "height": 1024
+        }
+      }
+    },
+    {
+      "id": "bouteloua-gracilis--habit--001",
+      "speciesId": 81,
+      "sci": "Bouteloua gracilis",
+      "role": "habit",
+      "tier": 0,
+      "status": "active",
+      "season": null,
+      "credit": "Cecelia Alexander",
+      "license": "CC0",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "sourceUrl": "https://www.inaturalist.org/observations/48472926",
+      "idVerification": "inat-research",
+      "capturedAt": null,
+      "elevationFt": null,
+      "site": {},
+      "derivatives": {
+        "thumb": {
+          "src": "/plants/bouteloua-gracilis--habit--001/thumb.webp",
+          "width": 400,
+          "height": 267
+        },
+        "card": {
+          "src": "/plants/bouteloua-gracilis--habit--001/card.webp",
+          "width": 800,
+          "height": 534
+        }
+      }
+    },
+    {
+      "id": "callirhoe-involucrata--habit--001",
+      "speciesId": 60,
+      "sci": "Callirhoe involucrata",
+      "role": "habit",
+      "tier": 0,
+      "status": "active",
+      "season": null,
+      "credit": "Linda Jo Conn",
+      "license": "CC-BY",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+      "sourceUrl": "https://www.inaturalist.org/observations/357253010",
+      "idVerification": "inat-research",
+      "capturedAt": null,
+      "elevationFt": null,
+      "site": {},
+      "derivatives": {
+        "thumb": {
+          "src": "/plants/callirhoe-involucrata--habit--001/thumb.webp",
+          "width": 400,
+          "height": 391
+        },
+        "card": {
+          "src": "/plants/callirhoe-involucrata--habit--001/card.webp",
+          "width": 800,
+          "height": 782
+        }
+      }
+    },
+    {
+      "id": "campanula-rotundifolia--habit--001",
+      "speciesId": 68,
+      "sci": "Campanula rotundifolia",
+      "role": "habit",
+      "tier": 0,
+      "status": "active",
+      "season": null,
+      "credit": "Mattia Menchetti",
+      "license": "CC-BY",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+      "sourceUrl": "https://www.inaturalist.org/observations/28797351",
+      "idVerification": "inat-research",
+      "capturedAt": null,
+      "elevationFt": null,
+      "site": {},
+      "derivatives": {
+        "thumb": {
+          "src": "/plants/campanula-rotundifolia--habit--001/thumb.webp",
+          "width": 400,
+          "height": 533
+        },
+        "card": {
+          "src": "/plants/campanula-rotundifolia--habit--001/card.webp",
+          "width": 768,
+          "height": 1024
+        }
+      }
+    },
+    {
+      "id": "ceanothus-velutinus--habit--001",
+      "speciesId": 40,
+      "sci": "Ceanothus velutinus",
+      "role": "habit",
+      "tier": 0,
+      "status": "active",
+      "season": null,
+      "credit": "Aiva Noringseth",
+      "license": "CC-BY",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+      "sourceUrl": "https://www.inaturalist.org/observations/304587385",
+      "idVerification": "inat-research",
+      "capturedAt": null,
+      "elevationFt": null,
+      "site": {},
+      "derivatives": {
+        "thumb": {
+          "src": "/plants/ceanothus-velutinus--habit--001/thumb.webp",
+          "width": 400,
+          "height": 533
+        },
+        "card": {
+          "src": "/plants/ceanothus-velutinus--habit--001/card.webp",
+          "width": 768,
+          "height": 1024
+        }
+      }
+    },
+    {
+      "id": "cercocarpus-ledifolius--habit--001",
+      "speciesId": 12,
+      "sci": "Cercocarpus ledifolius",
+      "role": "habit",
+      "tier": 0,
+      "status": "active",
+      "season": null,
+      "credit": "Rick Mandel",
+      "license": "CC-BY",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+      "sourceUrl": "https://www.inaturalist.org/observations/30798572",
+      "idVerification": "inat-research",
+      "capturedAt": null,
+      "elevationFt": null,
+      "site": {},
+      "derivatives": {
+        "thumb": {
+          "src": "/plants/cercocarpus-ledifolius--habit--001/thumb.webp",
+          "width": 400,
+          "height": 300
+        },
+        "card": {
+          "src": "/plants/cercocarpus-ledifolius--habit--001/card.webp",
+          "width": 800,
+          "height": 600
+        }
+      }
+    },
+    {
+      "id": "cercocarpus-montanus--habit--001",
+      "speciesId": 22,
+      "sci": "Cercocarpus montanus",
+      "role": "habit",
+      "tier": 0,
+      "status": "active",
+      "season": null,
+      "credit": "Jo Roberts",
+      "license": "CC-BY",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+      "sourceUrl": "https://www.inaturalist.org/observations/80015193",
+      "idVerification": "inat-research",
+      "capturedAt": null,
+      "elevationFt": null,
+      "site": {},
+      "derivatives": {
+        "thumb": {
+          "src": "/plants/cercocarpus-montanus--habit--001/thumb.webp",
+          "width": 400,
+          "height": 533
+        },
+        "card": {
+          "src": "/plants/cercocarpus-montanus--habit--001/card.webp",
+          "width": 768,
+          "height": 1024
+        }
+      }
+    },
+    {
+      "id": "chamaebatiaria-millefolium--habit--001",
+      "speciesId": 24,
+      "sci": "Chamaebatiaria millefolium",
+      "role": "habit",
+      "tier": 0,
+      "status": "active",
+      "season": null,
+      "credit": "Indio Brown",
+      "license": "CC-BY",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+      "sourceUrl": "https://www.inaturalist.org/observations/187966079",
+      "idVerification": "inat-research",
+      "capturedAt": null,
+      "elevationFt": null,
+      "site": {},
+      "derivatives": {
+        "thumb": {
+          "src": "/plants/chamaebatiaria-millefolium--habit--001/thumb.webp",
+          "width": 400,
+          "height": 400
+        },
+        "card": {
+          "src": "/plants/chamaebatiaria-millefolium--habit--001/card.webp",
+          "width": 800,
+          "height": 800
+        }
+      }
+    },
+    {
+      "id": "chrysothamnus-viscidiflorus--habit--001",
+      "speciesId": 16,
+      "sci": "Chrysothamnus viscidiflorus",
+      "role": "habit",
+      "tier": 0,
+      "status": "active",
+      "season": null,
+      "credit": "Erin Springinotic",
+      "license": "CC0",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "sourceUrl": "https://www.inaturalist.org/observations/86749696",
+      "idVerification": "inat-research",
+      "capturedAt": null,
+      "elevationFt": null,
+      "site": {},
+      "derivatives": {
+        "thumb": {
+          "src": "/plants/chrysothamnus-viscidiflorus--habit--001/thumb.webp",
+          "width": 400,
+          "height": 300
+        },
+        "card": {
+          "src": "/plants/chrysothamnus-viscidiflorus--habit--001/card.webp",
+          "width": 800,
+          "height": 600
+        }
+      }
+    },
+    {
+      "id": "cylindropuntia-imbricata--habit--001",
+      "speciesId": 44,
+      "sci": "Cylindropuntia imbricata",
+      "role": "habit",
+      "tier": 0,
+      "status": "active",
+      "season": null,
+      "credit": "Lauren McLaurin",
+      "license": "CC-BY",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+      "sourceUrl": "https://www.inaturalist.org/observations/19760310",
+      "idVerification": "inat-research",
+      "capturedAt": null,
+      "elevationFt": null,
+      "site": {},
+      "derivatives": {
+        "thumb": {
+          "src": "/plants/cylindropuntia-imbricata--habit--001/thumb.webp",
+          "width": 400,
+          "height": 330
+        },
+        "card": {
+          "src": "/plants/cylindropuntia-imbricata--habit--001/card.webp",
+          "width": 800,
+          "height": 659
+        }
+      }
+    },
+    {
+      "id": "delosperma-cooperi--habit--001",
+      "speciesId": 100,
+      "sci": "Delosperma cooperi",
+      "role": "habit",
+      "tier": 0,
+      "status": "active",
+      "season": null,
+      "credit": "Eleftherios Katsillis",
+      "license": "CC-BY",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+      "sourceUrl": "https://www.inaturalist.org/observations/169252968",
+      "idVerification": "inat-research",
+      "capturedAt": null,
+      "elevationFt": null,
+      "site": {},
+      "derivatives": {
+        "thumb": {
+          "src": "/plants/delosperma-cooperi--habit--001/thumb.webp",
+          "width": 400,
+          "height": 267
+        },
+        "card": {
+          "src": "/plants/delosperma-cooperi--habit--001/card.webp",
+          "width": 800,
+          "height": 534
+        }
+      }
+    },
+    {
+      "id": "echinacea-angustifolia--habit--001",
+      "speciesId": 62,
+      "sci": "Echinacea angustifolia",
+      "role": "habit",
+      "tier": 0,
+      "status": "active",
+      "season": null,
+      "credit": "Cody Stricker",
+      "license": "CC-BY",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+      "sourceUrl": "https://www.inaturalist.org/observations/123919720",
+      "idVerification": "inat-research",
+      "capturedAt": null,
+      "elevationFt": null,
+      "site": {},
+      "derivatives": {
+        "thumb": {
+          "src": "/plants/echinacea-angustifolia--habit--001/thumb.webp",
+          "width": 400,
+          "height": 533
+        },
+        "card": {
+          "src": "/plants/echinacea-angustifolia--habit--001/card.webp",
+          "width": 768,
+          "height": 1024
+        }
+      }
+    },
+    {
+      "id": "echinocereus-triglochidiatus--habit--001",
+      "speciesId": 43,
+      "sci": "Echinocereus triglochidiatus",
+      "role": "habit",
+      "tier": 0,
+      "status": "active",
+      "season": null,
+      "credit": "Casey Cowan",
+      "license": "CC0",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "sourceUrl": "https://www.inaturalist.org/observations/201621941",
+      "idVerification": "inat-research",
+      "capturedAt": null,
+      "elevationFt": null,
+      "site": {},
+      "derivatives": {
+        "thumb": {
+          "src": "/plants/echinocereus-triglochidiatus--habit--001/thumb.webp",
+          "width": 400,
+          "height": 300
+        },
+        "card": {
+          "src": "/plants/echinocereus-triglochidiatus--habit--001/card.webp",
+          "width": 800,
+          "height": 600
+        }
+      }
+    },
+    {
+      "id": "ephedra-viridis--habit--001",
+      "speciesId": 41,
+      "sci": "Ephedra viridis",
+      "role": "habit",
+      "tier": 0,
+      "status": "active",
+      "season": null,
+      "credit": "CK2AZ",
+      "license": "CC-BY",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+      "sourceUrl": "https://www.inaturalist.org/observations/202366118",
+      "idVerification": "inat-research",
+      "capturedAt": null,
+      "elevationFt": null,
+      "site": {},
+      "derivatives": {
+        "thumb": {
+          "src": "/plants/ephedra-viridis--habit--001/thumb.webp",
+          "width": 400,
+          "height": 533
+        },
+        "card": {
+          "src": "/plants/ephedra-viridis--habit--001/card.webp",
+          "width": 768,
+          "height": 1024
+        }
+      }
+    },
+    {
+      "id": "ericameria-nauseosa--habit--001",
+      "speciesId": 15,
+      "sci": "Ericameria nauseosa",
+      "role": "habit",
+      "tier": 0,
+      "status": "active",
+      "season": null,
+      "credit": "Bryon Paul Veal Noah",
+      "license": "CC0",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "sourceUrl": "https://www.inaturalist.org/observations/348147627",
+      "idVerification": "inat-research",
+      "capturedAt": null,
+      "elevationFt": null,
+      "site": {},
+      "derivatives": {
+        "thumb": {
+          "src": "/plants/ericameria-nauseosa--habit--001/thumb.webp",
+          "width": 400,
+          "height": 710
+        },
+        "card": {
+          "src": "/plants/ericameria-nauseosa--habit--001/card.webp",
+          "width": 577,
+          "height": 1024
+        }
+      }
+    },
+    {
+      "id": "erigeron-formosissimus--habit--001",
+      "speciesId": 80,
+      "sci": "Erigeron formosissimus",
+      "role": "habit",
+      "tier": 0,
+      "status": "active",
+      "season": null,
+      "credit": "Anders Hastings",
+      "license": "CC-BY",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+      "sourceUrl": "https://www.inaturalist.org/observations/307558487",
+      "idVerification": "inat-research",
+      "capturedAt": null,
+      "elevationFt": null,
+      "site": {},
+      "derivatives": {
+        "thumb": {
+          "src": "/plants/erigeron-formosissimus--habit--001/thumb.webp",
+          "width": 400,
+          "height": 267
+        },
+        "card": {
+          "src": "/plants/erigeron-formosissimus--habit--001/card.webp",
+          "width": 800,
+          "height": 534
+        }
+      }
+    },
+    {
+      "id": "eriocoma-hymenoides--habit--001",
+      "speciesId": 84,
+      "sci": "Eriocoma hymenoides",
+      "role": "habit",
+      "tier": 0,
+      "status": "active",
+      "season": null,
+      "credit": "Jesse Rorabaugh",
+      "license": "CC0",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "sourceUrl": "https://www.inaturalist.org/observations/39390700",
+      "idVerification": "inat-research",
+      "capturedAt": null,
+      "elevationFt": null,
+      "site": {},
+      "derivatives": {
+        "thumb": {
+          "src": "/plants/eriocoma-hymenoides--habit--001/thumb.webp",
+          "width": 400,
+          "height": 380
+        },
+        "card": {
+          "src": "/plants/eriocoma-hymenoides--habit--001/card.webp",
+          "width": 800,
+          "height": 759
+        }
+      }
+    },
+    {
+      "id": "eriogonum-jamesii--habit--001",
+      "speciesId": 55,
+      "sci": "Eriogonum jamesii",
+      "role": "habit",
+      "tier": 0,
+      "status": "active",
+      "season": null,
+      "credit": "Stephen Hornbeck",
+      "license": "CC-BY",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+      "sourceUrl": "https://www.inaturalist.org/observations/242488286",
+      "idVerification": "inat-research",
+      "capturedAt": null,
+      "elevationFt": null,
+      "site": {},
+      "derivatives": {
+        "thumb": {
+          "src": "/plants/eriogonum-jamesii--habit--001/thumb.webp",
+          "width": 400,
+          "height": 300
+        },
+        "card": {
+          "src": "/plants/eriogonum-jamesii--habit--001/card.webp",
+          "width": 800,
+          "height": 600
+        }
+      }
+    },
+    {
+      "id": "eriogonum-ovalifolium--habit--001",
+      "speciesId": 94,
+      "sci": "Eriogonum ovalifolium",
+      "role": "habit",
+      "tier": 0,
+      "status": "active",
+      "season": null,
+      "credit": "Steve Matson",
+      "license": "CC-BY",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+      "sourceUrl": "https://www.inaturalist.org/observations/251696823",
+      "idVerification": "inat-research",
+      "capturedAt": null,
+      "elevationFt": null,
+      "site": {},
+      "derivatives": {
+        "thumb": {
+          "src": "/plants/eriogonum-ovalifolium--habit--001/thumb.webp",
+          "width": 400,
+          "height": 234
+        },
+        "card": {
+          "src": "/plants/eriogonum-ovalifolium--habit--001/card.webp",
+          "width": 800,
+          "height": 468
+        }
+      }
+    },
+    {
+      "id": "eriogonum-umbellatum--habit--001",
+      "speciesId": 54,
+      "sci": "Eriogonum umbellatum",
+      "role": "habit",
+      "tier": 0,
+      "status": "active",
+      "season": null,
+      "credit": "Reid Hardin",
+      "license": "CC-BY",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+      "sourceUrl": "https://www.inaturalist.org/observations/87601036",
+      "idVerification": "inat-research",
+      "capturedAt": null,
+      "elevationFt": null,
+      "site": {},
+      "derivatives": {
+        "thumb": {
+          "src": "/plants/eriogonum-umbellatum--habit--001/thumb.webp",
+          "width": 400,
+          "height": 300
+        },
+        "card": {
+          "src": "/plants/eriogonum-umbellatum--habit--001/card.webp",
+          "width": 800,
+          "height": 600
+        }
+      }
+    },
+    {
+      "id": "erysimum-capitatum--habit--001",
+      "speciesId": 69,
+      "sci": "Erysimum capitatum",
+      "role": "habit",
+      "tier": 0,
+      "status": "active",
+      "season": null,
+      "credit": "Rachel Stringham",
+      "license": "CC-BY",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+      "sourceUrl": "https://www.inaturalist.org/observations/48444589",
+      "idVerification": "inat-research",
+      "capturedAt": null,
+      "elevationFt": null,
+      "site": {},
+      "derivatives": {
+        "thumb": {
+          "src": "/plants/erysimum-capitatum--habit--001/thumb.webp",
+          "width": 400,
+          "height": 300
+        },
+        "card": {
+          "src": "/plants/erysimum-capitatum--habit--001/card.webp",
+          "width": 800,
+          "height": 600
+        }
+      }
+    },
+    {
+      "id": "fallugia-paradoxa--habit--001",
+      "speciesId": 23,
+      "sci": "Fallugia paradoxa",
+      "role": "habit",
+      "tier": 0,
+      "status": "active",
+      "season": null,
+      "credit": "Cecelia Alexander",
+      "license": "CC0",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "sourceUrl": "https://www.inaturalist.org/observations/48491618",
+      "idVerification": "inat-research",
+      "capturedAt": null,
+      "elevationFt": null,
+      "site": {},
+      "derivatives": {
+        "thumb": {
+          "src": "/plants/fallugia-paradoxa--habit--001/thumb.webp",
+          "width": 400,
+          "height": 267
+        },
+        "card": {
+          "src": "/plants/fallugia-paradoxa--habit--001/card.webp",
+          "width": 800,
+          "height": 534
+        }
+      }
+    },
+    {
+      "id": "festuca-idahoensis--habit--001",
+      "speciesId": 86,
+      "sci": "Festuca idahoensis",
+      "role": "habit",
+      "tier": 0,
+      "status": "active",
+      "season": null,
+      "credit": "Matt Berger",
+      "license": "CC-BY",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+      "sourceUrl": "https://www.inaturalist.org/observations/330529586",
+      "idVerification": "inat-research",
+      "capturedAt": null,
+      "elevationFt": null,
+      "site": {},
+      "derivatives": {
+        "thumb": {
+          "src": "/plants/festuca-idahoensis--habit--001/thumb.webp",
+          "width": 400,
+          "height": 533
+        },
+        "card": {
+          "src": "/plants/festuca-idahoensis--habit--001/card.webp",
+          "width": 768,
+          "height": 1024
+        }
+      }
+    },
+    {
+      "id": "forestiera-pubescens--habit--001",
+      "speciesId": 32,
+      "sci": "Forestiera pubescens",
+      "role": "habit",
+      "tier": 0,
+      "status": "active",
+      "season": null,
+      "credit": "CK2AZ",
+      "license": "CC-BY",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+      "sourceUrl": "https://www.inaturalist.org/observations/99541079",
+      "idVerification": "inat-research",
+      "capturedAt": null,
+      "elevationFt": null,
+      "site": {},
+      "derivatives": {
+        "thumb": {
+          "src": "/plants/forestiera-pubescens--habit--001/thumb.webp",
+          "width": 400,
+          "height": 533
+        },
+        "card": {
+          "src": "/plants/forestiera-pubescens--habit--001/card.webp",
+          "width": 768,
+          "height": 1024
+        }
+      }
+    },
+    {
+      "id": "gaillardia-aristata--habit--001",
+      "speciesId": 56,
+      "sci": "Gaillardia aristata",
+      "role": "habit",
+      "tier": 0,
+      "status": "active",
+      "season": null,
+      "credit": "Oleksandr Shynder",
+      "license": "CC-BY",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+      "sourceUrl": "https://www.inaturalist.org/observations/189701023",
+      "idVerification": "inat-research",
+      "capturedAt": null,
+      "elevationFt": null,
+      "site": {},
+      "derivatives": {
+        "thumb": {
+          "src": "/plants/gaillardia-aristata--habit--001/thumb.webp",
+          "width": 400,
+          "height": 300
+        },
+        "card": {
+          "src": "/plants/gaillardia-aristata--habit--001/card.webp",
+          "width": 800,
+          "height": 600
+        }
+      }
+    },
+    {
+      "id": "geum-triflorum--habit--001",
+      "speciesId": 76,
+      "sci": "Geum triflorum",
+      "role": "habit",
+      "tier": 0,
+      "status": "active",
+      "season": null,
+      "credit": "Alan Covington",
+      "license": "CC-BY",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+      "sourceUrl": "https://www.inaturalist.org/observations/168941521",
+      "idVerification": "inat-research",
+      "capturedAt": null,
+      "elevationFt": null,
+      "site": {},
+      "derivatives": {
+        "thumb": {
+          "src": "/plants/geum-triflorum--habit--001/thumb.webp",
+          "width": 400,
+          "height": 273
+        },
+        "card": {
+          "src": "/plants/geum-triflorum--habit--001/card.webp",
+          "width": 800,
+          "height": 547
+        }
+      }
+    },
+    {
+      "id": "hesperostipa-comata--habit--001",
+      "speciesId": 85,
+      "sci": "Hesperostipa comata",
+      "role": "habit",
+      "tier": 0,
+      "status": "active",
+      "season": null,
+      "credit": "Elliott Gordon",
+      "license": "CC-BY",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+      "sourceUrl": "https://www.inaturalist.org/observations/83075911",
+      "idVerification": "inat-research",
+      "capturedAt": null,
+      "elevationFt": null,
+      "site": {},
+      "derivatives": {
+        "thumb": {
+          "src": "/plants/hesperostipa-comata--habit--001/thumb.webp",
+          "width": 400,
+          "height": 533
+        },
+        "card": {
+          "src": "/plants/hesperostipa-comata--habit--001/card.webp",
+          "width": 768,
+          "height": 1024
+        }
+      }
+    },
+    {
+      "id": "heterotheca-villosa--habit--001",
+      "speciesId": 63,
+      "sci": "Heterotheca villosa",
+      "role": "habit",
+      "tier": 0,
+      "status": "active",
+      "season": null,
+      "credit": "Cecelia Alexander",
+      "license": "CC0",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "sourceUrl": "https://www.inaturalist.org/observations/93318045",
+      "idVerification": "inat-research",
+      "capturedAt": null,
+      "elevationFt": null,
+      "site": {},
+      "derivatives": {
+        "thumb": {
+          "src": "/plants/heterotheca-villosa--habit--001/thumb.webp",
+          "width": 400,
+          "height": 300
+        },
+        "card": {
+          "src": "/plants/heterotheca-villosa--habit--001/card.webp",
+          "width": 800,
+          "height": 600
+        }
+      }
+    },
+    {
+      "id": "heuchera-pulchella--habit--001",
+      "speciesId": 79,
+      "sci": "Heuchera pulchella",
+      "role": "habit",
+      "tier": 0,
+      "status": "active",
+      "season": null,
+      "credit": "Sam Kieschnick",
+      "license": "CC-BY",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+      "sourceUrl": "https://www.inaturalist.org/observations/9280775",
+      "idVerification": "inat-research",
+      "capturedAt": null,
+      "elevationFt": null,
+      "site": {},
+      "derivatives": {
+        "thumb": {
+          "src": "/plants/heuchera-pulchella--habit--001/thumb.webp",
+          "width": 400,
+          "height": 300
+        },
+        "card": {
+          "src": "/plants/heuchera-pulchella--habit--001/card.webp",
+          "width": 800,
+          "height": 600
+        }
+      }
+    },
+    {
+      "id": "holodiscus-dumosus--habit--001",
+      "speciesId": 37,
+      "sci": "Holodiscus dumosus",
+      "role": "habit",
+      "tier": 0,
+      "status": "active",
+      "season": null,
+      "credit": "Gavin Slater",
+      "license": "CC-BY",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+      "sourceUrl": "https://www.inaturalist.org/observations/188329142",
+      "idVerification": "inat-research",
+      "capturedAt": null,
+      "elevationFt": null,
+      "site": {},
+      "derivatives": {
+        "thumb": {
+          "src": "/plants/holodiscus-dumosus--habit--001/thumb.webp",
+          "width": 400,
+          "height": 225
+        },
+        "card": {
+          "src": "/plants/holodiscus-dumosus--habit--001/card.webp",
+          "width": 800,
+          "height": 450
+        }
+      }
+    },
+    {
+      "id": "jamesia-americana--habit--001",
+      "speciesId": 35,
+      "sci": "Jamesia americana",
+      "role": "habit",
+      "tier": 0,
+      "status": "active",
+      "season": null,
+      "credit": "Kenzie Anderson-Bell",
+      "license": "CC-BY",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+      "sourceUrl": "https://www.inaturalist.org/observations/373716523",
+      "idVerification": "inat-research",
+      "capturedAt": null,
+      "elevationFt": null,
+      "site": {},
+      "derivatives": {
+        "thumb": {
+          "src": "/plants/jamesia-americana--habit--001/thumb.webp",
+          "width": 400,
+          "height": 533
+        },
+        "card": {
+          "src": "/plants/jamesia-americana--habit--001/card.webp",
+          "width": 768,
+          "height": 1024
+        }
+      }
+    },
+    {
       "id": "juniperus-osteosperma--habit--001",
       "speciesId": 3,
       "sci": "Juniperus osteosperma",
@@ -60,6 +1452,586 @@
       }
     },
     {
+      "id": "koeleria-macrantha--habit--001",
+      "speciesId": 87,
+      "sci": "Koeleria macrantha",
+      "role": "habit",
+      "tier": 0,
+      "status": "active",
+      "season": null,
+      "credit": "Leah Gardner",
+      "license": "CC0",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "sourceUrl": "https://www.inaturalist.org/observations/284700271",
+      "idVerification": "inat-research",
+      "capturedAt": null,
+      "elevationFt": null,
+      "site": {},
+      "derivatives": {
+        "thumb": {
+          "src": "/plants/koeleria-macrantha--habit--001/thumb.webp",
+          "width": 400,
+          "height": 533
+        },
+        "card": {
+          "src": "/plants/koeleria-macrantha--habit--001/card.webp",
+          "width": 768,
+          "height": 1024
+        }
+      }
+    },
+    {
+      "id": "krascheninnikovia-lanata--habit--001",
+      "speciesId": 26,
+      "sci": "Krascheninnikovia lanata",
+      "role": "habit",
+      "tier": 0,
+      "status": "active",
+      "season": null,
+      "credit": "Elin Pierce",
+      "license": "CC0",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "sourceUrl": "https://www.inaturalist.org/observations/163838251",
+      "idVerification": "inat-research",
+      "capturedAt": null,
+      "elevationFt": null,
+      "site": {},
+      "derivatives": {
+        "thumb": {
+          "src": "/plants/krascheninnikovia-lanata--habit--001/thumb.webp",
+          "width": 400,
+          "height": 503
+        },
+        "card": {
+          "src": "/plants/krascheninnikovia-lanata--habit--001/card.webp",
+          "width": 800,
+          "height": 1005
+        }
+      }
+    },
+    {
+      "id": "linum-lewisii--habit--001",
+      "speciesId": 58,
+      "sci": "Linum lewisii",
+      "role": "habit",
+      "tier": 0,
+      "status": "active",
+      "season": null,
+      "credit": "Bob Walker",
+      "license": "CC-BY",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+      "sourceUrl": "https://www.inaturalist.org/observations/55489724",
+      "idVerification": "inat-research",
+      "capturedAt": null,
+      "elevationFt": null,
+      "site": {},
+      "derivatives": {
+        "thumb": {
+          "src": "/plants/linum-lewisii--habit--001/thumb.webp",
+          "width": 400,
+          "height": 533
+        },
+        "card": {
+          "src": "/plants/linum-lewisii--habit--001/card.webp",
+          "width": 768,
+          "height": 1024
+        }
+      }
+    },
+    {
+      "id": "mirabilis-multiflora--habit--001",
+      "speciesId": 71,
+      "sci": "Mirabilis multiflora",
+      "role": "habit",
+      "tier": 0,
+      "status": "active",
+      "season": null,
+      "credit": "Steve Matson",
+      "license": "CC-BY",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+      "sourceUrl": "https://www.inaturalist.org/observations/124343452",
+      "idVerification": "inat-research",
+      "capturedAt": null,
+      "elevationFt": null,
+      "site": {},
+      "derivatives": {
+        "thumb": {
+          "src": "/plants/mirabilis-multiflora--habit--001/thumb.webp",
+          "width": 400,
+          "height": 278
+        },
+        "card": {
+          "src": "/plants/mirabilis-multiflora--habit--001/card.webp",
+          "width": 800,
+          "height": 555
+        }
+      }
+    },
+    {
+      "id": "muhlenbergia-montana--habit--001",
+      "speciesId": 91,
+      "sci": "Muhlenbergia montana",
+      "role": "habit",
+      "tier": 0,
+      "status": "active",
+      "season": null,
+      "credit": "Sue Carnahan",
+      "license": "CC-BY",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+      "sourceUrl": "https://www.inaturalist.org/observations/195206284",
+      "idVerification": "inat-research",
+      "capturedAt": null,
+      "elevationFt": null,
+      "site": {},
+      "derivatives": {
+        "thumb": {
+          "src": "/plants/muhlenbergia-montana--habit--001/thumb.webp",
+          "width": 400,
+          "height": 533
+        },
+        "card": {
+          "src": "/plants/muhlenbergia-montana--habit--001/card.webp",
+          "width": 768,
+          "height": 1024
+        }
+      }
+    },
+    {
+      "id": "oenothera-macrocarpa--habit--001",
+      "speciesId": 74,
+      "sci": "Oenothera macrocarpa",
+      "role": "habit",
+      "tier": 0,
+      "status": "active",
+      "season": null,
+      "credit": "askalotl",
+      "license": "CC0",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "sourceUrl": "https://www.inaturalist.org/observations/246825953",
+      "idVerification": "inat-research",
+      "capturedAt": null,
+      "elevationFt": null,
+      "site": {},
+      "derivatives": {
+        "thumb": {
+          "src": "/plants/oenothera-macrocarpa--habit--001/thumb.webp",
+          "width": 400,
+          "height": 533
+        },
+        "card": {
+          "src": "/plants/oenothera-macrocarpa--habit--001/card.webp",
+          "width": 768,
+          "height": 1024
+        }
+      }
+    },
+    {
+      "id": "opuntia-polyacantha--habit--001",
+      "speciesId": 42,
+      "sci": "Opuntia polyacantha",
+      "role": "habit",
+      "tier": 0,
+      "status": "active",
+      "season": null,
+      "credit": "Aiva Noringseth",
+      "license": "CC-BY",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+      "sourceUrl": "https://www.inaturalist.org/observations/171315430",
+      "idVerification": "inat-research",
+      "capturedAt": null,
+      "elevationFt": null,
+      "site": {},
+      "derivatives": {
+        "thumb": {
+          "src": "/plants/opuntia-polyacantha--habit--001/thumb.webp",
+          "width": 400,
+          "height": 533
+        },
+        "card": {
+          "src": "/plants/opuntia-polyacantha--habit--001/card.webp",
+          "width": 768,
+          "height": 1024
+        }
+      }
+    },
+    {
+      "id": "pascopyrum-smithii--habit--001",
+      "speciesId": 88,
+      "sci": "Pascopyrum smithii",
+      "role": "habit",
+      "tier": 0,
+      "status": "active",
+      "season": null,
+      "credit": "Matt Lavin",
+      "license": "CC-BY",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+      "sourceUrl": "https://www.inaturalist.org/observations/92237941",
+      "idVerification": "inat-research",
+      "capturedAt": null,
+      "elevationFt": null,
+      "site": {},
+      "derivatives": {
+        "thumb": {
+          "src": "/plants/pascopyrum-smithii--habit--001/thumb.webp",
+          "width": 400,
+          "height": 533
+        },
+        "card": {
+          "src": "/plants/pascopyrum-smithii--habit--001/card.webp",
+          "width": 768,
+          "height": 1024
+        }
+      }
+    },
+    {
+      "id": "paxistima-myrsinites--habit--001",
+      "speciesId": 96,
+      "sci": "Paxistima myrsinites",
+      "role": "habit",
+      "tier": 0,
+      "status": "active",
+      "season": null,
+      "credit": "giantcicada",
+      "license": "CC-BY",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+      "sourceUrl": "https://www.inaturalist.org/observations/147084782",
+      "idVerification": "inat-research",
+      "capturedAt": null,
+      "elevationFt": null,
+      "site": {},
+      "derivatives": {
+        "thumb": {
+          "src": "/plants/paxistima-myrsinites--habit--001/thumb.webp",
+          "width": 400,
+          "height": 400
+        },
+        "card": {
+          "src": "/plants/paxistima-myrsinites--habit--001/card.webp",
+          "width": 800,
+          "height": 800
+        }
+      }
+    },
+    {
+      "id": "penstemon-caespitosus--habit--001",
+      "speciesId": 52,
+      "sci": "Penstemon caespitosus",
+      "role": "habit",
+      "tier": 0,
+      "status": "active",
+      "season": null,
+      "credit": "Matt Berger",
+      "license": "CC-BY",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+      "sourceUrl": "https://www.inaturalist.org/observations/128743613",
+      "idVerification": "inat-research",
+      "capturedAt": null,
+      "elevationFt": null,
+      "site": {},
+      "derivatives": {
+        "thumb": {
+          "src": "/plants/penstemon-caespitosus--habit--001/thumb.webp",
+          "width": 400,
+          "height": 300
+        },
+        "card": {
+          "src": "/plants/penstemon-caespitosus--habit--001/card.webp",
+          "width": 800,
+          "height": 600
+        }
+      }
+    },
+    {
+      "id": "penstemon-eatonii--habit--001",
+      "speciesId": 49,
+      "sci": "Penstemon eatonii",
+      "role": "habit",
+      "tier": 0,
+      "status": "active",
+      "season": null,
+      "credit": "Grant Chovil",
+      "license": "CC-BY",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+      "sourceUrl": "https://www.inaturalist.org/observations/75357284",
+      "idVerification": "inat-research",
+      "capturedAt": null,
+      "elevationFt": null,
+      "site": {},
+      "derivatives": {
+        "thumb": {
+          "src": "/plants/penstemon-eatonii--habit--001/thumb.webp",
+          "width": 400,
+          "height": 533
+        },
+        "card": {
+          "src": "/plants/penstemon-eatonii--habit--001/card.webp",
+          "width": 768,
+          "height": 1024
+        }
+      }
+    },
+    {
+      "id": "penstemon-palmeri--habit--001",
+      "speciesId": 50,
+      "sci": "Penstemon palmeri",
+      "role": "habit",
+      "tier": 0,
+      "status": "active",
+      "season": null,
+      "credit": "Jim Morefield",
+      "license": "CC-BY",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+      "sourceUrl": "https://www.inaturalist.org/observations/55126921",
+      "idVerification": "inat-research",
+      "capturedAt": null,
+      "elevationFt": null,
+      "site": {},
+      "derivatives": {
+        "thumb": {
+          "src": "/plants/penstemon-palmeri--habit--001/thumb.webp",
+          "width": 400,
+          "height": 533
+        },
+        "card": {
+          "src": "/plants/penstemon-palmeri--habit--001/card.webp",
+          "width": 768,
+          "height": 1024
+        }
+      }
+    },
+    {
+      "id": "penstemon-pinifolius--habit--001",
+      "speciesId": 51,
+      "sci": "Penstemon pinifolius",
+      "role": "habit",
+      "tier": 0,
+      "status": "active",
+      "season": null,
+      "credit": "Andrew Tree",
+      "license": "CC-BY",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+      "sourceUrl": "https://www.inaturalist.org/observations/88865570",
+      "idVerification": "inat-research",
+      "capturedAt": null,
+      "elevationFt": null,
+      "site": {},
+      "derivatives": {
+        "thumb": {
+          "src": "/plants/penstemon-pinifolius--habit--001/thumb.webp",
+          "width": 400,
+          "height": 320
+        },
+        "card": {
+          "src": "/plants/penstemon-pinifolius--habit--001/card.webp",
+          "width": 800,
+          "height": 641
+        }
+      }
+    },
+    {
+      "id": "penstemon-secundiflorus--habit--001",
+      "speciesId": 53,
+      "sci": "Penstemon secundiflorus",
+      "role": "habit",
+      "tier": 0,
+      "status": "active",
+      "season": null,
+      "credit": "Jared Shorma",
+      "license": "CC-BY",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+      "sourceUrl": "https://www.inaturalist.org/observations/349166255",
+      "idVerification": "inat-research",
+      "capturedAt": null,
+      "elevationFt": null,
+      "site": {},
+      "derivatives": {
+        "thumb": {
+          "src": "/plants/penstemon-secundiflorus--habit--001/thumb.webp",
+          "width": 400,
+          "height": 300
+        },
+        "card": {
+          "src": "/plants/penstemon-secundiflorus--habit--001/card.webp",
+          "width": 800,
+          "height": 600
+        }
+      }
+    },
+    {
+      "id": "penstemon-strictus--habit--001",
+      "speciesId": 48,
+      "sci": "Penstemon strictus",
+      "role": "habit",
+      "tier": 0,
+      "status": "active",
+      "season": null,
+      "credit": "William Harmon",
+      "license": "CC-BY",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+      "sourceUrl": "https://www.inaturalist.org/observations/169319214",
+      "idVerification": "inat-research",
+      "capturedAt": null,
+      "elevationFt": null,
+      "site": {},
+      "derivatives": {
+        "thumb": {
+          "src": "/plants/penstemon-strictus--habit--001/thumb.webp",
+          "width": 400,
+          "height": 267
+        },
+        "card": {
+          "src": "/plants/penstemon-strictus--habit--001/card.webp",
+          "width": 800,
+          "height": 534
+        }
+      }
+    },
+    {
+      "id": "petrophytum-caespitosum--habit--001",
+      "speciesId": 95,
+      "sci": "Petrophytum caespitosum",
+      "role": "habit",
+      "tier": 0,
+      "status": "active",
+      "season": null,
+      "credit": "Roberto Daniel Avila",
+      "license": "CC-BY",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+      "sourceUrl": "https://www.inaturalist.org/observations/247181027",
+      "idVerification": "inat-research",
+      "capturedAt": null,
+      "elevationFt": null,
+      "site": {},
+      "derivatives": {
+        "thumb": {
+          "src": "/plants/petrophytum-caespitosum--habit--001/thumb.webp",
+          "width": 400,
+          "height": 600
+        },
+        "card": {
+          "src": "/plants/petrophytum-caespitosum--habit--001/card.webp",
+          "width": 683,
+          "height": 1024
+        }
+      }
+    },
+    {
+      "id": "philadelphus-lewisii--habit--001",
+      "speciesId": 33,
+      "sci": "Philadelphus lewisii",
+      "role": "habit",
+      "tier": 0,
+      "status": "active",
+      "season": null,
+      "credit": "Charles Swift",
+      "license": "CC-BY",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+      "sourceUrl": "https://www.inaturalist.org/observations/6844683",
+      "idVerification": "inat-research",
+      "capturedAt": null,
+      "elevationFt": null,
+      "site": {},
+      "derivatives": {
+        "thumb": {
+          "src": "/plants/philadelphus-lewisii--habit--001/thumb.webp",
+          "width": 400,
+          "height": 711
+        },
+        "card": {
+          "src": "/plants/philadelphus-lewisii--habit--001/card.webp",
+          "width": 576,
+          "height": 1024
+        }
+      }
+    },
+    {
+      "id": "phlox-hoodii--habit--001",
+      "speciesId": 93,
+      "sci": "Phlox hoodii",
+      "role": "habit",
+      "tier": 0,
+      "status": "active",
+      "season": null,
+      "credit": "Anders Hastings",
+      "license": "CC-BY",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+      "sourceUrl": "https://www.inaturalist.org/observations/364471333",
+      "idVerification": "inat-research",
+      "capturedAt": null,
+      "elevationFt": null,
+      "site": {},
+      "derivatives": {
+        "thumb": {
+          "src": "/plants/phlox-hoodii--habit--001/thumb.webp",
+          "width": 400,
+          "height": 267
+        },
+        "card": {
+          "src": "/plants/phlox-hoodii--habit--001/card.webp",
+          "width": 800,
+          "height": 534
+        }
+      }
+    },
+    {
+      "id": "physocarpus-monogynus--habit--001",
+      "speciesId": 34,
+      "sci": "Physocarpus monogynus",
+      "role": "habit",
+      "tier": 0,
+      "status": "active",
+      "season": null,
+      "credit": "Parker Hopkins",
+      "license": "CC0",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "sourceUrl": "https://www.inaturalist.org/observations/50008722",
+      "idVerification": "inat-research",
+      "capturedAt": null,
+      "elevationFt": null,
+      "site": {},
+      "derivatives": {
+        "thumb": {
+          "src": "/plants/physocarpus-monogynus--habit--001/thumb.webp",
+          "width": 400,
+          "height": 300
+        },
+        "card": {
+          "src": "/plants/physocarpus-monogynus--habit--001/card.webp",
+          "width": 800,
+          "height": 600
+        }
+      }
+    },
+    {
+      "id": "pinus-aristata--habit--001",
+      "speciesId": 6,
+      "sci": "Pinus aristata",
+      "role": "habit",
+      "tier": 0,
+      "status": "active",
+      "season": null,
+      "credit": "Jim Morefield",
+      "license": "CC-BY",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+      "sourceUrl": "https://www.inaturalist.org/observations/32749628",
+      "idVerification": "inat-research",
+      "capturedAt": null,
+      "elevationFt": null,
+      "site": {},
+      "derivatives": {
+        "thumb": {
+          "src": "/plants/pinus-aristata--habit--001/thumb.webp",
+          "width": 400,
+          "height": 300
+        },
+        "card": {
+          "src": "/plants/pinus-aristata--habit--001/card.webp",
+          "width": 800,
+          "height": 600
+        }
+      }
+    },
+    {
       "id": "pinus-edulis--habit--001",
       "speciesId": 1,
       "sci": "Pinus edulis",
@@ -84,6 +2056,644 @@
         "card": {
           "src": "/plants/pinus-edulis--habit--001/card.webp",
           "width": 768,
+          "height": 1024
+        }
+      }
+    },
+    {
+      "id": "pinus-flexilis--habit--001",
+      "speciesId": 5,
+      "sci": "Pinus flexilis",
+      "role": "habit",
+      "tier": 0,
+      "status": "active",
+      "season": null,
+      "credit": "Siddarth Machado",
+      "license": "CC-BY",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+      "sourceUrl": "https://www.inaturalist.org/observations/125051171",
+      "idVerification": "inat-research",
+      "capturedAt": null,
+      "elevationFt": null,
+      "site": {},
+      "derivatives": {
+        "thumb": {
+          "src": "/plants/pinus-flexilis--habit--001/thumb.webp",
+          "width": 400,
+          "height": 556
+        },
+        "card": {
+          "src": "/plants/pinus-flexilis--habit--001/card.webp",
+          "width": 737,
+          "height": 1024
+        }
+      }
+    },
+    {
+      "id": "pinus-ponderosa--habit--001",
+      "speciesId": 4,
+      "sci": "Pinus ponderosa",
+      "role": "habit",
+      "tier": 0,
+      "status": "active",
+      "season": null,
+      "credit": "Jim Morefield",
+      "license": "CC-BY",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+      "sourceUrl": "https://www.inaturalist.org/observations/28988090",
+      "idVerification": "inat-research",
+      "capturedAt": null,
+      "elevationFt": null,
+      "site": {},
+      "derivatives": {
+        "thumb": {
+          "src": "/plants/pinus-ponderosa--habit--001/thumb.webp",
+          "width": 400,
+          "height": 300
+        },
+        "card": {
+          "src": "/plants/pinus-ponderosa--habit--001/card.webp",
+          "width": 800,
+          "height": 600
+        }
+      }
+    },
+    {
+      "id": "populus-tremuloides--habit--001",
+      "speciesId": 7,
+      "sci": "Populus tremuloides",
+      "role": "habit",
+      "tier": 0,
+      "status": "active",
+      "season": null,
+      "credit": "Ed Alverson",
+      "license": "CC-BY",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+      "sourceUrl": "https://www.inaturalist.org/observations/45563475",
+      "idVerification": "inat-research",
+      "capturedAt": null,
+      "elevationFt": null,
+      "site": {},
+      "derivatives": {
+        "thumb": {
+          "src": "/plants/populus-tremuloides--habit--001/thumb.webp",
+          "width": 400,
+          "height": 266
+        },
+        "card": {
+          "src": "/plants/populus-tremuloides--habit--001/card.webp",
+          "width": 800,
+          "height": 533
+        }
+      }
+    },
+    {
+      "id": "prunus-besseyi--habit--001",
+      "speciesId": 38,
+      "sci": "Prunus besseyi",
+      "role": "habit",
+      "tier": 0,
+      "status": "active",
+      "season": null,
+      "credit": "Ryan Sorrells",
+      "license": "CC-BY",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+      "sourceUrl": "https://www.inaturalist.org/observations/234778074",
+      "idVerification": "inat-research",
+      "capturedAt": null,
+      "elevationFt": null,
+      "site": {},
+      "derivatives": {
+        "thumb": {
+          "src": "/plants/prunus-besseyi--habit--001/thumb.webp",
+          "width": 400,
+          "height": 301
+        },
+        "card": {
+          "src": "/plants/prunus-besseyi--habit--001/card.webp",
+          "width": 800,
+          "height": 602
+        }
+      }
+    },
+    {
+      "id": "prunus-virginiana--habit--001",
+      "speciesId": 11,
+      "sci": "Prunus virginiana",
+      "role": "habit",
+      "tier": 0,
+      "status": "active",
+      "season": null,
+      "credit": "Trevor Van Loon",
+      "license": "CC-BY",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+      "sourceUrl": "https://www.inaturalist.org/observations/77665608",
+      "idVerification": "inat-research",
+      "capturedAt": null,
+      "elevationFt": null,
+      "site": {},
+      "derivatives": {
+        "thumb": {
+          "src": "/plants/prunus-virginiana--habit--001/thumb.webp",
+          "width": 400,
+          "height": 533
+        },
+        "card": {
+          "src": "/plants/prunus-virginiana--habit--001/card.webp",
+          "width": 768,
+          "height": 1024
+        }
+      }
+    },
+    {
+      "id": "purshia-tridentata--habit--001",
+      "speciesId": 17,
+      "sci": "Purshia tridentata",
+      "role": "habit",
+      "tier": 0,
+      "status": "active",
+      "season": null,
+      "credit": "Deniz Wilson",
+      "license": "CC0",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "sourceUrl": "https://www.inaturalist.org/observations/278855287",
+      "idVerification": "inat-research",
+      "capturedAt": null,
+      "elevationFt": null,
+      "site": {},
+      "derivatives": {
+        "thumb": {
+          "src": "/plants/purshia-tridentata--habit--001/thumb.webp",
+          "width": 400,
+          "height": 300
+        },
+        "card": {
+          "src": "/plants/purshia-tridentata--habit--001/card.webp",
+          "width": 800,
+          "height": 600
+        }
+      }
+    },
+    {
+      "id": "quercus-gambelii--habit--001",
+      "speciesId": 10,
+      "sci": "Quercus gambelii",
+      "role": "habit",
+      "tier": 0,
+      "status": "active",
+      "season": null,
+      "credit": "Daughter Dad",
+      "license": "CC-BY",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+      "sourceUrl": "https://www.inaturalist.org/observations/313450572",
+      "idVerification": "inat-research",
+      "capturedAt": null,
+      "elevationFt": null,
+      "site": {},
+      "derivatives": {
+        "thumb": {
+          "src": "/plants/quercus-gambelii--habit--001/thumb.webp",
+          "width": 400,
+          "height": 225
+        },
+        "card": {
+          "src": "/plants/quercus-gambelii--habit--001/card.webp",
+          "width": 800,
+          "height": 450
+        }
+      }
+    },
+    {
+      "id": "ratibida-columnifera--habit--001",
+      "speciesId": 61,
+      "sci": "Ratibida columnifera",
+      "role": "habit",
+      "tier": 0,
+      "status": "active",
+      "season": null,
+      "credit": "Cecelia Alexander",
+      "license": "CC0",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "sourceUrl": "https://www.inaturalist.org/observations/9256939",
+      "idVerification": "inat-research",
+      "capturedAt": null,
+      "elevationFt": null,
+      "site": {},
+      "derivatives": {
+        "thumb": {
+          "src": "/plants/ratibida-columnifera--habit--001/thumb.webp",
+          "width": 400,
+          "height": 267
+        },
+        "card": {
+          "src": "/plants/ratibida-columnifera--habit--001/card.webp",
+          "width": 800,
+          "height": 534
+        }
+      }
+    },
+    {
+      "id": "rhus-glabra--habit--001",
+      "speciesId": 20,
+      "sci": "Rhus glabra",
+      "role": "habit",
+      "tier": 0,
+      "status": "active",
+      "season": null,
+      "credit": "Zach Earl",
+      "license": "CC-BY",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+      "sourceUrl": "https://www.inaturalist.org/observations/209767681",
+      "idVerification": "inat-research",
+      "capturedAt": null,
+      "elevationFt": null,
+      "site": {},
+      "derivatives": {
+        "thumb": {
+          "src": "/plants/rhus-glabra--habit--001/thumb.webp",
+          "width": 400,
+          "height": 533
+        },
+        "card": {
+          "src": "/plants/rhus-glabra--habit--001/card.webp",
+          "width": 768,
+          "height": 1024
+        }
+      }
+    },
+    {
+      "id": "rhus-trilobata--habit--001",
+      "speciesId": 18,
+      "sci": "Rhus trilobata",
+      "role": "habit",
+      "tier": 0,
+      "status": "active",
+      "season": null,
+      "credit": "Daniel",
+      "license": "CC0",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "sourceUrl": "https://www.inaturalist.org/observations/215051406",
+      "idVerification": "inat-research",
+      "capturedAt": null,
+      "elevationFt": null,
+      "site": {},
+      "derivatives": {
+        "thumb": {
+          "src": "/plants/rhus-trilobata--habit--001/thumb.webp",
+          "width": 400,
+          "height": 533
+        },
+        "card": {
+          "src": "/plants/rhus-trilobata--habit--001/card.webp",
+          "width": 768,
+          "height": 1024
+        }
+      }
+    },
+    {
+      "id": "ribes-aureum--habit--001",
+      "speciesId": 29,
+      "sci": "Ribes aureum",
+      "role": "habit",
+      "tier": 0,
+      "status": "active",
+      "season": null,
+      "credit": "Carolyn Koehn",
+      "license": "CC-BY",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+      "sourceUrl": "https://www.inaturalist.org/observations/209720045",
+      "idVerification": "inat-research",
+      "capturedAt": null,
+      "elevationFt": null,
+      "site": {},
+      "derivatives": {
+        "thumb": {
+          "src": "/plants/ribes-aureum--habit--001/thumb.webp",
+          "width": 400,
+          "height": 533
+        },
+        "card": {
+          "src": "/plants/ribes-aureum--habit--001/card.webp",
+          "width": 768,
+          "height": 1024
+        }
+      }
+    },
+    {
+      "id": "rosa-woodsii--habit--001",
+      "speciesId": 30,
+      "sci": "Rosa woodsii",
+      "role": "habit",
+      "tier": 0,
+      "status": "active",
+      "season": null,
+      "credit": "Samuel A Schmid, PhD, PWS",
+      "license": "CC-BY",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+      "sourceUrl": "https://www.inaturalist.org/observations/83166179",
+      "idVerification": "inat-research",
+      "capturedAt": null,
+      "elevationFt": null,
+      "site": {},
+      "derivatives": {
+        "thumb": {
+          "src": "/plants/rosa-woodsii--habit--001/thumb.webp",
+          "width": 400,
+          "height": 533
+        },
+        "card": {
+          "src": "/plants/rosa-woodsii--habit--001/card.webp",
+          "width": 768,
+          "height": 1024
+        }
+      }
+    },
+    {
+      "id": "salvia-dorrii--habit--001",
+      "speciesId": 77,
+      "sci": "Salvia dorrii",
+      "role": "habit",
+      "tier": 0,
+      "status": "active",
+      "season": null,
+      "credit": "Matt Berger",
+      "license": "CC-BY",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+      "sourceUrl": "https://www.inaturalist.org/observations/167307676",
+      "idVerification": "inat-research",
+      "capturedAt": null,
+      "elevationFt": null,
+      "site": {},
+      "derivatives": {
+        "thumb": {
+          "src": "/plants/salvia-dorrii--habit--001/thumb.webp",
+          "width": 400,
+          "height": 533
+        },
+        "card": {
+          "src": "/plants/salvia-dorrii--habit--001/card.webp",
+          "width": 768,
+          "height": 1024
+        }
+      }
+    },
+    {
+      "id": "schizachyrium-scoparium--habit--001",
+      "speciesId": 89,
+      "sci": "Schizachyrium scoparium",
+      "role": "habit",
+      "tier": 0,
+      "status": "active",
+      "season": null,
+      "credit": "Zihao Wang",
+      "license": "CC-BY",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+      "sourceUrl": "https://www.inaturalist.org/observations/33345826",
+      "idVerification": "inat-research",
+      "capturedAt": null,
+      "elevationFt": null,
+      "site": {},
+      "derivatives": {
+        "thumb": {
+          "src": "/plants/schizachyrium-scoparium--habit--001/thumb.webp",
+          "width": 400,
+          "height": 268
+        },
+        "card": {
+          "src": "/plants/schizachyrium-scoparium--habit--001/card.webp",
+          "width": 800,
+          "height": 536
+        }
+      }
+    },
+    {
+      "id": "sedum-lanceolatum--habit--001",
+      "speciesId": 47,
+      "sci": "Sedum lanceolatum",
+      "role": "habit",
+      "tier": 0,
+      "status": "active",
+      "season": null,
+      "credit": "Peter Abrahamsen",
+      "license": "CC-BY",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+      "sourceUrl": "https://www.inaturalist.org/observations/224019322",
+      "idVerification": "inat-research",
+      "capturedAt": null,
+      "elevationFt": null,
+      "site": {},
+      "derivatives": {
+        "thumb": {
+          "src": "/plants/sedum-lanceolatum--habit--001/thumb.webp",
+          "width": 400,
+          "height": 533
+        },
+        "card": {
+          "src": "/plants/sedum-lanceolatum--habit--001/card.webp",
+          "width": 768,
+          "height": 1024
+        }
+      }
+    },
+    {
+      "id": "shepherdia-canadensis--habit--001",
+      "speciesId": 31,
+      "sci": "Shepherdia canadensis",
+      "role": "habit",
+      "tier": 0,
+      "status": "active",
+      "season": null,
+      "credit": "Erin Springinotic",
+      "license": "CC0",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "sourceUrl": "https://www.inaturalist.org/observations/95357480",
+      "idVerification": "inat-research",
+      "capturedAt": null,
+      "elevationFt": null,
+      "site": {},
+      "derivatives": {
+        "thumb": {
+          "src": "/plants/shepherdia-canadensis--habit--001/thumb.webp",
+          "width": 400,
+          "height": 300
+        },
+        "card": {
+          "src": "/plants/shepherdia-canadensis--habit--001/card.webp",
+          "width": 800,
+          "height": 600
+        }
+      }
+    },
+    {
+      "id": "solidago-multiradiata--habit--001",
+      "speciesId": 65,
+      "sci": "Solidago multiradiata",
+      "role": "habit",
+      "tier": 0,
+      "status": "active",
+      "season": null,
+      "credit": "Brandon Corder",
+      "license": "CC-BY",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+      "sourceUrl": "https://www.inaturalist.org/observations/126119122",
+      "idVerification": "inat-research",
+      "capturedAt": null,
+      "elevationFt": null,
+      "site": {},
+      "derivatives": {
+        "thumb": {
+          "src": "/plants/solidago-multiradiata--habit--001/thumb.webp",
+          "width": 400,
+          "height": 533
+        },
+        "card": {
+          "src": "/plants/solidago-multiradiata--habit--001/card.webp",
+          "width": 768,
+          "height": 1024
+        }
+      }
+    },
+    {
+      "id": "sphaeralcea-coccinea--habit--001",
+      "speciesId": 59,
+      "sci": "Sphaeralcea coccinea",
+      "role": "habit",
+      "tier": 0,
+      "status": "active",
+      "season": null,
+      "credit": "Chris Friesen",
+      "license": "CC-BY",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+      "sourceUrl": "https://www.inaturalist.org/observations/6782476",
+      "idVerification": "inat-research",
+      "capturedAt": null,
+      "elevationFt": null,
+      "site": {},
+      "derivatives": {
+        "thumb": {
+          "src": "/plants/sphaeralcea-coccinea--habit--001/thumb.webp",
+          "width": 400,
+          "height": 225
+        },
+        "card": {
+          "src": "/plants/sphaeralcea-coccinea--habit--001/card.webp",
+          "width": 800,
+          "height": 450
+        }
+      }
+    },
+    {
+      "id": "sporobolus-cryptandrus--habit--001",
+      "speciesId": 90,
+      "sci": "Sporobolus cryptandrus",
+      "role": "habit",
+      "tier": 0,
+      "status": "active",
+      "season": null,
+      "credit": "KAnatoliy",
+      "license": "CC-BY",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+      "sourceUrl": "https://www.inaturalist.org/observations/86049480",
+      "idVerification": "inat-research",
+      "capturedAt": null,
+      "elevationFt": null,
+      "site": {},
+      "derivatives": {
+        "thumb": {
+          "src": "/plants/sporobolus-cryptandrus--habit--001/thumb.webp",
+          "width": 400,
+          "height": 533
+        },
+        "card": {
+          "src": "/plants/sporobolus-cryptandrus--habit--001/card.webp",
+          "width": 768,
+          "height": 1024
+        }
+      }
+    },
+    {
+      "id": "symphoricarpos-oreophilus--habit--001",
+      "speciesId": 27,
+      "sci": "Symphoricarpos oreophilus",
+      "role": "habit",
+      "tier": 0,
+      "status": "active",
+      "season": null,
+      "credit": "Steve Woodward",
+      "license": "CC0",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "sourceUrl": "https://www.inaturalist.org/observations/180355333",
+      "idVerification": "inat-research",
+      "capturedAt": null,
+      "elevationFt": null,
+      "site": {},
+      "derivatives": {
+        "thumb": {
+          "src": "/plants/symphoricarpos-oreophilus--habit--001/thumb.webp",
+          "width": 400,
+          "height": 300
+        },
+        "card": {
+          "src": "/plants/symphoricarpos-oreophilus--habit--001/card.webp",
+          "width": 800,
+          "height": 600
+        }
+      }
+    },
+    {
+      "id": "symphyotrichum-laeve--habit--001",
+      "speciesId": 64,
+      "sci": "Symphyotrichum laeve",
+      "role": "habit",
+      "tier": 0,
+      "status": "active",
+      "season": null,
+      "credit": "fiona",
+      "license": "CC0",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "sourceUrl": "https://www.inaturalist.org/observations/300205324",
+      "idVerification": "inat-research",
+      "capturedAt": null,
+      "elevationFt": null,
+      "site": {},
+      "derivatives": {
+        "thumb": {
+          "src": "/plants/symphyotrichum-laeve--habit--001/thumb.webp",
+          "width": 400,
+          "height": 533
+        },
+        "card": {
+          "src": "/plants/symphyotrichum-laeve--habit--001/card.webp",
+          "width": 769,
+          "height": 1024
+        }
+      }
+    },
+    {
+      "id": "thermopsis-montana--habit--001",
+      "speciesId": 66,
+      "sci": "Thermopsis montana",
+      "role": "habit",
+      "tier": 0,
+      "status": "active",
+      "season": null,
+      "credit": "Craig Martin",
+      "license": "CC0",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "sourceUrl": "https://www.inaturalist.org/observations/3367538",
+      "idVerification": "inat-research",
+      "capturedAt": null,
+      "elevationFt": null,
+      "site": {},
+      "derivatives": {
+        "thumb": {
+          "src": "/plants/thermopsis-montana--habit--001/thumb.webp",
+          "width": 400,
+          "height": 711
+        },
+        "card": {
+          "src": "/plants/thermopsis-montana--habit--001/card.webp",
+          "width": 576,
           "height": 1024
         }
       }
@@ -120,6 +2730,64 @@
       }
     },
     {
+      "id": "veronica-liwanensis--habit--001",
+      "speciesId": 98,
+      "sci": "Veronica liwanensis",
+      "role": "habit",
+      "tier": 0,
+      "status": "active",
+      "season": null,
+      "credit": "Todd Boland",
+      "license": "CC-BY",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+      "sourceUrl": "https://www.inaturalist.org/observations/25512773",
+      "idVerification": "inat-research",
+      "capturedAt": null,
+      "elevationFt": null,
+      "site": {},
+      "derivatives": {
+        "thumb": {
+          "src": "/plants/veronica-liwanensis--habit--001/thumb.webp",
+          "width": 400,
+          "height": 533
+        },
+        "card": {
+          "src": "/plants/veronica-liwanensis--habit--001/card.webp",
+          "width": 768,
+          "height": 1024
+        }
+      }
+    },
+    {
+      "id": "yucca-baccata--habit--001",
+      "speciesId": 46,
+      "sci": "Yucca baccata",
+      "role": "habit",
+      "tier": 0,
+      "status": "active",
+      "season": null,
+      "credit": "Grant Chovil",
+      "license": "CC-BY",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+      "sourceUrl": "https://www.inaturalist.org/observations/59017918",
+      "idVerification": "inat-research",
+      "capturedAt": null,
+      "elevationFt": null,
+      "site": {},
+      "derivatives": {
+        "thumb": {
+          "src": "/plants/yucca-baccata--habit--001/thumb.webp",
+          "width": 400,
+          "height": 533
+        },
+        "card": {
+          "src": "/plants/yucca-baccata--habit--001/card.webp",
+          "width": 768,
+          "height": 1024
+        }
+      }
+    },
+    {
       "id": "yucca-glauca--habit--001",
       "speciesId": 45,
       "sci": "Yucca glauca",
@@ -141,12 +2809,41 @@
         "thumb": {
           "src": "/plants/yucca-glauca--habit--001/thumb.webp",
           "width": 400,
-          "height": 300
+          "height": 533
         },
         "card": {
           "src": "/plants/yucca-glauca--habit--001/card.webp",
           "width": 800,
-          "height": 600
+          "height": 1067
+        }
+      }
+    },
+    {
+      "id": "zinnia-grandiflora--habit--001",
+      "speciesId": 73,
+      "sci": "Zinnia grandiflora",
+      "role": "habit",
+      "tier": 0,
+      "status": "active",
+      "season": null,
+      "credit": "Craig Martin",
+      "license": "CC0",
+      "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/",
+      "sourceUrl": "https://www.inaturalist.org/observations/60423184",
+      "idVerification": "inat-research",
+      "capturedAt": null,
+      "elevationFt": null,
+      "site": {},
+      "derivatives": {
+        "thumb": {
+          "src": "/plants/zinnia-grandiflora--habit--001/thumb.webp",
+          "width": 400,
+          "height": 225
+        },
+        "card": {
+          "src": "/plants/zinnia-grandiflora--habit--001/card.webp",
+          "width": 800,
+          "height": 450
         }
       }
     }
