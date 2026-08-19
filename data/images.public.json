@@ -1,0 +1,154 @@
+{
+  "schemaVersion": 1,
+  "images": [
+    {
+      "id": "juniperus-osteosperma--habit--001",
+      "speciesId": 3,
+      "sci": "Juniperus osteosperma",
+      "role": "habit",
+      "tier": 0,
+      "status": "active",
+      "season": null,
+      "credit": "Michael J. Papay",
+      "license": "CC-BY",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+      "sourceUrl": "https://www.inaturalist.org/observations/66610196",
+      "idVerification": "inat-research",
+      "capturedAt": null,
+      "elevationFt": null,
+      "site": {},
+      "derivatives": {
+        "thumb": {
+          "src": "/plants/juniperus-osteosperma--habit--001/thumb.webp",
+          "width": 400,
+          "height": 300
+        },
+        "card": {
+          "src": "/plants/juniperus-osteosperma--habit--001/card.webp",
+          "width": 800,
+          "height": 600
+        }
+      }
+    },
+    {
+      "id": "juniperus-scopulorum--habit--001",
+      "speciesId": 2,
+      "sci": "Juniperus scopulorum",
+      "role": "habit",
+      "tier": 0,
+      "status": "active",
+      "season": null,
+      "credit": "Matt Lavin",
+      "license": "CC-BY",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+      "sourceUrl": "https://www.inaturalist.org/observations/119428437",
+      "idVerification": "inat-research",
+      "capturedAt": null,
+      "elevationFt": null,
+      "site": {},
+      "derivatives": {
+        "thumb": {
+          "src": "/plants/juniperus-scopulorum--habit--001/thumb.webp",
+          "width": 400,
+          "height": 300
+        },
+        "card": {
+          "src": "/plants/juniperus-scopulorum--habit--001/card.webp",
+          "width": 800,
+          "height": 600
+        }
+      }
+    },
+    {
+      "id": "pinus-edulis--habit--001",
+      "speciesId": 1,
+      "sci": "Pinus edulis",
+      "role": "habit",
+      "tier": 0,
+      "status": "active",
+      "season": null,
+      "credit": "CK2AZ",
+      "license": "CC-BY",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/",
+      "sourceUrl": "https://www.inaturalist.org/observations/5249009",
+      "idVerification": "inat-research",
+      "capturedAt": null,
+      "elevationFt": null,
+      "site": {},
+      "derivatives": {
+        "thumb": {
+          "src": "/plants/pinus-edulis--habit--001/thumb.webp",
+          "width": 400,
+          "height": 533
+        },
+        "card": {
+          "src": "/plants/pinus-edulis--habit--001/card.webp",
+          "width": 768,
+          "height": 1024
+        }
+      }
+    },
+    {
+      "id": "thymus-serpyllum--habit--001",
+      "speciesId": 99,
+      "sci": "Thymus serpyllum",
+      "role": "habit",
+      "tier": 1,
+      "status": "active",
+      "season": "summer",
+      "credit": "Next Steppe",
+      "license": "own",
+      "licenseUrl": null,
+      "sourceUrl": "",
+      "idVerification": "own-field",
+      "capturedAt": "2026-07-14",
+      "elevationFt": 7415,
+      "site": {
+        "context": "wild"
+      },
+      "derivatives": {
+        "thumb": {
+          "src": "/plants/thymus-serpyllum--habit--001/thumb.webp",
+          "width": 400,
+          "height": 533
+        },
+        "card": {
+          "src": "/plants/thymus-serpyllum--habit--001/card.webp",
+          "width": 800,
+          "height": 1067
+        }
+      }
+    },
+    {
+      "id": "yucca-glauca--habit--001",
+      "speciesId": 45,
+      "sci": "Yucca glauca",
+      "role": "habit",
+      "tier": 1,
+      "status": "active",
+      "season": "summer",
+      "credit": "Next Steppe",
+      "license": "own",
+      "licenseUrl": null,
+      "sourceUrl": "",
+      "idVerification": "own-field",
+      "capturedAt": "2026-07-15",
+      "elevationFt": 6528,
+      "site": {
+        "context": "wild"
+      },
+      "derivatives": {
+        "thumb": {
+          "src": "/plants/yucca-glauca--habit--001/thumb.webp",
+          "width": 400,
+          "height": 300
+        },
+        "card": {
+          "src": "/plants/yucca-glauca--habit--001/card.webp",
+          "width": 800,
+          "height": 600
+        }
+      }
+    }
+  ]
+}

@@ -4,6 +4,10 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 // and unverified cultural notes are absent from this file, not filtered here.
 import plants from '../../../data/plants.public.json';
 import { hizGuidance, ignSourceLabel } from '../../lib/publish-gate.js';
+// Gated at sync time by scripts/sync-plant-db.mjs through src/lib/image-gate.js.
+// Capture coordinates never reach this repo; see PRIVATE_FIELDS in that module.
+import imageIndex from '../../../data/images.public.json';
+import { ROLE_LABEL, creditLine, imagesBySpecies } from '../../lib/image-gate.js';
 
 export function getStaticPaths() {
   return plants.map((plant) => ({
@@ -13,6 +17,35 @@ export function getStaticPaths() {
 }
 
 const { plant: p } = Astro.props;
+
+// Built once per build rather than per page: getStaticPaths renders 100 of these.
+const bySpecies = imagesBySpecies(imageIndex.images);
+const photos = bySpecies[p.slug] ?? null;
+
+/**
+ * The field line under an own photograph.
+ *
+ * This is the part no scraped database can reproduce. `elevMin`/`elevMax` on this
+ * page come from CSU Extension; "photographed at 7,415 ft" comes from having stood
+ * there, and the elevation is read out of the file's own EXIF rather than typed.
+ * Only elevation and date cross from that EXIF — the coordinates stay in the
+ * database repo, because on a job they are the client's address.
+ */
+const fieldLine = (img) => {
+  const bits = [];
+  if (img.elevationFt) bits.push(`Photographed at ${img.elevationFt.toLocaleString()} ft`);
+  if (img.capturedAt) {
+    bits.push(
+      new Date(`${img.capturedAt}T00:00:00`).toLocaleDateString('en-US', {
+        month: 'long',
+        year: 'numeric',
+      }),
+    );
+  }
+  const site = img.site ?? {};
+  if (site.aspect) bits.push(`${site.aspect} aspect`);
+  return bits.join(' · ');
+};
 
 const hiz = hizGuidance(p);
 const ignSource = ignSourceLabel(p.ignSrc);
@@ -73,6 +106,82 @@ const facts = [
       <div class="scope-tags">
         {p.useTags.map((t) => <span class="tag">{t}</span>)}
       </div>
+    )}
+
+    {/* Photographs, where they exist. 99 of 100 species have none today, and a
+        species without one renders exactly as it did before this section — no
+        placeholder, no empty frame, no apology. */}
+    {photos?.primary && (
+      <figure class="hero">
+        <img
+          src={photos.primary.derivatives.card.src}
+          width={photos.primary.derivatives.card.width}
+          height={photos.primary.derivatives.card.height}
+          alt={`${p.common} (${p.sci}) — ${ROLE_LABEL[photos.primary.role] ?? photos.primary.role}`}
+          loading="eager"
+          decoding="async"
+        />
+        <figcaption>
+          <span class="credit">{creditLine(photos.primary)}</span>
+          {fieldLine(photos.primary) && <span class="field">{fieldLine(photos.primary)}</span>}
+        </figcaption>
+      </figure>
+    )}
+
+    {photos?.gallery?.length > 0 && (
+      <section class="gallery-section">
+        <h2>More photographs</h2>
+        <div class="gallery">
+          {photos.gallery.map((img) => (
+            <figure>
+              <img
+                src={img.derivatives.card.src}
+                width={img.derivatives.card.width}
+                height={img.derivatives.card.height}
+                alt={`${p.common} — ${ROLE_LABEL[img.role] ?? img.role}`}
+                loading="lazy"
+                decoding="async"
+              />
+              <figcaption>
+                <span class="role">{ROLE_LABEL[img.role] ?? img.role}</span>
+                <span class="credit">{creditLine(img)}</span>
+                {fieldLine(img) && <span class="field">{fieldLine(img)}</span>}
+              </figcaption>
+            </figure>
+          ))}
+        </div>
+      </section>
+    )}
+
+    {photos?.variants?.length > 0 && (
+      <section class="gallery-section">
+        <h2>Same plant, different exposure</h2>
+        <p class="caveat">
+          At 8,000 ft a south-facing slope performs roughly like 6,500 ft and a
+          north-facing one like 9,500 ft — three to four weeks of bloom offset,
+          different mature size, same species. These were photographed on different
+          aspects rather than one being a better version of the other.
+        </p>
+        <div class="gallery">
+          {photos.variants.map((img) => (
+            <figure>
+              <img
+                src={img.derivatives.card.src}
+                width={img.derivatives.card.width}
+                height={img.derivatives.card.height}
+                alt={`${p.common} — ${ROLE_LABEL[img.role] ?? img.role}, ${img.site?.aspect ?? ''} aspect`}
+                loading="lazy"
+                decoding="async"
+              />
+              <figcaption>
+                <span class="role">{ROLE_LABEL[img.role] ?? img.role}</span>
+                <span class="credit">{creditLine(img)}</span>
+                {fieldLine(img) && <span class="field">{fieldLine(img)}</span>}
+              </figcaption>
+            </figure>
+          ))}
+        </div>
+      </section>
     )}
 
     <section class="fire">
@@ -211,6 +320,45 @@ const facts = [
   .syn { font-family: var(--font-mono); font-size: 0.8rem; color: var(--basalt-soft); }
 
   .scope-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin: 1rem 0 0; }
+
+  /* Photographs. width/height are set on every <img> from the manifest's recorded
+     pixel size, so the box is reserved before the file arrives and the page does
+     not jump as it loads. */
+  figure { margin: 0; }
+  figure img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: var(--sand-light);
+  }
+  .hero { margin-top: 1.8rem; }
+  .hero img { max-height: 30rem; object-fit: cover; }
+
+  figcaption {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.15rem 0.9rem;
+    margin-top: 0.5rem;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    line-height: 1.6;
+    color: var(--basalt-soft);
+  }
+  figcaption .role {
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--sienna);
+  }
+  figcaption .field { font-style: italic; }
+
+  .gallery-section .caveat { margin-bottom: 1rem; }
+  .gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 1.4rem;
+  }
 
   section { margin-top: 2.6rem; }
   section h2 { font-size: 1.25rem; margin-bottom: 0.7rem; }

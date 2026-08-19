@@ -1,0 +1,167 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Contour from '../components/Contour.astro';
+// Gated at sync time by scripts/sync-plant-db.mjs through src/lib/image-gate.js.
+import imageIndex from '../../data/images.public.json';
+import plants from '../../data/plants.public.json';
+import { creditLine, imageCounts } from '../lib/image-gate.js';
+import { speciesSlug } from '../lib/publish-gate.js';
+
+// This page is GENERATED from the image manifest, never hand-maintained.
+//
+// A hand-written attribution page drifts out of step with what is actually on the
+// site the first time an image is swapped, which is the ordinary way a small
+// operator ends up out of licence compliance without knowing it. Deriving it from
+// the same file the pages render from makes that drift structurally impossible:
+// an image cannot appear on a species page without appearing here.
+const images = imageIndex.images;
+const counts = imageCounts(images);
+
+const bySlug = Object.fromEntries(plants.map((p) => [p.slug, p]));
+const named = (img) => bySlug[speciesSlug({ sci: img.sci })] ?? { common: img.sci, sci: img.sci };
+
+const borrowed = images
+  .filter((i) => i.license !== 'own')
+  .sort((a, b) => named(a).common.localeCompare(named(b).common));
+---
+<BaseLayout
+  title="Image credits — Next Steppe"
+  description="Attribution for every photograph on this site, generated from the image manifest rather than maintained by hand."
+>
+  <section class="wrap intro-section">
+    <span class="eyebrow">Attribution</span>
+    <h1>Image credits</h1>
+    <p class="lead">
+      Every photograph on this site, with its photographer and licence. This page is
+      generated from the same record the pages themselves render from, so it cannot
+      fall out of step with what is actually published.
+    </p>
+
+    <div class="stat-row">
+      <div class="stat"><span class="stat-n">{counts.total}</span><span class="stat-l">Photographs</span></div>
+      <div class="stat"><span class="stat-n">{counts.own}</span><span class="stat-l">Our own</span></div>
+      <div class="stat"><span class="stat-n">{counts.borrowed}</span><span class="stat-l">Licensed</span></div>
+    </div>
+  </section>
+
+  <Contour />
+
+  <section class="wrap credits">
+    {counts.total === 0 && (
+      <p class="empty">
+        No photographs are published yet. The plant database's image library is being
+        built from original photography rather than stock, so species pages carry data
+        before they carry pictures.
+      </p>
+    )}
+
+    {borrowed.length > 0 && (
+      <>
+        <h2>Licensed and Creative Commons</h2>
+        <p class="note">
+          Used under the licence shown. Non-commercial licences are refused at ingest:
+          this is a commercial practice, and CC-BY-NC content is not free for it
+          however it is labelled elsewhere.
+        </p>
+        <div class="table-scroll">
+          <table>
+            <thead>
+              <tr><th>Plant</th><th>Subject</th><th>Photographer</th><th>Licence</th><th>Source</th></tr>
+            </thead>
+            <tbody>
+              {borrowed.map((img) => (
+                <tr>
+                  <td>
+                    <a href={`/plants/${speciesSlug({ sci: img.sci })}`}>{named(img).common}</a>
+                    <em>{img.sci}</em>
+                  </td>
+                  <td>{img.role}</td>
+                  <td>{img.credit || '—'}</td>
+                  <td>
+                    {img.licenseUrl
+                      ? <a href={img.licenseUrl} rel="license noopener">{img.license}</a>
+                      : img.license}
+                  </td>
+                  <td>
+                    {img.sourceUrl
+                      ? <a href={img.sourceUrl} rel="noopener">observation</a>
+                      : '—'}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </>
+    )}
+
+    {counts.own > 0 && (
+      <>
+        <h2>Original photography</h2>
+        <p>
+          {counts.own} {counts.own === 1 ? 'photograph' : 'photographs'} &copy; Next Steppe,
+          all rights reserved. Each was taken in the field in Eagle County and carries its
+          own capture date and elevation, which is why the species pages can say where a
+          plant was actually growing rather than only what a reference book reports.
+        </p>
+        <p class="note">
+          Capture coordinates are held in our own records and are not published. A
+          photograph taken on a client's property would otherwise carry their address.
+        </p>
+      </>
+    )}
+  </section>
+</BaseLayout>
+
+<style>
+  /* Same block as plants/index.astro and index.astro. Astro scopes styles per
+     page, and these three are the only pages with a stat row; kept local to match
+     the existing convention rather than promoting one presentational rule to
+     global on its third use. */
+  .stat-row { display: flex; gap: 2.5rem; margin: 2rem 0 1.8rem; flex-wrap: wrap; }
+  .stat { display: flex; flex-direction: column; }
+  .stat-n {
+    font-family: var(--font-display);
+    font-size: 2.1rem;
+    line-height: 1;
+    color: var(--juniper);
+  }
+  .stat-l {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--basalt-soft);
+    margin-top: 0.4em;
+  }
+
+  .credits { padding-bottom: 4rem; max-width: 860px; }
+  .credits h2 { font-size: 1.25rem; margin: 2.6rem 0 0.6rem; }
+  .note { font-size: 0.88rem; color: var(--basalt-soft); line-height: 1.65; }
+  .empty { color: var(--basalt-soft); }
+
+  .table-scroll { overflow-x: auto; margin-top: 1rem; }
+  table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+  th {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    text-align: left;
+    color: var(--basalt-soft);
+    padding: 0.4rem 0.8rem 0.4rem 0;
+    border-bottom: 1px solid var(--line);
+    white-space: nowrap;
+  }
+  td {
+    padding: 0.6rem 0.8rem 0.6rem 0;
+    border-bottom: 1px solid var(--line);
+    vertical-align: top;
+  }
+  td em {
+    display: block;
+    font-family: var(--font-display);
+    font-size: 0.82rem;
+    color: var(--basalt-soft);
+  }
+</style>

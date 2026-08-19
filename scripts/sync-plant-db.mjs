@@ -21,24 +21,40 @@
 // output by hand.
 
 import { execFileSync } from 'node:child_process';
-import { copyFileSync, existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
+import {
+  copyFileSync,
+  existsSync,
+  mkdirSync,
+  readFileSync,
+  readdirSync,
+  rmSync,
+  writeFileSync,
+} from 'node:fs';
 import { dirname, join } from 'node:path';
 import {
   GATE_SRC,
+  IMAGE_BYTE_WARN,
+  IMAGE_GATE_SRC,
   MANIFEST,
   NO_DB_PATH,
   PUBLIC_DATA,
+  PUBLIC_IMAGES,
+  PUBLIC_IMAGE_DIR,
+  PUBLISHED_SIZES,
   SITE_ROOT,
   SOURCE_DATA,
+  SOURCE_IMAGES,
   SYNCED,
   dbCommit,
   dbDirtyPaths,
   dbPath,
   hashFile,
   renderPublicData,
+  renderPublicImages,
   sha256,
 } from './plant-db-common.mjs';
 import { withheldCounts } from '../src/lib/publish-gate.js';
+import { gateImages } from '../src/lib/image-gate.js';
 
 const root = dbPath();
 
@@ -121,6 +137,130 @@ console.log(
   `  ${SOURCE_DATA}  ->  ${PUBLIC_DATA}  (gated: ${counts.ign} ratings, ${counts.culture} cultural notes withheld)`,
 );
 
+/* ── Photographs, gated ──────────────────────────────────────────────────── */
+//
+// The database's image manifest holds the capture coordinates of every photograph.
+// What crosses here is its allowlisted projection — no coordinates, no field notes,
+// no path to the original — passed through src/lib/image-gate.js on the way in. The
+// pixels are the stripped derivatives; the full-resolution masters never leave the
+// database repo.
+
+const imagesSourcePath = join(root, SOURCE_IMAGES);
+const rawImages = existsSync(imagesSourcePath) ? readFileSync(imagesSourcePath, 'utf8') : null;
+
+if (!rawImages) {
+  console.log(`  ${SOURCE_IMAGES} not present — writing an empty image index.`);
+  console.log('  (run `python3 scripts/build.py` in the database to generate it)');
+}
+
+// Two shapes of the same set. `sourceImages` still carries the database's own
+// derivative paths, which is what the copy loop needs; the written index carries
+// public URLs and only the sizes that actually cross.
+const { published: sourceImages, refused: refusedImages } = gateImages(
+  rawImages ? JSON.parse(rawImages) : { images: [] },
+);
+const imagesJson = renderPublicImages(rawImages);
+
+writeFileSync(join(SITE_ROOT, PUBLIC_IMAGES), imagesJson);
+
+/**
+ * Does this file carry an EXIF or XMP block?
+ *
+ * The last check between a client's GPS coordinates and a public GitHub repo. The
+ * database strips metadata when it writes the derivatives and its verify.py asserts
+ * so, but this repo is the one that publishes them, and a check that only runs
+ * upstream is a check that stops running the moment something else writes a file
+ * into derived/.
+ *
+ * A WebP is a RIFF container: a flat sequence of FourCC + little-endian length. The
+ * database's verify.py reads it exactly this way; both implement the same rule
+ * because a rule enforced by reading bytes can be implemented in any language.
+ */
+function metadataBytes(buf) {
+  if (buf.length < 12 || buf.toString('ascii', 0, 4) !== 'RIFF') return 0;
+  if (buf.toString('ascii', 8, 12) !== 'WEBP') return 0;
+  let off = 12;
+  let total = 0;
+  while (off + 8 <= buf.length) {
+    const fourcc = buf.toString('ascii', off, off + 4);
+    const size = buf.readUInt32LE(off + 4);
+    if (fourcc === 'EXIF' || fourcc === 'XMP ') total += size;
+    off += 8 + size + (size % 2); // chunks are word-aligned
+  }
+  return total;
+}
+
+const imageDir = join(SITE_ROOT, PUBLIC_IMAGE_DIR);
+mkdirSync(imageDir, { recursive: true });
+
+const imageFiles = [];
+let imageBytes = 0;
+
+for (const img of sourceImages) {
+  for (const size of PUBLISHED_SIZES) {
+    const derivative = img.derivatives?.[size];
+    if (!derivative) continue;
+
+    const from = join(root, derivative.path);
+    if (!existsSync(from)) {
+      console.error(`  missing derivative for ${img.id}: ${derivative.path}`);
+      console.error('  rebuild it in the database repo, then re-sync.');
+      process.exit(1);
+    }
+
+    const bytes = readFileSync(from);
+    const meta = metadataBytes(bytes);
+    if (meta) {
+      console.error(`  REFUSING to publish ${derivative.path}`);
+      console.error(`    it carries ${meta} bytes of EXIF/XMP, which may hold GPS.`);
+      console.error('    a capture location is a client address. Re-generate the');
+      console.error('    derivative in the database repo before syncing.');
+      process.exit(1);
+    }
+
+    const rel = `${PUBLIC_IMAGE_DIR}/${img.id}/${size}.webp`;
+    mkdirSync(join(imageDir, img.id), { recursive: true });
+    writeFileSync(join(SITE_ROOT, rel), bytes);
+    imageFiles.push({ path: rel, sha256: sha256(bytes), bytes: bytes.length });
+    imageBytes += bytes.length;
+  }
+}
+
+// Prune anything the gate no longer publishes. Without this a superseded photo — or
+// one a licence review later refused — would keep sitting at its URL, served to
+// anyone who had the link and invisible to every page that stopped referencing it.
+const keep = new Set(imageFiles.map((f) => join(SITE_ROOT, f.path)));
+let pruned = 0;
+for (const entry of existsSync(imageDir) ? readdirSync(imageDir, { withFileTypes: true }) : []) {
+  const dir = join(imageDir, entry.name);
+  if (!entry.isDirectory()) continue;
+  for (const file of readdirSync(dir)) {
+    if (!keep.has(join(dir, file))) {
+      rmSync(join(dir, file));
+      pruned += 1;
+    }
+  }
+  if (readdirSync(dir).length === 0) rmSync(dir, { recursive: true });
+}
+
+const mb = (n) => `${(n / 1024 / 1024).toFixed(1)} MB`;
+console.log(
+  `  ${SOURCE_IMAGES}  ->  ${PUBLIC_IMAGES}  ` +
+    `(${sourceImages.length} published, ${refusedImages.length} refused)`,
+);
+console.log(
+  `  ${imageFiles.length} file(s) -> ${PUBLIC_IMAGE_DIR}/  ${mb(imageBytes)}` +
+    (pruned ? `, ${pruned} pruned` : ''),
+);
+for (const r of refusedImages) console.log(`    refused ${r.id}: ${r.reason}`);
+
+if (imageBytes > IMAGE_BYTE_WARN) {
+  console.warn(`\n  WARNING: committed imagery is ${mb(imageBytes)}, past the`);
+  console.warn(`  ${mb(IMAGE_BYTE_WARN)} tripwire. This repo is what Cloudflare builds from.`);
+  console.warn('  Consider re-tuning WebP quality in the database\'s ingest.py,');
+  console.warn('  or publishing thumb only for secondary roles.\n');
+}
+
 /* ── Manifest ────────────────────────────────────────────────────────────── */
 
 writeFileSync(
@@ -145,6 +285,15 @@ writeFileSync(
       // the rule we applied — detects the gate changing without a re-sync
       gateSha: hashFile(join(SITE_ROOT, GATE_SRC)),
       files,
+      // The same three questions for the photographs: did the database's export
+      // move, was the output edited here, did the image rule change without a
+      // re-sync. imageFiles additionally pins the pixels, so a derivative deleted
+      // or swapped in this repo is detectable — the species data has no
+      // equivalent because it is a single file the outputSha already covers.
+      imagesSourceSha: rawImages ? sha256(rawImages) : null,
+      imagesOutputSha: sha256(imagesJson),
+      imageGateSha: hashFile(join(SITE_ROOT, IMAGE_GATE_SRC)),
+      imageFiles,
     },
     null,
     2,

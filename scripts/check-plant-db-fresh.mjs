@@ -17,18 +17,23 @@
 // is skipped with a notice rather than failing, because Cloudflare builds from
 // GitHub and can never see it.
 
-import { existsSync, readFileSync } from 'node:fs';
+import { existsSync, readFileSync, readdirSync } from 'node:fs';
 import { join } from 'node:path';
 import {
   GATE_SRC,
+  IMAGE_GATE_SRC,
   PUBLIC_DATA,
+  PUBLIC_IMAGES,
+  PUBLIC_IMAGE_DIR,
   SITE_ROOT,
   SOURCE_DATA,
+  SOURCE_IMAGES,
   dbCommit,
   dbPath,
   hashFile,
   readManifest,
   renderPublicData,
+  renderPublicImages,
   sha256,
 } from './plant-db-common.mjs';
 
@@ -85,6 +90,70 @@ if (hashFile(join(SITE_ROOT, GATE_SRC)) !== manifest.gateSha) {
   );
 }
 
+/* ── 4. The photographs ──────────────────────────────────────────────────── */
+// The same three questions as the species data, plus one it does not need.
+//
+// A manifest predating the image sync has no imageFiles key at all; that is a
+// pre-image sync rather than a corrupt one, and re-syncing is the fix either way.
+
+if (manifest.imagesOutputSha !== undefined) {
+  const imagesPath = join(SITE_ROOT, PUBLIC_IMAGES);
+  if (!existsSync(imagesPath)) {
+    fail(`  missing: ${PUBLIC_IMAGES}`, '    run: npm run sync:plants');
+  } else if (hashFile(imagesPath) !== manifest.imagesOutputSha) {
+    fail(
+      `  EDITED HERE: ${PUBLIC_IMAGES}`,
+      '    this file is generated from the database by the image gate.',
+      '    change the database (or the gate), then: npm run sync:plants',
+    );
+  }
+
+  if (hashFile(join(SITE_ROOT, IMAGE_GATE_SRC)) !== manifest.imageGateSha) {
+    fail(
+      `  GATE CHANGED: ${IMAGE_GATE_SRC} differs from the rule the images were built with.`,
+      '    a licence or credit rule moved without the images being re-derived.',
+      '    re-derive them: npm run sync:plants',
+    );
+  }
+
+  // The pixels themselves. Species data is one file the outputSha already covers;
+  // the images are hundreds of binaries that no other check can see. A derivative
+  // swapped, truncated or deleted here would otherwise be invisible until someone
+  // loaded the page — and a file in public/plants/ that the index does not list is
+  // a photograph still being served after the gate stopped publishing it.
+  const expected = new Set();
+  for (const file of manifest.imageFiles ?? []) {
+    const path = join(SITE_ROOT, file.path);
+    expected.add(path);
+    if (!existsSync(path)) {
+      fail(`  MISSING IMAGE: ${file.path}`, '    run: npm run sync:plants');
+    } else if (hashFile(path) !== file.sha256) {
+      fail(
+        `  CHANGED IMAGE: ${file.path}`,
+        '    published derivatives are copies. Re-generate in the database repo,',
+        '    then: npm run sync:plants',
+      );
+    }
+  }
+
+  const imageDir = join(SITE_ROOT, PUBLIC_IMAGE_DIR);
+  if (existsSync(imageDir)) {
+    for (const entry of readdirSync(imageDir, { withFileTypes: true })) {
+      if (!entry.isDirectory()) continue;
+      for (const name of readdirSync(join(imageDir, entry.name))) {
+        const path = join(imageDir, entry.name, name);
+        if (!expected.has(path)) {
+          fail(
+            `  UNTRACKED IMAGE: ${PUBLIC_IMAGE_DIR}/${entry.name}/${name}`,
+            '    not in the gated index — it is being served but nothing publishes it.',
+            '    run: npm run sync:plants  (the sync prunes these)',
+          );
+        }
+      }
+    }
+  }
+}
+
 if (failed) process.exit(1);
 
 /* ── 4. The upstream database (local only) ───────────────────────────────── */
@@ -126,6 +195,27 @@ if (sha256(renderPublicData(raw)) !== manifest.outputSha) {
   );
   console.error('  run: npm run sync:plants');
   process.exit(1);
+}
+
+// The images, re-derived the same way. Missing upstream is not a failure: the
+// database had no image export before this feature, and an empty photo library
+// must not block a build.
+if (manifest.imagesOutputSha !== undefined) {
+  const imagesSourcePath = join(root, SOURCE_IMAGES);
+  const rawImages = existsSync(imagesSourcePath)
+    ? readFileSync(imagesSourcePath, 'utf8')
+    : null;
+
+  if (sha256(renderPublicImages(rawImages)) !== manifest.imagesOutputSha) {
+    const moved = (rawImages ? sha256(rawImages) : null) !== manifest.imagesSourceSha;
+    console.error(
+      moved
+        ? '  STALE: the image index has changed since the last sync'
+        : `  STALE: re-deriving no longer reproduces ${PUBLIC_IMAGES}`,
+    );
+    console.error('  run: npm run sync:plants');
+    process.exit(1);
+  }
 }
 
 console.log(

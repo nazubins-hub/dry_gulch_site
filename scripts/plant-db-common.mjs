@@ -12,6 +12,7 @@ import { existsSync, readFileSync } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { gateAll } from '../src/lib/publish-gate.js';
+import { gateImages } from '../src/lib/image-gate.js';
 
 export const SITE_ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 
@@ -74,6 +75,45 @@ export const PUBLIC_DATA = 'data/plants.public.json';
 /** The gate itself is hashed into the manifest: change the rule, re-sync the data. */
 export const GATE_SRC = 'src/lib/publish-gate.js';
 
+/**
+ * The image index in the database repo — its allowlisted projection of manifest.json.
+ *
+ * NOT the manifest itself, and not out/plants.built.json. Both carry the capture
+ * coordinates of every photograph, which on a job is the client's address. The
+ * database decides what may leave (PUBLIC_IMAGE_FIELDS in its scripts/build.py);
+ * this repo only ever reads the result.
+ */
+export const SOURCE_IMAGES = 'out/images.index.json';
+
+/** The gated image index committed here. Companion to PUBLIC_DATA. */
+export const PUBLIC_IMAGES = 'data/images.public.json';
+
+/** Hashed into the manifest for the same reason GATE_SRC is. */
+export const IMAGE_GATE_SRC = 'src/lib/image-gate.js';
+
+/**
+ * Where the published derivatives are committed.
+ *
+ * Cloudflare builds from GitHub and cannot see the database repo, so the pixels
+ * have to live here — the same constraint that produced plants.public.json. Only
+ * `thumb` and `card` cross; `full` stays in the database for print and reports,
+ * because this repo is a deployment artifact rather than a photo archive.
+ */
+export const PUBLIC_IMAGE_DIR = 'public/plants';
+
+/** Derivative sizes the site publishes. Ordered small to large. */
+export const PUBLISHED_SIZES = ['thumb', 'card'];
+
+/**
+ * Warn past this much committed imagery.
+ *
+ * Not a limit — a tripwire. At two roles for a hundred species, thumb+card at the
+ * database's current WebP quality lands near 50 MB, and a repo quietly growing to
+ * that size is the kind of thing noticed a year late. The warning makes the
+ * trajectory visible while it is still cheap to re-tune the encoder.
+ */
+export const IMAGE_BYTE_WARN = 40 * 1024 * 1024;
+
 /** Site-analysis constants, synced verbatim from the database. */
 export const SITE_RULES_DATA = 'data/site-rules.json';
 
@@ -93,6 +133,49 @@ export const hashFile = (path) => sha256(readFileSync(path));
  */
 export function renderPublicData(rawPlantsJson) {
   return `${JSON.stringify(gateAll(JSON.parse(rawPlantsJson)), null, 2)}\n`;
+}
+
+/**
+ * Render the public image index from the database's out/images.index.json.
+ *
+ * Shared by sync and the freshness check for exactly the reason renderPublicData
+ * is: one writes it, the other re-derives it and compares byte for byte, and a
+ * second implementation of the serialization would make that comparison
+ * meaningless the first time the two drifted.
+ *
+ * Missing upstream is not an error — it renders an empty index. The database had
+ * no image export until this feature existed, and a species sync must not start
+ * failing because the photo library is empty.
+ */
+export function renderPublicImages(rawIndexJson) {
+  const index = rawIndexJson ? JSON.parse(rawIndexJson) : { images: [] };
+  const { published } = gateImages(index);
+
+  // Rewrite the derivatives into what this site can actually serve. The database
+  // describes its own layout — `derived/<id>/card.webp`, plus a `full` it keeps for
+  // print — and none of that is true here. Templates get a URL and the intrinsic
+  // dimensions, and cannot reference a size that was never copied across.
+  const projected = published.map((img) => ({
+    ...img,
+    derivatives: Object.fromEntries(
+      PUBLISHED_SIZES.filter((size) => img.derivatives?.[size]).map((size) => [
+        size,
+        {
+          src: `/${PUBLIC_IMAGE_DIR.replace(/^public\//, '')}/${img.id}/${size}.webp`,
+          width: img.derivatives[size].width,
+          height: img.derivatives[size].height,
+        },
+      ]),
+    ),
+  }));
+
+  projected.sort((a, b) => a.id.localeCompare(b.id));
+  return `${JSON.stringify({ schemaVersion: 1, images: projected }, null, 2)}\n`;
+}
+
+/** Refusals from the image gate, for the publish audit. Not written to disk. */
+export function imageRefusals(rawIndexJson) {
+  return gateImages(rawIndexJson ? JSON.parse(rawIndexJson) : { images: [] }).refused;
 }
 
 /** Short HEAD hash of the database repo, or null if git can't tell us. */

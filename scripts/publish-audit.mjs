@@ -23,7 +23,8 @@
 
 import { existsSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
-import { NO_DB_PATH, SOURCE_DATA, dbPath, readManifest } from './plant-db-common.mjs';
+import { NO_DB_PATH, SOURCE_DATA, SOURCE_IMAGES, dbPath, readManifest } from './plant-db-common.mjs';
+import { gateImages } from '../src/lib/image-gate.js';
 
 const root = dbPath();
 
@@ -99,6 +100,58 @@ if (both.length) {
   console.log('   These exercise both gating rules at once — useful for verification.\n');
   for (const p of both) console.log(`   ${String(p.id).padStart(3)}  ${p.common}`);
 }
+
+/* ── Photographs ─────────────────────────────────────────────────────────── */
+//
+// A photograph is a different kind of publication risk from a species fact. It can
+// carry a licence you are not entitled to, and it can show a place you were invited
+// into rather than one you own. Neither is visible in the JSON at a glance, so both
+// get listed here, before a deploy rather than after.
+
+const imagesSourcePath = join(root, SOURCE_IMAGES);
+const rawImages = existsSync(imagesSourcePath) ? readFileSync(imagesSourcePath, 'utf8') : null;
+const { published: publishedImages, refused: refusedImages } = gateImages(
+  rawImages ? JSON.parse(rawImages) : { images: [] },
+);
+
+const bySci = Object.fromEntries(plants.map((p) => [p.sci, p]));
+const commonOf = (img) => bySci[img.sci]?.common ?? img.sci;
+
+const installed = publishedImages
+  .filter((i) => i.site?.context === 'installed')
+  .sort((a, b) => commonOf(a).localeCompare(commonOf(b)));
+
+rule(`4. PHOTOGRAPHS ON A CLIENT'S PROPERTY  (site.context "installed")   ${installed.length}`);
+console.log("   These show someone else's landscape on a public marketing site.");
+console.log('   Nothing blocks them — an installed shot is the one that converts —');
+console.log('   but you should know what is going public before it does.\n');
+if (installed.length === 0) {
+  console.log('   none.\n');
+}
+for (const img of installed) {
+  console.log(`   ${img.id}`);
+  console.log(`        ${commonOf(img)} · ${img.role} · tier ${img.tier} · ${img.capturedAt ?? 'undated'}`);
+}
+
+rule(`5. IMAGES REFUSED BY THE GATE   ${refusedImages.length}`);
+console.log('   Present in the database, held out of the site by src/lib/image-gate.js.\n');
+if (refusedImages.length === 0) {
+  console.log('   none — everything the database exports is publishable.\n');
+}
+for (const r of refusedImages) {
+  console.log(`   ${r.id}`);
+  console.log(`        ${r.reason}`);
+}
+
+const manifestImages = manifest?.imageFiles ?? [];
+const totalBytes = manifestImages.reduce((n, f) => n + f.bytes, 0);
+rule('COMMITTED IMAGERY');
+console.log(
+  `   ${publishedImages.length} image(s) published, ${manifestImages.length} file(s) committed, ` +
+    `${(totalBytes / 1024 / 1024).toFixed(1)} MB.`,
+);
+console.log('   Only thumb and card cross; full-resolution masters stay in the database.');
+console.log('   Capture coordinates are never synced — see PRIVATE_FIELDS in image-gate.js.\n');
 
 const verified = plants.filter((p) => p.ignSrc === 'CSU' || p.ignSrc === 'IDFW');
 rule('IF YOU PUBLISH ONLY SOURCE-BACKED RATINGS');
