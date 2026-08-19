@@ -1220,6 +1220,37 @@
       }
     },
     {
+      "id": "geranium-viscosissimum--habit--001",
+      "speciesId": 103,
+      "sci": "Geranium viscosissimum",
+      "role": "habit",
+      "tier": 1,
+      "status": "active",
+      "season": "spring",
+      "credit": "Next Steppe",
+      "license": "own",
+      "licenseUrl": null,
+      "sourceUrl": "",
+      "idVerification": "own-field",
+      "capturedAt": "2026-06-23",
+      "elevationFt": 7876,
+      "site": {
+        "context": "wild"
+      },
+      "derivatives": {
+        "thumb": {
+          "src": "/plants/geranium-viscosissimum--habit--001/thumb.webp",
+          "width": 400,
+          "height": 533
+        },
+        "card": {
+          "src": "/plants/geranium-viscosissimum--habit--001/card.webp",
+          "width": 800,
+          "height": 1067
+        }
+      }
+    },
+    {
       "id": "geum-triflorum--habit--001",
       "speciesId": 76,
       "sci": "Geum triflorum",
@@ -1245,6 +1276,37 @@
           "src": "/plants/geum-triflorum--habit--001/card.webp",
           "width": 800,
           "height": 547
+        }
+      }
+    },
+    {
+      "id": "heliomeris-multiflora--flower--001",
+      "speciesId": 101,
+      "sci": "Heliomeris multiflora",
+      "role": "flower",
+      "tier": 1,
+      "status": "active",
+      "season": "summer",
+      "credit": "Next Steppe",
+      "license": "own",
+      "licenseUrl": null,
+      "sourceUrl": "",
+      "idVerification": "own-field",
+      "capturedAt": "2026-08-15",
+      "elevationFt": 8634,
+      "site": {
+        "context": "wild"
+      },
+      "derivatives": {
+        "thumb": {
+          "src": "/plants/heliomeris-multiflora--flower--001/thumb.webp",
+          "width": 400,
+          "height": 533
+        },
+        "card": {
+          "src": "/plants/heliomeris-multiflora--flower--001/card.webp",
+          "width": 800,
+          "height": 1067
         }
       }
     },
@@ -1448,6 +1510,37 @@
           "src": "/plants/juniperus-scopulorum--habit--001/card.webp",
           "width": 800,
           "height": 600
+        }
+      }
+    },
+    {
+      "id": "kniphofia-uvaria--habit--001",
+      "speciesId": 104,
+      "sci": "Kniphofia uvaria",
+      "role": "habit",
+      "tier": 1,
+      "status": "active",
+      "season": "spring",
+      "credit": "Next Steppe",
+      "license": "own",
+      "licenseUrl": null,
+      "sourceUrl": "",
+      "idVerification": "own-field",
+      "capturedAt": "2026-06-11",
+      "elevationFt": 7269,
+      "site": {
+        "context": "installed"
+      },
+      "derivatives": {
+        "thumb": {
+          "src": "/plants/kniphofia-uvaria--habit--001/thumb.webp",
+          "width": 400,
+          "height": 533
+        },
+        "card": {
+          "src": "/plants/kniphofia-uvaria--habit--001/card.webp",
+          "width": 800,
+          "height": 1067
         }
       }
     },
@@ -2521,6 +2614,37 @@
           "src": "/plants/shepherdia-canadensis--habit--001/card.webp",
           "width": 800,
           "height": 600
+        }
+      }
+    },
+    {
+      "id": "solidago-missouriensis--habit--001",
+      "speciesId": 102,
+      "sci": "Solidago missouriensis",
+      "role": "habit",
+      "tier": 1,
+      "status": "active",
+      "season": "summer",
+      "credit": "Next Steppe",
+      "license": "own",
+      "licenseUrl": null,
+      "sourceUrl": "",
+      "idVerification": "own-field",
+      "capturedAt": "2026-08-15",
+      "elevationFt": 8854,
+      "site": {
+        "context": "wild"
+      },
+      "derivatives": {
+        "thumb": {
+          "src": "/plants/solidago-missouriensis--habit--001/thumb.webp",
+          "width": 400,
+          "height": 533
+        },
+        "card": {
+          "src": "/plants/solidago-missouriensis--habit--001/card.webp",
+          "width": 800,
+          "height": 1067
         }
       }
     },
